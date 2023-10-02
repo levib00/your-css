@@ -1,10 +1,9 @@
-// Create new link Element
-let link = document.createElement('style');
-const head = document.head;
-
-const style = 'body {background-color: black} header {background-color: yellow}'
-
-link.type = 'text/css'
-// Append link element to HTML head
-link.appendChild(document.createTextNode(style))
-head.appendChild(link);
+"use strict";
+const link = document.createElement('style');
+const style = {
+    stackoverflow: 'body {background-color: black} header {background-color: yellow}',
+};
+const url = new URL(window.location.href);
+const domain = url.hostname.split('.')[0];
+link.appendChild(document.createTextNode(style[domain]));
+document.head.appendChild(link);
