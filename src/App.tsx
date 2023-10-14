@@ -1,34 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Form } from "react-router-dom";
+import './App.css';
+import { styles } from '../public/scripts/your-css.js';
+import Listing from './components/listing.js';
+import NavBar from './components/nav.js'
+import Home from "./components/home.js";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const passStyles = () => {
+    for (let style in styles) {
+      if (styles.hasOwnProperty(style)) {
+        return (
+          <>
+            <Listing style={ style } styles={ styles }/>
+          </>
+        )
+      }
+    }
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <BrowserRouter>
+        <NavBar />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path="/form"  element={<Form /> } />
+          <Route path="/form/:site"  element={<Form /> } />
+        </Routes>
+      </BrowserRouter>
+      {passStyles()}
+    </div>
   )
 }
 
