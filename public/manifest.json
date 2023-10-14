@@ -1,21 +1,28 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Your Css",
   "version": "1.0",
-
+  "permissions": [
+    "scripting"
+  ],
   "description": "Add and save your own custom css for whatever websites you want.",
 
   "icons": {
     "48": "icons/border-48.png"
   },
-  "browser_action": {
-    "default_icon": "icons/beasts-32.png",
+  "action": {
+    "default_icon": "icons/border-48.png",
     "default_title": "your-css",
     "default_popup": "index.html"
   },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"]
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/your-css.js"]
     }
   ]
 }
