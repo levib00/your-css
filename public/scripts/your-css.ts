@@ -1,13 +1,14 @@
 const link: HTMLStyleElement = document.createElement('style');
 
-type Styles = { [key: string] : string };
+interface Style {
+  [key: string] : string
+};
 
-const style: Styles = {
+export const styles: Style = {
   stackoverflow: 'body {background-color: black} header {background-color: yellow}',
-
 };
 const url = new URL(window.location.href);
 const domain: string | undefined = url.hostname.split('.')[0];
 
-link.appendChild(document.createTextNode(style[domain]));
+link.appendChild(document.createTextNode(styles[domain]));
 document.head.appendChild(link);
