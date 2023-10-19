@@ -5,10 +5,10 @@ import '@testing-library/jest-dom'
 
 describe("Listing renders", () => {
 
-  test('Listing renders with correct text', () => {
+  test('Create new form renders.', () => {
     render(
       <MemoryRouter>
-        <Form />
+        <Form website='' customCss='' />
       </MemoryRouter>
     );
 
@@ -16,5 +16,18 @@ describe("Listing renders", () => {
     expect(websiteLabel).toBeInTheDocument();
     const textAreaLabel = screen.getByText('custom css');
     expect(textAreaLabel).toBeInTheDocument()
+  });
+
+  test('edit form renders with previous text.', () => {
+    render(
+      <MemoryRouter>
+        <Form website='example website' customCss='exampleCss'/>
+      </MemoryRouter>
+    );
+
+    const websiteText = screen.getByDisplayValue('example website');
+    expect(websiteText).toBeInTheDocument();
+    const textAreaText = screen.getByDisplayValue('exampleCss');
+    expect(textAreaText).toBeInTheDocument()
   });
 })
