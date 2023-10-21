@@ -69,6 +69,46 @@ describe("Listing renders", () => {
     expect(teste.styles.websitetest).toBe('css test')
   });
 
+  test('Update css.', async () => {
+    render(
+      <MemoryRouter>
+        <Form website='exampleName1' customCss='example style text 1'/>
+      </MemoryRouter>
+    );
+
+    const cssBox = screen.getByLabelText('custom css');
+    const saveButton = screen.getByText('save');
+
+    await act( async() => { 
+      await userEvent.type(cssBox, ' updated')
+      await userEvent.click(saveButton)
+    });
+
+    expect(teste.styles.exampleName1).toBe('example style text 1 updated')
+  });
+
+  test('Update website name.', async () => {
+    render(
+      <MemoryRouter>
+        <Form website='exampleName1' customCss='example style text 1'/>
+      </MemoryRouter>
+    );
+
+    const websiteBox = screen.getByLabelText('Website');
+    const saveButton = screen.getByText('save');
+
+    await act( async() => { 
+      await userEvent.type(websiteBox, 'Updated')
+      await userEvent.click(saveButton)
+    });
+
+    console.log()
+
+
+    expect(teste.styles.exampleName1).toBeUndefined()
+    expect(teste.styles.exampleName1Updated).toBeTruthy()
+  });
+
   // TODO: then make sure that function that saves it to extension storage gets called once.
   // TODO: then test that it edits correctly too. then use an after() to set the mock object back to default.
 })
