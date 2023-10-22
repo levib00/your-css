@@ -10,7 +10,13 @@ const Form = (props: FormProps) => {
   const [websiteInput, setWebsiteInput] = useState(props.website || '');
   const [cssInput, setCssInput] = useState(props.customCss || '')
 
+
+  // TODO: add a warning if it isn't an edit. allow user to confirm update. 
   const saveCss = (website: string, css: string) => {
+    if (props.website !== website) {
+      styles[website] = styles[props.website];
+      delete styles[props.website];
+    }
     styles[website] = css
   }
 
