@@ -13,9 +13,9 @@ jest.mock('../objects/styles', () => {
   };
 });
 
-describe("Listing renders", () => {
+describe("Home renders", () => {
 
-  test('Listing renders with correct text', () => {
+  test('Home renders with correct text', () => {
     
     render(
       <MemoryRouter>
