@@ -1,27 +1,31 @@
-let teste: FormTestProps
+let testStylesObject: FormTestProps
 import { render, screen } from '@testing-library/react';
 import Form from '../components/form';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
+import * as storageHandlers from '../scripts/storage-handlers';
 
 interface FormTestProps {
   styles :{ [key: string]: string}
 };
 
-
+beforeEach(() => {
+  jest.clearAllMocks()
+  jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn())
+})
 
 jest.mock('../objects/styles', () => {
   const object = {
     exampleName1: 'example style text 1',
     exampleName2: 'example style text 2',
   }
-  teste = {styles: object}
-  return teste
+  testStylesObject = {styles: object}
+  return testStylesObject
 });
 
-describe("Listing renders", () => {
+describe("Form renders", () => {
 
   test('Create new form renders.', () => {
     render(
@@ -66,7 +70,7 @@ describe("Listing renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(teste.styles.websitetest).toBe('css test')
+    expect(testStylesObject.styles.websitetest).toBe('css test')
   });
 
   test('Update css.', async () => {
@@ -84,7 +88,7 @@ describe("Listing renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(teste.styles.exampleName1).toBe('example style text 1 updated')
+    expect(testStylesObject.styles.exampleName1).toBe('example style text 1 updated')
   });
 
   test('Update website name.', async () => {
@@ -102,13 +106,9 @@ describe("Listing renders", () => {
       await userEvent.click(saveButton)
     });
 
-    console.log()
-
-
-    expect(teste.styles.exampleName1).toBeUndefined()
-    expect(teste.styles.exampleName1Updated).toBeTruthy()
+    expect(testStylesObject.styles.exampleName1).toBeUndefined()
+    expect(testStylesObject.styles.exampleName1Updated).toBeTruthy()
+    expect(storageHandlers.saveToStorage).toBeCalledTimes(1)
   });
 
-  // TODO: then make sure that function that saves it to extension storage gets called once.
-  // TODO: then test that it edits correctly too. then use an after() to set the mock object back to default.
 })
