@@ -5,6 +5,7 @@ import '@testing-library/jest-dom'
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as storageHandlers from '../scripts/storage-handlers';
+import { setStyles } from '../objects/styles';
 
 describe("Listing renders", () => {
 
@@ -51,6 +52,13 @@ describe("Listing renders", () => {
 
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn())
 
+    const masterStylesMock = {
+      styleName: 'style text',
+      styleName2: 'style text 2'
+    }
+
+    setStyles(masterStylesMock)
+
     render(
       <MemoryRouter>
         <Listing styles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
@@ -63,6 +71,8 @@ describe("Listing renders", () => {
       await userEvent.click(deleteButton)
     });
 
-    expect(storageHandlers.saveToStorage).toBeCalledTimes(1)
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledTimes(1)
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith(masterStylesMock)
+    expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
   });
 })
