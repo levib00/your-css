@@ -3,7 +3,8 @@
   "name": "Your Css",
   "version": "1.0",
   "permissions": [
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "description": "Add and save your own custom css for whatever websites you want.",
 
