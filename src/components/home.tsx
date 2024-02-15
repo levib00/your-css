@@ -1,20 +1,24 @@
-import Listing from './listing'
-import { styles } from '../objects/styles'
-import { Link } from 'react-router-dom'
+import Listing from './listing';
+import { styles } from '../objects/styles';
+import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
 
-  const passStyles = () => {
-    const stylesArray = []
-    for (let style in styles) {
-      if (styles.hasOwnProperty(style)) {
-        stylesArray.push(
-          <Listing key={Math.random()} style={ style } styles={ styles }/>
-        )
+  const [allStyles, setAllStyles] = useState(styles)
+  const [listings, setListings] = useState<any>([])
+
+  useEffect(() => {
+      const stylesArray = []
+      for (let style in allStyles) {
+        if (styles.hasOwnProperty(style)) {
+          stylesArray.push(
+            <Listing key={Math.random()} style={ style } styles={ styles } setAllStyles={setAllStyles} />
+          )
+        }
       }
-    }
-    return stylesArray
-  }
+      setListings(stylesArray)
+  }, [allStyles])
 
   return (
     <>
@@ -22,7 +26,7 @@ const Home = () => {
       <input type="text" id='search' />
       <Link to='/form'><button>+</button></Link>
       <div>
-        {passStyles().map(listing => listing)}
+        {listings.map((listing: any) => listing)}
       </div>
     </>
   )
