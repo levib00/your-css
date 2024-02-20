@@ -8,5 +8,17 @@ const domain: string | undefined = url.hostname.split('.')[0];
 
 setStyles(getFromStorage());
 
+interface Domain {
+  active: boolean
+  styles: string
+};
+
+export const getStyleValue = (domain : Domain) => {
+  if (!domain.active) {
+    return null
+  } 
+  return domain.styles
+}
+
 link.appendChild(document.createTextNode(styles[domain]));
 document.head.appendChild(link);
