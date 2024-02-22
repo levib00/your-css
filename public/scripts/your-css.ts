@@ -1,7 +1,7 @@
 import { styles, setStyles } from '../../src/objects/styles'
 import { getFromStorage } from '../../src/scripts/storage-handlers'
 
-const link: HTMLStyleElement = document.createElement('style');
+const domainStyle: HTMLStyleElement = document.createElement('style');
 
 const url = new URL(window.location.href);
 const domain: string | undefined = url.hostname.split('.')[0];
@@ -20,5 +20,5 @@ export const getStyleValue = (domain : Domain) => {
   return domain.styles
 }
 
-link.appendChild(document.createTextNode(styles[domain]));
-document.head.appendChild(link);
+domainStyle.appendChild(document.createTextNode(styles[domain]));
+document.head.appendChild(domainStyle);
