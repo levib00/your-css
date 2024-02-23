@@ -77,4 +77,30 @@ describe("Listing renders", () => {
     expect(storageHandlers.saveToStorage).toHaveBeenCalledWith(masterStylesMock)
     expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
   });
+
+  test('Checkbox is checked and fires save function', async() => {
+    jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn())
+
+    const masterStylesMock = {
+      styleName: {isActive: true, css: 'style text',},
+      styleName2: {isActive: true, css: 'style text 2'}
+    }
+
+    setStyles(masterStylesMock)
+
+    render(
+      <MemoryRouter>
+        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
+      </MemoryRouter>
+    );
+
+    const styleActive = screen.getByRole('checkbox')
+
+    await act( async() => {
+      await userEvent.click(styleActive)
+    });
+
+    expect(styleActive).toBeChecked()
+    expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
+  });
 })
