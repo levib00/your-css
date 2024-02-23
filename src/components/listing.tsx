@@ -12,6 +12,7 @@ interface ListingProps {
 function Listing(props: ListingProps) {
   const {style, setAllStyles, styles} = props
   const [editMode, setEditMode] = useState(false)
+  const [isActive, setIsActive] = useState(styles.isActive)
 
   const deleteListing = () => {
     delete masterStyles[style];
@@ -19,6 +20,13 @@ function Listing(props: ListingProps) {
     setAllStyles({...masterStyles})
     // TODO: use DI instead of props.
   }
+
+  const updateIsActive = () => {
+    setIsActive(isActive);
+    masterStyles[style].isActive = isActive
+    setAllStyles({...masterStyles})
+    saveToStorage(masterStyles)
+  };
 
   const openEditPage = () => {
     setEditMode(true)
@@ -32,6 +40,7 @@ function Listing(props: ListingProps) {
         <Form website={style} customCss={styles.css}/>
         : 
         <>
+          <input type="checkbox" checked={isActive} onChange={updateIsActive}/>
           <div>
             { style }
           </div>
