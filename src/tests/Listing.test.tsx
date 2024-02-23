@@ -10,8 +10,10 @@ import { setStyles } from '../objects/styles';
 describe("Listing renders", () => {
 
   const stylesMock = {
-    styleName: 'style text',
-  
+    styleName: {
+      css: 'style text',
+      isActive: true
+    }
   }
 
   const setAllStylesMock = jest.fn()
@@ -19,7 +21,7 @@ describe("Listing renders", () => {
   test('Listing renders with correct text', () => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -32,7 +34,7 @@ describe("Listing renders", () => {
   test('Edit button works', async() => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -53,15 +55,15 @@ describe("Listing renders", () => {
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn())
 
     const masterStylesMock = {
-      styleName: 'style text',
-      styleName2: 'style text 2'
+      styleName: {isActive: true, css: 'style text',},
+      styleName2: {isActive: true, css: 'style text 2'}
     }
 
     setStyles(masterStylesMock)
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 

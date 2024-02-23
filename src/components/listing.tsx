@@ -5,12 +5,12 @@ import { saveToStorage } from "../scripts/storage-handlers";
 
 interface ListingProps {
   style : string
-  styles :{ [key: string]: string} // TODO: fix these names.
+  styles :{ isActive: boolean, css: string} // TODO: fix these names.
   setAllStyles: any
 };
 
 function Listing(props: ListingProps) {
-  const {style, setAllStyles} = props
+  const {style, setAllStyles, styles} = props
   const [editMode, setEditMode] = useState(false)
 
   const deleteListing = () => {
@@ -29,14 +29,14 @@ function Listing(props: ListingProps) {
     <>
       {
         editMode ?
-        <Form website={style} customCss={props.styles[style]}/>
+        <Form website={style} customCss={styles.css}/>
         : 
         <>
           <div>
             { style }
           </div>
           <div>
-            { props.styles[style] }
+            { styles.css }
           </div>
           <button onClick={openEditPage}>edit</button>
           <button onClick={deleteListing}>delete</button>

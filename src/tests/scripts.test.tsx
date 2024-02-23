@@ -5,12 +5,12 @@ describe("your-css style", () => {
 
   const stylesMock = {
     domain1: {
-      active: true,
-      styles: 'css'
+      isActive: true,
+      css: 'css'
     },
     domain2: {
-      active: false,
-      styles: 'css'
+      isActive: false,
+      css: 'css'
     }
   }
 

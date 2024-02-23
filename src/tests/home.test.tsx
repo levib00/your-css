@@ -5,8 +5,8 @@ import '@testing-library/jest-dom'
 
 jest.mock('../objects/styles', () => {
   const object = {
-    exampleName1: 'example style text 1',
-    exampleName2: 'example style text 2',
+    exampleName1: {isActive: true, css: 'example style text 1'},
+    exampleName2: {isActive: true, css: 'example style text 2'},
   }
   return {
     styles: object,

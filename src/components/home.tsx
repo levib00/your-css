@@ -13,7 +13,7 @@ const Home = () => {
       for (let style in allStyles) {
         if (styles.hasOwnProperty(style)) {
           stylesArray.push(
-            <Listing key={Math.random()} style={ style } styles={ styles } setAllStyles={setAllStyles} />
+            <Listing key={Math.random()} style={ style } styles={ styles[style] } setAllStyles={setAllStyles} />
           )
         }
       }

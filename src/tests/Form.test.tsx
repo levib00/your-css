@@ -8,7 +8,7 @@ import { act } from 'react-dom/test-utils';
 import * as storageHandlers from '../scripts/storage-handlers';
 
 interface FormTestProps {
-  styles :{ [key: string]: string}
+  styles : {[key: string]: {isActive: boolean, css: string}}
 };
 
 beforeEach(() => {
@@ -18,8 +18,8 @@ beforeEach(() => {
 
 jest.mock('../objects/styles', () => {
   const object = {
-    exampleName1: 'example style text 1',
-    exampleName2: 'example style text 2',
+    exampleName1: {isActive: true, css: 'example style text 1'},
+    exampleName2: {isActive: true, css: 'example style text 2'},
   }
   testStylesObject = {styles: object}
   return testStylesObject
@@ -70,7 +70,7 @@ describe("Form renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(testStylesObject.styles.websitetest).toBe('css test')
+    expect(testStylesObject.styles.websitetest.css).toBe('css test')
   });
 
   test('Update css.', async () => {
@@ -88,7 +88,7 @@ describe("Form renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(testStylesObject.styles.exampleName1).toBe('example style text 1 updated')
+    expect(testStylesObject.styles.exampleName1.css).toBe('example style text 1 updated')
   });
 
   test('Update website name.', async () => {
@@ -110,5 +110,4 @@ describe("Form renders", () => {
     expect(testStylesObject.styles.exampleName1Updated).toBeTruthy()
     expect(storageHandlers.saveToStorage).toBeCalledTimes(1)
   });
-
 })
