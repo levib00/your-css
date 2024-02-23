@@ -1,10 +1,10 @@
 interface Style {
-  [key: string] : string
+  [key: string] : {isActive: boolean, css: string}
 };
 
 export let styles: Style = {
 };
 
-export const setStyles = (newStyles: {[key: string] : string}) => {
+export const setStyles = (newStyles: {[key: string] : {isActive: boolean, css: string}}) => {
   styles = newStyles
 }
