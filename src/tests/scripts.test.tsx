@@ -14,8 +14,12 @@ describe("your-css style", () => {
       css: 'css'
     },
     _toggleAll: {
-      isActive: false,
+      isActive: true,
       css: ''
+    },
+    _global: {
+      isActive: false,
+      css: 'global'
     }
   }
 
@@ -24,7 +28,38 @@ describe("your-css style", () => {
   })
 
   test('Active style returns css', () => {
-    const stylesMockIsActive = {
+    const mock111 = getStyleValue(stylesMock.domain1)
+    expect(mock111).toBe('css')
+  });
+
+  test('Inactive style returns null', () => {
+    const mock111 = getStyleValue(stylesMock.domain2)
+    expect(mock111).toBeNull()
+  });
+
+  test('allStyles inactive returns null', () => {
+    const stylesMockNotActive = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: false,
+        css: ''
+      }
+    }
+
+    setStyles(stylesMockNotActive)
+    const mock111 = getStyleValue(stylesMock.domain1)
+    expect(mock111).toBeNull()
+  });
+
+  test('returns global styles and domain style', () => {
+    const stylesMockGlobal = {
       domain1: {
         isActive: true,
         css: 'css'
@@ -36,21 +71,40 @@ describe("your-css style", () => {
       _toggleAll: {
         isActive: true,
         css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
       }
     }
 
-    setStyles(stylesMockIsActive)
+    setStyles(stylesMockGlobal)
     const mock111 = getStyleValue(stylesMock.domain1)
-    expect(mock111).toBe('css')
+    expect(mock111).toBe('globalcss')
   });
 
-  test('Inactive style returns null', () => {
+  test('returns global styles without domain if domain is inactive', () => {
+    const stylesMockGlobal = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      }
+    }
+
+    setStyles(stylesMockGlobal)
     const mock111 = getStyleValue(stylesMock.domain2)
-    expect(mock111).toBeNull()
-  });
-
-  test('Inactive style returns null', () => {
-    const mock111 = getStyleValue(stylesMock.domain1)
-    expect(mock111).toBeNull()
+    expect(mock111).toBe('global')
   });
 })
