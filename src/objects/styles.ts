@@ -3,6 +3,18 @@ interface Style {
 };
 
 export let styles: Style = {
+  _global: {
+    isActive: false, 
+    css: ''
+  },
+  _extension: {
+    isActive: false,
+    css: ''
+  },
+  _toggleAll: {
+    isActive: true,
+    css: ''
+  }
 };
 
 export const setStyles = (newStyles: {[key: string] : {isActive: boolean, css: string}}) => {
