@@ -14,7 +14,7 @@ interface Domain {
 };
 
 export const getStyleValue = (domain : Domain) => {
-  if (!domain.isActive) {
+  if (!domain.isActive || !styles._toggleAll?.isActive) {
     return null
   } 
   return domain.css
