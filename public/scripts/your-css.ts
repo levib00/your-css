@@ -14,10 +14,17 @@ interface Domain {
 };
 
 export const getStyleValue = (domain : Domain) => {
-  if (!domain.isActive || !styles._toggleAll?.isActive) {
+  let test = ''
+  if ((!domain.isActive && !styles._global.isActive) || !styles._toggleAll?.isActive) {
     return null
   } 
-  return domain.css
+  if (styles._global?.isActive) {
+    test = test.concat(styles._global.css)
+  }
+  if (domain.isActive){
+    test = test.concat(domain.css)
+  }
+  return test 
 }
 
 // TODO: test if the optional chain is needed by fixing test setup
