@@ -1,5 +1,5 @@
 // @ts-nocheck
-export const saveToStorage = (newObject : {[key: string] : {isActive: boolean, css: string}}) => {
+export const saveToStorage = (newObject : {[key: string] : {isActive?: boolean, css?: string}}) => {
   browser.storage.local.set(newObject)
 }
 

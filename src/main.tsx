@@ -11,5 +11,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 )
 
 const domainStyle: HTMLStyleElement = document.createElement('style');
-domainStyle.appendChild(document.createTextNode(styles._extension?.isActive ? styles._extension?.css : ''));
+domainStyle.appendChild(document.createTextNode(styles._extension?.isActive && styles._extension?.css ? styles._extension?.css : ''));
 document.head.appendChild(domainStyle);

@@ -9,24 +9,24 @@ const domain: string | undefined = url.hostname.split('.')[0];
 setStyles(getFromStorage());
 
 interface Domain {
-  isActive: boolean
-  css: string
+  isActive?: boolean
+  css?: string
 };
 
 export const getStyleValue = (domain : Domain) => {
   let test = ''
   if ((!domain.isActive && !styles._global.isActive) || !styles._toggleAll?.isActive) {
-    return null
+    return ''
   } 
-  if (styles._global?.isActive) {
+  if (styles._global?.isActive && styles._global.css) {
     test = test.concat(styles._global.css)
   }
-  if (domain.isActive){
+  if (domain.isActive && domain.css){
     test = test.concat(domain.css)
   }
   return test 
 }
 
 // TODO: test if the optional chain is needed by fixing test setup
-domainStyle.appendChild(document.createTextNode(styles[domain]?.css)); 
+domainStyle.appendChild(document.createTextNode(getStyleValue(styles[domain]))); 
 document.head.appendChild(domainStyle);

@@ -1,12 +1,12 @@
 import Form from "./form";
-import { styles as masterStyles } from "../objects/styles";
+import { IStyle, styles as masterStyles } from "../objects/styles";
 import { useState } from "react";
 import { saveToStorage } from "../scripts/storage-handlers";
 
 interface ListingProps {
   style : string
-  styles :{ isActive: boolean, css: string} // TODO: fix these names.
-  setAllStyles: any
+  styles : {isActive?: boolean, css?:string } // TODO: fix these names.
+  setAllStyles: React.Dispatch<React.SetStateAction<IStyle>>
 };
 
 function Listing(props: ListingProps) {

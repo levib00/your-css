@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 interface FormProps {
   website: string
-  customCss: string
+  customCss?: string
 };
 
 const Form = (props: FormProps) => {

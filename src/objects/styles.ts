@@ -1,8 +1,11 @@
-interface Style {
-  [key: string] : {isActive: boolean, css: string}
+export interface IStyle {
+  [key: string] : {
+    isActive?: boolean,
+    css?: string
+  }
 };
 
-export let styles: Style = {
+export let styles: IStyle = {
   _global: {
     isActive: false, 
     css: ''

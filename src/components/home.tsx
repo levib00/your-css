@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 const Home = () => {
 
   const [allStyles, setAllStyles] = useState(styles)
-  const [listings, setListings] = useState<any>([])
+  const [listings, setListings] = useState<React.ReactElement[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState({})
 
@@ -53,7 +53,7 @@ const Home = () => {
       <input type="text" id='search' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
       <Link to='/form'><button>+</button></Link>
       <div>
-        {listings.map((listing: any) => listing)}
+        {listings.map((listing: React.ReactElement) => listing)}
       </div>
     </>
   )
