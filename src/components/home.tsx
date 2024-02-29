@@ -12,14 +12,14 @@ const Home = () => {
 
   const search = (obj:  IStyle, searchQuery: string) => {
     const keys = Object.getOwnPropertyNames(obj)
-    const arr: IStyle  = {}
+    const searchResultsObj: IStyle  = {}
     for ( let i: number = 0; i < keys.length; i++) {
       if (keys[i].toLowerCase().includes(searchQuery)) {
-        arr[keys[i]] = obj[keys[i]]
+        searchResultsObj[keys[i]] = obj[keys[i]]
       }
     }
-    setSearchResults(arr)
-    return arr
+    setSearchResults(searchResultsObj)
+    return searchResultsObj
   }
 
   useEffect(() => {
