@@ -14,19 +14,18 @@ interface Domain {
 };
 
 export const getStyleValue = (domain : Domain) => {
-  let test = ''
-  if ((!domain.isActive && !styles._global.isActive) || !styles._toggleAll?.isActive) {
+  let css = ''
+  if ((!domain?.isActive && !styles._global?.isActive) || !styles._toggleAll?.isActive) {
     return ''
   } 
-  if (styles._global?.isActive && styles._global.css) {
-    test = test.concat(styles._global.css)
+  if (styles._global?.isActive && styles._global?.css) {
+    css = css.concat(styles._global.css)
   }
-  if (domain.isActive && domain.css){
-    test = test.concat(domain.css)
+  if (domain?.isActive && domain.css){
+    css = css.concat(domain.css)
   }
-  return test 
+  return css
 }
 
-// TODO: test if the optional chain is needed by fixing test setup
 domainStyle.appendChild(document.createTextNode(getStyleValue(styles[domain]))); 
 document.head.appendChild(domainStyle);
