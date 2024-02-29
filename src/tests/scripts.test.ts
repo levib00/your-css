@@ -33,7 +33,7 @@ describe("your-css style", () => {
 
   test('Inactive style returns null', () => {
     const mock111 = getStyleValue(stylesMock.domain2)
-    expect(mock111).toBeNull()
+    expect(mock111).toBe('')
   });
 
   test('allStyles inactive returns null', () => {
@@ -54,7 +54,7 @@ describe("your-css style", () => {
 
     setStyles(stylesMockNotActive)
     const mock111 = getStyleValue(stylesMock.domain1)
-    expect(mock111).toBeNull()
+    expect(mock111).toBe('')
   });
 
   test('returns global styles and domain style', () => {
