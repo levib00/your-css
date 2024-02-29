@@ -10,12 +10,12 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState({})
 
-  const func = (obj:  IStyle, searchQuery: string) => {
-    const op = Object.getOwnPropertyNames(obj)
+  const search = (obj:  IStyle, searchQuery: string) => {
+    const keys = Object.getOwnPropertyNames(obj)
     const arr: IStyle  = {}
-    for ( let i: number = 0; i < op.length; i++) {
-      if (op[i].toLowerCase().includes(searchQuery)) {
-        arr[op[i]] = obj[op[i]]
+    for ( let i: number = 0; i < keys.length; i++) {
+      if (keys[i].toLowerCase().includes(searchQuery)) {
+        arr[keys[i]] = obj[keys[i]]
       }
     }
     setSearchResults(arr)
@@ -23,7 +23,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    func(allStyles, searchQuery)
+    search(allStyles, searchQuery)
   }, [searchQuery])
 
   useEffect(() => {
