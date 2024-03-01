@@ -1,6 +1,6 @@
 import Form from "./form";
 import { IStyle, styles as masterStyles } from "../objects/styles";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { saveToStorage } from "../scripts/storage-handlers";
 
 interface ListingProps {
@@ -21,17 +21,22 @@ function Listing(props: ListingProps) {
     // TODO: use DI instead of props.
   }
 
-  const updateIsActive = () => {
-    setIsActive(isActive);
-    masterStyles[style].isActive = isActive
-    setAllStyles({...masterStyles})
-    saveToStorage(masterStyles)
-  };
-
   const openEditPage = () => {
     setEditMode(true)
     // TODO: cancel button on form is gonna have to set this to false when pressed and isEdit
-   }
+  }
+
+  const firstUpdate = useRef(true);
+  useLayoutEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+
+    masterStyles[style].isActive = isActive
+    setAllStyles({...masterStyles})
+    saveToStorage(masterStyles)
+  }, [isActive]);
 
   return (
     <>
@@ -40,7 +45,7 @@ function Listing(props: ListingProps) {
         <Form website={style} customCss={styles.css}/>
         : 
         <>
-          <input type="checkbox" checked={isActive} onChange={updateIsActive}/>
+          <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { style }
           </div>
