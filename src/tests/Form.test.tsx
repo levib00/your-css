@@ -43,10 +43,12 @@ describe("Form renders", () => {
   test('edit form renders with previous text.', () => {
     render(
       <MemoryRouter>
-        <Form website='example website' customCss='exampleCss'/>
+        <Form website='example website' customCss='exampleCss' isActive={true}/>
       </MemoryRouter>
     );
 
+    const isActive = screen.getByLabelText('activate')
+    expect(isActive).toBeChecked()
     const websiteText = screen.getByDisplayValue('example website');
     expect(websiteText).toBeInTheDocument();
     const textAreaText = screen.getByDisplayValue('exampleCss');
@@ -63,14 +65,17 @@ describe("Form renders", () => {
     const websiteBox = screen.getByLabelText('Website');
     const cssBox = screen.getByLabelText('custom css');
     const saveButton = screen.getByText('save');
+    const checkbox = screen.getByText('activate');
 
     await act( async() => {
       await userEvent.type(websiteBox, 'websitetest')
       await userEvent.type(cssBox, 'css test')
+      await userEvent.click(checkbox)
       await userEvent.click(saveButton)
     });
 
     expect(testStylesObject.styles.websitetest.css).toBe('css test')
+    expect(testStylesObject.styles.websitetest.isActive).toBeTruthy()
   });
 
   test('Update css.', async () => {
