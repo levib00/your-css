@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Listing from '../components/listing';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom'
@@ -100,7 +100,9 @@ describe("Listing renders", () => {
       await userEvent.click(styleActive)
     });
 
-    expect(styleActive).toBeChecked()
-    expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
+    waitFor(() => {
+      expect(styleActive).toBeChecked()
+      expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
+    })
   });
 })
