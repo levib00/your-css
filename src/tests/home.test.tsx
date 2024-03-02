@@ -1,7 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Home from '../components/home';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom'
+import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 jest.mock('../objects/styles', () => {
   const object = {
@@ -30,5 +32,27 @@ describe("Home renders", () => {
     expect(exampleName2).toBeInTheDocument()
     const exampleStyle2 = screen.getByText('example style text 2');
     expect(exampleStyle2).toBeInTheDocument()
+  });
+  
+  test('Search bar works', async () => {
+    
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+    const searchBar = screen.getByPlaceholderText('website');
+    expect(searchBar).toBeInTheDocument();
+
+    await act( async() => {
+      await userEvent.type(searchBar, 'exampleName1')
+    });
+
+    waitFor(() => {
+      const exampleName1 = screen.getByText('exampleName1');
+      expect(exampleName1).toBeInTheDocument();
+      const exampleName2 = screen.getByText('exampleName2');
+      expect(exampleName2).toBeNull()
+    })    
   });
 })
