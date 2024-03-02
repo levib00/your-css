@@ -21,7 +21,7 @@ const Form = (props: FormProps) => {
       styles[website] = styles[props.website];
       delete styles[props.website];
     }
-    styles[website] = {isActive, css} // TODO: allow changing isActive
+    styles[website] = {isActive, css}
     saveToStorage(styles)
     navigate('/')
   }
