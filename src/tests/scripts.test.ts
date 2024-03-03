@@ -1,5 +1,6 @@
 import { getStyleValue } from '../../public/scripts/your-css'
-import { setStyles } from '../objects/styles';
+import { setStyles, styles } from '../objects/styles';
+import { assembleCssForExport, parseCssFile } from '../scripts/import-export-css';
 
 describe("your-css style", () => {
 
@@ -106,4 +107,31 @@ describe("your-css style", () => {
     const mock111 = getStyleValue(stylesMock.domain2)
     expect(mock111).toBe('global')
   });
+})
+
+describe('Import/export css', () => {
+  test('css url is created', () => {
+    const stylesMockGlobal = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      }
+    }
+
+    setStyles(stylesMockGlobal)
+    global.URL.createObjectURL = jest.fn(() => 'url');
+    expect(assembleCssForExport('domain1', styles)).toBe('url')
+  })
 })
