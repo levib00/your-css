@@ -1,6 +1,6 @@
 import { getStyleValue } from '../../public/scripts/your-css'
 import { setStyles, styles } from '../objects/styles';
-import { assembleCssForExport, parseCssFile } from '../scripts/import-export-css';
+import { assembleCssForExport } from '../scripts/import-export-css';
 
 describe("your-css style", () => {
 
