@@ -44,7 +44,7 @@ const Form = (props: FormProps) => {
   }
 
   const handleDownloadClick = () => {
-    const url = assembleCssForExport(null, null, cssInput)
+    const url = assembleCssForExport(null, cssInput)
     if (!url) {
       return
     }
