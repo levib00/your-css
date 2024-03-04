@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from "react";
 import { styles } from "../objects/styles";
 import { saveToStorage } from "../scripts/storage-handlers";
 import { useNavigate } from "react-router-dom";
-import { parseCssFile } from "../scripts/import-export-css";
+import { assembleCssForExport, parseCssFile } from "../scripts/import-export-css";
 
 interface FormProps {
   website: string
@@ -43,6 +43,30 @@ const Form = (props: FormProps) => {
     setFile(e.target.files[0])
   }
 
+  const handleDownloadClick = () => {
+    const url = assembleCssForExport(null, null, cssInput)
+    if (!url) {
+      return
+    }
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute(
+      'download',
+      `${props.website}.css`,
+    );
+
+    // Append to html link element page
+    document.body.appendChild(link);
+
+    // Start download
+    link.click();
+
+    // Clean up and remove the link
+    if (link.parentNode) {
+      link.parentNode.removeChild(link);
+    }
+  }
+
   return (
     <>
       <label htmlFor="website-input">Website</label>
@@ -54,6 +78,7 @@ const Form = (props: FormProps) => {
       <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
+      <button onClick={handleDownloadClick}>export</button>
     </>
   )
 }
