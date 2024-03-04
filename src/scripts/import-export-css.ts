@@ -12,6 +12,9 @@ export const assembleCssForExport = (domain: string, masterStyles: IStyle) => {
   return jsonURL
 }
 
-export const parseCssFile = async (file: File) => {
+export const parseCssFile = async (file: File | undefined) => {
+  if (!file) {
+    return
+  }
   return await file.text()
 }
