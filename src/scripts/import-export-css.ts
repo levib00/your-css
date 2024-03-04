@@ -1,11 +1,11 @@
 import { IStyle } from "../objects/styles";
 
-export const assembleCssForExport = (domain: string | null, masterStyles: IStyle | null, css: string | null) => {
+export const assembleCssForExport = ( masterStyles: IStyle | null, css: string | null) => {
   let jsonString
   if (css) {
-    jsonString = JSON.stringify(css, null, 2)
-  } else if (masterStyles && domain) {
-    jsonString = JSON.stringify(masterStyles[domain], null, 2);
+    jsonString = css
+  } else if (masterStyles) {
+    jsonString = JSON.stringify(masterStyles, null, 2);
   } else {
     return 
   }
