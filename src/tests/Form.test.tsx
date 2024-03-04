@@ -136,4 +136,22 @@ describe("Form renders", () => {
     const cssBox = screen.getByDisplayValue('Updated')
     expect(cssBox).toBeInTheDocument()
   })
+
+  test('Export single listing css file.', async () => {
+    render(
+      <MemoryRouter>
+        <Form website='' customCss=''/>
+      </MemoryRouter>
+    );
+
+    const exportButton = screen.getByText('export');
+
+    jest.spyOn(importExportCss, 'assembleCssForExport').mockImplementationOnce(() => 'Updated')
+
+    await act( async() => { 
+      await userEvent.click(exportButton)
+    });
+
+    expect(importExportCss.assembleCssForExport).toHaveBeenCalledTimes(1)
+  })
 })
