@@ -1,8 +1,14 @@
 import { IStyle } from "../objects/styles";
 
-export const assembleCssForExport = (domain: string, masterStyles: IStyle) => {
-  // Convert object to JSON string
-  const jsonString = JSON.stringify(masterStyles[domain], null, 2);
+export const assembleCssForExport = (domain: string | null, masterStyles: IStyle | null, css: string | null) => {
+  let jsonString
+  if (css) {
+    jsonString = JSON.stringify(css, null, 2)
+  } else if (masterStyles && domain) {
+    jsonString = JSON.stringify(masterStyles[domain], null, 2);
+  } else {
+    return 
+  }
 
   // Create a Blob from the JSON string
   const file = new Blob([jsonString], {type: 'application/json'});
