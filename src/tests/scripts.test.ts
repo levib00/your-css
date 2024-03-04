@@ -132,6 +132,6 @@ describe('Import/export css', () => {
 
     setStyles(stylesMockGlobal)
     global.URL.createObjectURL = jest.fn(() => 'url');
-    expect(assembleCssForExport('domain1', styles)).toBe('url')
+    expect(assembleCssForExport('domain1', styles, null)).toBe('url')
   })
 })
