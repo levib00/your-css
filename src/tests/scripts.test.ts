@@ -1,6 +1,6 @@
 import { getStyleValue } from '../../public/scripts/your-css'
 import { setStyles, styles } from '../objects/styles';
-import { assembleCssForExport } from '../scripts/import-export-css';
+import { assembleCssForExport, parseCssFile } from '../scripts/import-export-css';
 
 describe("your-css style", () => {
 
@@ -110,7 +110,7 @@ describe("your-css style", () => {
 })
 
 describe('Import/export css', () => {
-  test('css url is created', () => {
+  test('css url is created if object is passed', () => {
     const stylesMockGlobal = {
       domain1: {
         isActive: true,
@@ -132,6 +132,77 @@ describe('Import/export css', () => {
 
     setStyles(stylesMockGlobal)
     global.URL.createObjectURL = jest.fn(() => 'url');
-    expect(assembleCssForExport('domain1', styles, null)).toBe('url')
+    expect(assembleCssForExport( styles, null)).toBe('url')
+  })
+
+  test('css url is created if css string is passed', () => {
+    const stylesMockGlobal = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      }
+    }
+
+    setStyles(stylesMockGlobal)
+    global.URL.createObjectURL = jest.fn(() => 'url');
+    expect(assembleCssForExport( null, 'css')).toBe('url')
+  })
+
+  test('no url is created if no css or object is given', () => {
+    const stylesMockGlobal = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      }
+    }
+
+    setStyles(stylesMockGlobal)
+    global.URL.createObjectURL = jest.fn(() => 'url');
+    expect(assembleCssForExport( null, null)).toBeFalsy()
+  })
+
+  test('css is parsed if file is passed', async () => {
+    const fileMock = {
+      text: jest.fn(async () => 'css'),
+      lastModified: 0,
+      name: '',
+      webkitRelativePath: '',
+      size: 0,
+      type: '',
+      arrayBuffer: jest.fn(),
+      slice: jest.fn(),
+      stream: jest.fn()
+    }
+
+    global.URL.createObjectURL = jest.fn(() => 'url');
+    expect(await parseCssFile(fileMock)).toBe('css')
+  })
+
+  test('parse css returns undefined if not passed a file', async () => {
+    expect(await parseCssFile(undefined)).toBeFalsy()
   })
 })
