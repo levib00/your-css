@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import * as storageHandlers from '../scripts/storage-handlers';
+import * as importExportCss from '../scripts/import-export-css'
 
 interface FormTestProps {
   styles : {[key: string]: {isActive: boolean, css: string}}
@@ -115,4 +116,24 @@ describe("Form renders", () => {
     expect(testStylesObject.styles.exampleName1Updated).toBeTruthy()
     expect(storageHandlers.saveToStorage).toBeCalledTimes(1)
   });
+
+  test('Import single css file.', async () => {
+    render(
+      <MemoryRouter>
+        <Form website='' customCss=''/>
+      </MemoryRouter>
+    );
+
+    const importButton = screen.getByText('import');
+
+    jest.spyOn(importExportCss, 'parseCssFile').mockImplementationOnce(async () => 'Updated')
+
+    await act( async() => { 
+      await userEvent.click(importButton)
+    });
+
+    expect(importExportCss.parseCssFile).toHaveBeenCalledTimes(1)
+    const cssBox = screen.getByDisplayValue('Updated')
+    expect(cssBox).toBeInTheDocument()
+  })
 })
