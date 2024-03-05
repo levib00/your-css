@@ -24,3 +24,13 @@ export const parseCssFile = async (file: File | undefined) => {
   }
   return await file.text()
 }
+
+export const parseJsonFile = async (file: File | undefined, masterStyles: IStyle) => {
+  const json = await parseCssFile(file)
+  if (!json) {
+    return
+  }
+  const parsedJSON = JSON.parse(json)
+
+  return {...parsedJSON, ...masterStyles}
+}
