@@ -1,6 +1,6 @@
 import { getStyleValue } from '../../public/scripts/your-css'
 import { setStyles, styles } from '../objects/styles';
-import { assembleCssForExport, parseCssFile } from '../scripts/import-export-css';
+import { assembleCssForExport, parseCssFile, parseJsonFile } from '../scripts/import-export-css';
 
 describe("your-css style", () => {
 
@@ -204,5 +204,77 @@ describe('Import/export css', () => {
 
   test('parse css returns undefined if not passed a file', async () => {
     expect(await parseCssFile(undefined)).toBeFalsy()
+  })
+
+  test('css is parsed if file is passed', async () => {
+
+    const jsonMock = '{ "test": {"domain": "data","isActive": true}, "test2": {"domain2": "data2", "isActive": true}}'
+
+    const fileMock = {
+      text: jest.fn(async () => jsonMock),
+      lastModified: 0,
+      name: '',
+      webkitRelativePath: '',
+      size: 0,
+      type: '',
+      arrayBuffer: jest.fn(),
+      slice: jest.fn(),
+      stream: jest.fn()
+    }
+
+    const stylesMockGlobal = {
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      }
+    }
+
+    
+
+    setStyles(stylesMockGlobal)
+
+    global.URL.createObjectURL = jest.fn(() => 'url');
+    expect(await parseJsonFile(fileMock, styles)).toStrictEqual({
+      domain1: {
+        isActive: true,
+        css: 'css'
+      },
+      domain2: {
+        isActive: false,
+        css: 'css'
+      },
+      _toggleAll: {
+        isActive: true,
+        css: ''
+      },
+      _global: {
+        isActive: true,
+        css: 'global'
+      },
+      test: {
+        domain: "data",
+        isActive: true
+      },
+      test2: {
+        domain2:"data2",
+        isActive: true
+      }
+    })
+  })
+
+  test('parse json returns undefined if not passed a file', async () => {
+    expect(await parseJsonFile(undefined, styles)).toBeFalsy()
   })
 })
