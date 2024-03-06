@@ -34,3 +34,32 @@ export const parseJsonFile = async (file: File | undefined, masterStyles: IStyle
 
   return {...parsedJSON, ...masterStyles}
 }
+
+export const handleDownloadClick = (css: string | null, domain: string | null, masterStyles: IStyle | null) => {
+  const link = document.createElement('a');
+  let url
+  console.log
+  if (masterStyles) {
+    url = assembleCssForExport(masterStyles, null)
+    link.download = 'your-css.json';
+  } else if (css) {
+    url = assembleCssForExport(null, css)
+    link.download = `${domain}.css`;
+  }
+  if (!url) {
+    return
+  }
+  
+  link.href = url;
+
+  // Append to html link element page
+  document.body.appendChild(link);
+
+  // Start download
+  link.click();
+
+  // Clean up and remove the link
+  if (link.parentNode) {
+    link.parentNode.removeChild(link);
+  }
+}
