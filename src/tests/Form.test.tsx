@@ -140,7 +140,7 @@ describe("Form renders", () => {
   test('Export single listing css file.', async () => {
     render(
       <MemoryRouter>
-        <Form website='' customCss=''/>
+        <Form website='' customCss='css'/>
       </MemoryRouter>
     );
 
