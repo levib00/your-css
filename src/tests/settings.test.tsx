@@ -6,6 +6,7 @@ import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as importExport from '../scripts/import-export-css';
+import { setStyles } from '../objects/styles';
 
 describe('Settings page component',() => {
   test('Renders properly', () => {
@@ -29,6 +30,15 @@ describe('Settings page component',() => {
       </MemoryRouter>
     );
 
+    const masterStylesMock = {
+      styleName: {isActive: true, css: 'style text',},
+      styleName2: {isActive: true, css: 'style text 2'}
+    }
+
+    setStyles(masterStylesMock)
+
+    jest.spyOn(importExport, 'assembleCssForExport').mockImplementationOnce(() => 'Updated')
+
     const exportButton = screen.getByText('export');
     expect(exportButton).toBeInTheDocument();
 
@@ -36,6 +46,6 @@ describe('Settings page component',() => {
       await userEvent.click(exportButton)
     })
 
-    expect(mock).toHaveBeenCalledTimes(1)
+    expect(mock).toHaveBeenCalledWith(masterStylesMock, null)
   })
 })
