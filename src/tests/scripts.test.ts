@@ -208,7 +208,34 @@ describe('Import/export css', () => {
 
   test('css is parsed if file is passed', async () => {
 
-    const jsonMock = '{ "test": {"domain": "data","isActive": true}, "test2": {"domain2": "data2", "isActive": true}}'
+    const jsonMock = `{
+      "test": {
+        "domain": "data",
+        "isActive": true
+      },
+      "test2": {
+        "domain2": "data2",
+        "isActive": true
+      },
+      "_toggleAll":{
+        "isActive":true,
+        "css":"",
+        "undeleteable":true,
+        "displayName":"toggle all"
+      },
+      "_global":{
+        "isActive":false,
+        "css":"global",
+        "undeleteable":true,
+        "displayName":"global styles"
+      },
+      "_extension":{
+        "isActive":false,
+        "css":"",
+        "undeleteable":true,
+        "displayName":"extension styles"
+      }
+    }`
 
     const fileMock = {
       text: jest.fn(async () => jsonMock),
@@ -233,15 +260,23 @@ describe('Import/export css', () => {
       },
       _toggleAll: {
         isActive: true,
-        css: ''
+        css: '',
+        undeleteable: true,
+        displayName: 'toggle all'
       },
       _global: {
-        isActive: true,
-        css: 'global'
-      }
+        isActive: true, 
+        css: 'global',
+        undeleteable: true,
+        displayName: 'global styles'
+      },
+      _extension: {
+        isActive: false,
+        css: '',
+        undeleteable: true,
+        displayName: 'extension styles'
+      },
     }
-
-    
 
     setStyles(stylesMockGlobal)
 
@@ -257,11 +292,21 @@ describe('Import/export css', () => {
       },
       _toggleAll: {
         isActive: true,
-        css: ''
+        css: '',
+        displayName: 'toggle all',
+        undeleteable: true
       },
       _global: {
         isActive: true,
-        css: 'global'
+        css: 'global',
+        displayName: 'global styles',
+        undeleteable: true
+      },
+      _extension: {
+        isActive: false,
+        css: '',
+        undeleteable: true,
+        displayName: 'extension styles'
       },
       test: {
         domain: "data",
