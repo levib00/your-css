@@ -15,11 +15,11 @@ interface Domain {
 
 export const getStyleValue = (domain : Domain) => {
   let css = ''
-  if ((!domain?.isActive && !styles._global?.isActive) || !styles._toggleAll?.isActive) {
+  if ((!domain?.isActive && !styles.__global?.isActive) || !styles.___toggleAll?.isActive) {
     return ''
   } 
-  if (styles._global?.isActive && styles._global?.css) {
-    css = css.concat(styles._global.css)
+  if (styles.__global?.isActive && styles.__global?.css) {
+    css = css.concat(styles.__global.css)
   }
   if (domain?.isActive && domain.css){
     css = css.concat(domain.css)

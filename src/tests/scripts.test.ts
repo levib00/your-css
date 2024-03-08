@@ -13,11 +13,11 @@ describe("your-css style", () => {
       isActive: false,
       css: 'css'
     },
-    _toggleAll: {
+    ___toggleAll: {
       isActive: true,
       css: ''
     },
-    _global: {
+    __global: {
       isActive: false,
       css: 'global'
     }
@@ -47,7 +47,7 @@ describe("your-css style", () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: false,
         css: ''
       }
@@ -68,11 +68,11 @@ describe("your-css style", () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: ''
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global'
       }
@@ -93,11 +93,11 @@ describe("your-css style", () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: ''
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global'
       }
@@ -120,11 +120,11 @@ describe('Import/export css', () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: ''
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global'
       }
@@ -145,11 +145,11 @@ describe('Import/export css', () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: ''
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global'
       }
@@ -170,11 +170,11 @@ describe('Import/export css', () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: ''
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global'
       }
@@ -217,13 +217,13 @@ describe('Import/export css', () => {
         "domain2": "data2",
         "isActive": true
       },
-      "_toggleAll":{
+      "___toggleAll":{
         "isActive":true,
         "css":"",
         "undeleteable":true,
         "displayName":"toggle all"
       },
-      "_global":{
+      "__global":{
         "isActive":false,
         "css":"global",
         "undeleteable":true,
@@ -258,13 +258,13 @@ describe('Import/export css', () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: '',
         undeleteable: true,
         displayName: 'toggle all'
       },
-      _global: {
+      __global: {
         isActive: true, 
         css: 'global',
         undeleteable: true,
@@ -290,13 +290,13 @@ describe('Import/export css', () => {
         isActive: false,
         css: 'css'
       },
-      _toggleAll: {
+      ___toggleAll: {
         isActive: true,
         css: '',
         displayName: 'toggle all',
         undeleteable: true
       },
-      _global: {
+      __global: {
         isActive: true,
         css: 'global',
         displayName: 'global styles',

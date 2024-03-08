@@ -114,7 +114,7 @@ describe('Special master styles', () => {
   test('Toggle all does not have any buttons but does have checkbox', async () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles._toggleAll} style={'_toggleAll'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.___toggleAll} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -154,7 +154,7 @@ describe('Special master styles', () => {
   test('Global has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles._global} style={'_global'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.__global} style={'__global'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 

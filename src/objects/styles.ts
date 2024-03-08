@@ -8,13 +8,13 @@ export interface IStyle {
 };
 
 export let styles: IStyle = {
-  _toggleAll: {
+  ___toggleAll: {
     isActive: true,
     css: '',
     undeleteable: true,
     displayName: 'toggle all'
   },
-  _global: {
+  __global: {
     isActive: false, 
     css: '',
     undeleteable: true,
@@ -29,16 +29,16 @@ export let styles: IStyle = {
 };
 
 export const setStyles = (newStyles: {[key: string] : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string}}) => {
-  if (!newStyles._toggleAll) {
-    newStyles._toggleAll = styles._toggleAll
+  if (!newStyles.___toggleAll) {
+    newStyles.___toggleAll = styles.___toggleAll
   }
-  newStyles._toggleAll.undeleteable = true
-  newStyles._toggleAll.displayName = 'toggle all'
-  if (!newStyles._global) {
-    newStyles._global = styles._global
+  newStyles.___toggleAll.undeleteable = true
+  newStyles.___toggleAll.displayName = 'toggle all'
+  if (!newStyles.__global) {
+    newStyles.__global = styles.__global
   }
-  newStyles._global.undeleteable = true
-  newStyles._global.displayName = 'global styles'
+  newStyles.__global.undeleteable = true
+  newStyles.__global.displayName = 'global styles'
   if (!newStyles._extension) {
     newStyles._extension = styles._extension
   }

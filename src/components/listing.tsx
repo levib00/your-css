@@ -52,8 +52,8 @@ function Listing(props: ListingProps) {
           <div>
             { styles.css }
           </div>
-          {style !== '_toggleAll' && <button onClick={openEditPage}>edit</button>}
-          {style !== '_toggleAll' && (styles.undeleteable ? <button onClick={deleteListing}>clear</button> : <button onClick={deleteListing}>delete</button>)}
+          {style !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
+          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={deleteListing}>clear</button> : <button onClick={deleteListing}>delete</button>)}
         </>
       }
     </>
