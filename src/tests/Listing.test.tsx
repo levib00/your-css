@@ -5,7 +5,7 @@ import '@testing-library/jest-dom'
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as storageHandlers from '../scripts/storage-handlers';
-import { setStyles } from '../objects/styles';
+import { setStyles, styles } from '../objects/styles';
 
 describe("Listing renders", () => {
 
@@ -105,4 +105,69 @@ describe("Listing renders", () => {
       expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
     })
   });
+})
+
+describe('Special master styles', () => {
+
+  const setAllStylesMock = jest.fn()
+
+  test('Toggle all does not have any buttons but does have checkbox', async () => {
+    render(
+      <MemoryRouter>
+        <Listing styles={styles._toggleAll} style={'_toggleAll'} setAllStyles={setAllStylesMock} />
+      </MemoryRouter>
+    );
+
+    const displayName = screen.queryByText('toggle all')
+    const styleActive = screen.getByRole('checkbox')
+    const clearButton = screen.queryByText('clear')
+    const editButton = screen.queryByText('edit')
+    const deleteButton = screen.queryByText('delete')
+
+    expect(displayName).toBeInTheDocument()
+    expect(styleActive).toBeInTheDocument()
+    expect(clearButton).toBeNull()
+    expect(editButton).toBeNull()
+    expect(deleteButton).toBeNull()
+  })
+
+  test('Extension has no delete button but does have clear', () => {
+    render(
+      <MemoryRouter>
+        <Listing styles={styles._extension} style={'_extension'} setAllStyles={setAllStylesMock} />
+      </MemoryRouter>
+    );
+
+    const displayName = screen.queryByText('extension styles')
+    const styleActive = screen.getByRole('checkbox')
+    const clearButton = screen.queryByText('clear')
+    const editButton = screen.queryByText('edit')
+    const deleteButton = screen.queryByText('delete')
+
+    expect(displayName).toBeInTheDocument()
+    expect(styleActive).toBeInTheDocument()
+    expect(clearButton).toBeInTheDocument()
+    expect(editButton).toBeInTheDocument()
+    expect(deleteButton).toBeNull()
+  })
+
+  test('Global has no delete button but does have clear', () => {
+    render(
+      <MemoryRouter>
+        <Listing styles={styles._global} style={'_global'} setAllStyles={setAllStylesMock} />
+      </MemoryRouter>
+    );
+
+    const displayName = screen.queryByText('global styles')
+    const styleActive = screen.getByRole('checkbox')
+    const clearButton = screen.queryByText('clear')
+    const editButton = screen.queryByText('edit')
+    const deleteButton = screen.queryByText('delete')
+
+    expect(displayName).toBeInTheDocument()
+    expect(styleActive).toBeInTheDocument()
+    expect(clearButton).toBeInTheDocument()
+    expect(editButton).toBeInTheDocument()
+    expect(deleteButton).toBeNull()
+  })
 })
