@@ -44,7 +44,7 @@ const Home = () => {
           )}
         }
       }
-      setListings(stylesArray)
+      setListings(stylesArray.sort((a, b) => a.props.style.localeCompare(b.props.style)))
   }, [allStyles, searchResults])
 
   return (
