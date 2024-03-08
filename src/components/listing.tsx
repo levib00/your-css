@@ -5,7 +5,7 @@ import { saveToStorage } from "../scripts/storage-handlers";
 
 interface ListingProps {
   style : string
-  styles : {isActive?: boolean, css?:string } // TODO: fix these names.
+  styles : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string} // TODO: fix these names.
   setAllStyles: React.Dispatch<React.SetStateAction<IStyle>>
 };
 
@@ -47,13 +47,13 @@ function Listing(props: ListingProps) {
         <>
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
-            { style }
+            { styles.displayName || style }
           </div>
           <div>
             { styles.css }
           </div>
-          <button onClick={openEditPage}>edit</button>
-          <button onClick={deleteListing}>delete</button>
+          {style !== '_toggleAll' && <button onClick={openEditPage}>edit</button>}
+          {style !== '_toggleAll' && (styles.undeleteable ? <button onClick={deleteListing}>clear</button> : <button onClick={deleteListing}>delete</button>)}
         </>
       }
     </>
