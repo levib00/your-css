@@ -1,57 +1,22 @@
+interface Domain {
+  isActive?: boolean,
+  css?: string
+  undeleteable?: boolean
+  displayName?: string
+};
+
 interface IStyle {
-  [key: string] : {
-    isActive?: boolean,
-    css?: string
-    undeleteable?: boolean
-    displayName?: string
-  }
+  [key: string] : Domain
 };
-
-let styles: IStyle = {
-  ___toggleAll: {
-    isActive: true,
-    css: '',
-    undeleteable: true,
-    displayName: 'toggle all'
-  },
-  __global: {
-    isActive: false, 
-    css: '',
-    undeleteable: true,
-    displayName: 'global styles'
-  },
-  _extension: {
-    isActive: false,
-    css: '',
-    undeleteable: true,
-    displayName: 'extension styles'
-  },
-};
-
-const setStyles = (newStyles: {[key: string] : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string}}) => {
-  if (!newStyles.___toggleAll) {
-    newStyles.___toggleAll = styles.___toggleAll
-  }
-  newStyles.___toggleAll.undeleteable = true
-  newStyles.___toggleAll.displayName = 'toggle all'
-  if (!newStyles.__global) {
-    newStyles.__global = styles.__global
-  }
-  newStyles.__global.undeleteable = true
-  newStyles.__global.displayName = 'global styles'
-  if (!newStyles._extension) {
-    newStyles._extension = styles._extension
-  }
-  newStyles._extension.undeleteable = true
-  newStyles._extension.displayName = 'extension styles'
-  styles = newStyles
-  return styles
-}
 
 const getFromStorage = async(domain: string) => {
   // @ts-ignore
   const obj = await browser.storage.local.get(domain)
-  return obj[domain]
+  // @ts-ignore
+  const ___toggleAll = await browser.storage.local.get('___toggleAll')
+  // @ts-ignore
+  const __global = await browser.storage.local.get('__global')
+  return {domain: obj[domain], ___toggleAll, __global}
 }
 
 const domainStyle: HTMLStyleElement = document.createElement('style');
@@ -60,17 +25,20 @@ const url = new URL(window.location.href);
 const domain: string | undefined = url.hostname.split('.')[0];
 
 interface Domain {
-  isActive?: boolean
-  css?: string
+  isActive?: boolean,
+    css?: string
+    undeleteable?: boolean
+    displayName?: string
 };
 
-const getStyleValue = (domain : Domain) => {
+const getStyleValue = (styles: IStyle) => {
+  const {domain, ___toggleAll, __global} = styles
   let css = ''
-  if ((!domain?.isActive && !styles.__global?.isActive) || !styles.___toggleAll?.isActive) {
+  if ((!domain?.isActive && !__global?.isActive) || !___toggleAll?.isActive) {
     return ''
   } 
-  if (styles.__global?.isActive && styles.__global?.css) {
-    css = css.concat(styles.__global.css)
+  if (__global?.isActive && __global?.css) {
+    css = css.concat(__global.css)
   }
   if (domain?.isActive && domain.css){
     css = css.concat(domain.css)
@@ -79,9 +47,8 @@ const getStyleValue = (domain : Domain) => {
 }
 
 (async() => {
-  await getFromStorage(domain).then((style) => {
-    domainStyle.appendChild(document.createTextNode(style.css))
-  })
+  const css = getStyleValue(await getFromStorage(domain))
+  domainStyle.appendChild(document.createTextNode(css))
 })()
 
 document.head.appendChild(domainStyle);
