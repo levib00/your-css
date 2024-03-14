@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ES2020",
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "target": "ES6", 
+    "module": "ES2015", 
+    "sourceMap": true,
+    "outDir": "./dist",
+    "forceConsistentCasingInFileNames": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -22,5 +25,6 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
+  "exclude": ["src/tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
