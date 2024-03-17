@@ -21,7 +21,7 @@ describe("Listing renders", () => {
   test('Listing renders with correct text', () => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -34,7 +34,7 @@ describe("Listing renders", () => {
   test('Edit button works', async() => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -54,16 +54,40 @@ describe("Listing renders", () => {
 
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn())
 
-    const masterStylesMock = {
+    const deleteStylesMock = {
       styleName: {isActive: true, css: 'style text',},
       styleName2: {isActive: true, css: 'style text 2'}
     }
+    const deletedStylesMock = {
+      styleName2: {
+        isActive: true,
+        css: 'style text 2'
+      },
+      ___toggleAll: {
+        css: "",
+        displayName: "toggle all",
+        isActive: true,
+        undeleteable: true,
+      },
+      __global:  {
+        css: "",
+        displayName: "global styles",
+        isActive: false,
+        undeleteable: true,
+      },
+      _extension:  {
+        css: "",
+        displayName: "extension styles",
+        isActive: false,
+        undeleteable: true,
+      },
+    }
 
-    setStyles(masterStylesMock)
+    setStyles(deleteStylesMock)
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -74,8 +98,8 @@ describe("Listing renders", () => {
     });
 
     expect(storageHandlers.saveToStorage).toHaveBeenCalledTimes(1)
-    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith(masterStylesMock)
-    expect(setAllStylesMock).toHaveBeenCalledWith(masterStylesMock)
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith(deletedStylesMock)
+    expect(setAllStylesMock).toHaveBeenCalledWith(deletedStylesMock)
   });
 
   test('Checkbox is checked and fires save function', async() => {
@@ -90,7 +114,7 @@ describe("Listing renders", () => {
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -114,7 +138,7 @@ describe('Special master styles', () => {
   test('Toggle all does not have any buttons but does have checkbox', async () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.___toggleAll} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.___toggleAll} allStyles={styles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -134,7 +158,7 @@ describe('Special master styles', () => {
   test('Extension has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles._extension} style={'_extension'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles._extension} allStyles={styles} style={'_extension'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -154,7 +178,7 @@ describe('Special master styles', () => {
   test('Global has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.__global} style={'__global'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.__global} allStyles={styles} style={'__global'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
