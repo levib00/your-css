@@ -1,3 +1,4 @@
+import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Home from '../components/home';
 import { MemoryRouter } from 'react-router-dom';
