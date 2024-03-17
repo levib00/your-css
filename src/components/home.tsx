@@ -1,11 +1,12 @@
 import Listing from './listing';
-import { styles, IStyle } from '../objects/styles';
+import { IStyle, styles } from '../objects/styles';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
 
 const Home = () => {
 
-  const [allStyles, setAllStyles] = useState(styles)
+  const [allStyles, setAllStyles] = useState<IStyle>(styles)
   const [listings, setListings] = useState<React.ReactElement[]>([])
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState({})
@@ -27,20 +28,26 @@ const Home = () => {
   }, [searchQuery])
 
   useEffect(() => {
+    (async() => {
+      setAllStyles(populateSpecialStyles(await getFromStorage(null)))
+    })()
+  }, [searchQuery])
+
+  useEffect(() => {
       const stylesArray = []
       if (searchQuery) {
         for (let style in searchResults) {
-          if (styles.hasOwnProperty(style)) {
+          if (allStyles.hasOwnProperty(style)) {
             stylesArray.push(
-              <Listing key={Math.random()} style={ style } styles={ styles[style] } setAllStyles={setAllStyles} />
+              <Listing key={Math.random()} style={ style } styles={ allStyles[style] } setAllStyles={setAllStyles} />
             )
           }
         }
       } else {
       for (let style in allStyles) {
-        if (styles.hasOwnProperty(style)) {
+        if (allStyles.hasOwnProperty(style)) {
           stylesArray.push(
-            <Listing key={Math.random()} style={ style } styles={ styles[style] } setAllStyles={setAllStyles} />
+            <Listing key={Math.random()} style={ style } styles={allStyles[style] } setAllStyles={setAllStyles} />
           )}
         }
       }
