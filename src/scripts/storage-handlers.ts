@@ -4,8 +4,10 @@ export const saveToStorage = (newObject : {[key: string] : {isActive?: boolean, 
   browser.storage.local.set(newObject)
 }
 
-export const getFromStorage = () => {
-  return browser.storage.local.get('styles')
+export const getFromStorage = (domain: string | null) => {
+  // @ts-ignore
+  return browser.storage.local.get(domain)
+}
 
 export const populateSpecialStyles = (newStyles: {[key: string] : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string}}) => {
   if (!newStyles.___toggleAll) {
