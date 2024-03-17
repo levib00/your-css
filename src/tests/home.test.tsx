@@ -6,16 +6,6 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 
-jest.mock('../objects/styles', () => {
-  const object = {
-    exampleName1: {isActive: true, css: 'example style text 1'},
-    exampleName2: {isActive: true, css: 'example style text 2'},
-  }
-  return {
-    styles: object,
-  };
-});
-
 describe("Home renders", () => {
 
   test('Home renders with correct text', () => {
@@ -25,14 +15,12 @@ describe("Home renders", () => {
         <Home />
       </MemoryRouter>
     );
-    const exampleName1 = screen.getByText('exampleName1');
-    expect(exampleName1).toBeInTheDocument();
-    const exampleStyle1 = screen.getByText('example style text 1');
-    expect(exampleStyle1).toBeInTheDocument()
-    const exampleName2 = screen.getByText('exampleName2');
-    expect(exampleName2).toBeInTheDocument()
-    const exampleStyle2 = screen.getByText('example style text 2');
-    expect(exampleStyle2).toBeInTheDocument()
+    const globalStyles = screen.getByText('global styles');
+    expect(globalStyles).toBeInTheDocument();
+    const toggleAll = screen.getByText('toggle all');
+    expect(toggleAll).toBeInTheDocument();
+    const extensionStyles = screen.getByText('extension styles');
+    expect(extensionStyles).toBeInTheDocument();
   });
   
   test('Search bar works', async () => {
@@ -46,13 +34,13 @@ describe("Home renders", () => {
     expect(searchBar).toBeInTheDocument();
 
     await act( async() => {
-      await userEvent.type(searchBar, 'exampleName1')
+      await userEvent.type(searchBar, 'toggle')
     });
 
     waitFor(() => {
-      const exampleName1 = screen.getByText('exampleName1');
+      const exampleName1 = screen.getByText('toggle all');
       expect(exampleName1).toBeInTheDocument();
-      const exampleName2 = screen.getByText('exampleName2');
+      const exampleName2 = screen.getByText('global styles');
       expect(exampleName2).toBeNull()
     })    
   });
