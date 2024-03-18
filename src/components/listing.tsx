@@ -44,7 +44,7 @@ function Listing(props: ListingProps) {
     <>
       {
         editMode ?
-        <Form website={style} customCss={styles.css} isActive={styles.isActive}/>
+        <Form website={style} customCss={styles.css} isActive={styles.isActive} setEditMode={setEditMode}/>
         : 
         <>
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>

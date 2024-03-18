@@ -8,9 +8,11 @@ interface FormProps {
   website: string
   customCss?: string
   isActive?: boolean
+  setEditMode?: React.Dispatch<React.SetStateAction<boolean>>
 };
 
 const Form = (props: FormProps) => {
+  const { setEditMode } = props
   const [websiteInput, setWebsiteInput] = useState(props.website || '');
   const [cssInput, setCssInput] = useState(props.customCss || '')
   const [isActive, setIsActive] = useState(props.isActive || false)
@@ -26,6 +28,9 @@ const Form = (props: FormProps) => {
     styles[website] = {isActive, css}
     saveToStorage(styles)
     navigate('/')
+    if (setEditMode) {
+      setEditMode(false)
+    }
   }
 
   const importCss = async (file: File | undefined) => {
