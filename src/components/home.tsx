@@ -39,7 +39,7 @@ const Home = () => {
         for (let style in searchResults) {
           if (allStyles.hasOwnProperty(style)) {
             stylesArray.push(
-              <Listing key={Math.random()} style={ style } styles={ allStyles[style] } setAllStyles={setAllStyles} />
+              <Listing key={Math.random()} style={ style } allStyles={ allStyles } styles={ allStyles[style] } setAllStyles={setAllStyles} />
             )
           }
         }
@@ -47,7 +47,7 @@ const Home = () => {
       for (let style in allStyles) {
         if (allStyles.hasOwnProperty(style)) {
           stylesArray.push(
-            <Listing key={Math.random()} style={ style } styles={allStyles[style] } setAllStyles={setAllStyles} />
+            <Listing key={Math.random()} style={ style } allStyles={ allStyles } styles={allStyles[style] } setAllStyles={setAllStyles} />
           )}
         }
       }
