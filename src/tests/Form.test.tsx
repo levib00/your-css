@@ -151,4 +151,21 @@ describe("Form renders", () => {
 
     expect(importExportCss.handleDownloadClick).toHaveBeenCalledTimes(1)
   })
+
+  test('Cancel toggles state to close edit box.', async () => {
+    const setEditModeMock = jest.fn()
+    render(
+      <MemoryRouter>
+        <Form website='' customCss='css' setEditMode={setEditModeMock}/>
+      </MemoryRouter>
+    );
+
+    const cancelButton = screen.getByText('cancel');
+
+    await act( async() => { 
+      await userEvent.click(cancelButton)
+    });
+
+    expect(setEditModeMock).toHaveBeenCalledTimes(1)
+  })
 })
