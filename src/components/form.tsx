@@ -28,7 +28,7 @@ const Form = (props: FormProps) => {
     styles[website] = {isActive, css}
     saveToStorage(styles)
     navigate('/')
-    if (setEditMode) {
+    if (setEditMode) { // TODO: update allStyles so listing shows new css
       setEditMode(false)
     }
   }
@@ -57,6 +57,7 @@ const Form = (props: FormProps) => {
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => {setIsActive(!isActive)}} />
       <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
+      <button onClick={() => {setEditMode ? setEditMode(false) : navigate('/')}}>cancel</button>
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
       <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
