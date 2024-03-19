@@ -7,13 +7,15 @@ import { act } from 'react-dom/test-utils';
 
 describe("Home renders", () => {
 
-  test('Home renders with correct text', () => {
+  test('Home renders with correct text', async () => {
+    await act(async() => {
+      render(
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>
+      );
+    })
     
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
     const globalStyles = screen.getByText('global styles');
     expect(globalStyles).toBeInTheDocument();
     const toggleAll = screen.getByText('toggle all');
@@ -24,22 +26,22 @@ describe("Home renders", () => {
   
   test('Search bar works', async () => {
     
-    render(
-      <MemoryRouter>
-        <Home />
-      </MemoryRouter>
-    );
+    await act(async() => {
+      render(
+        <MemoryRouter>
+          <Home />
+        </MemoryRouter>
+      );
+    })
     const searchBar = screen.getByPlaceholderText('website');
     expect(searchBar).toBeInTheDocument();
 
-    await act( async() => {
-      await userEvent.type(searchBar, 'toggle')
-    });
+    await userEvent.type(searchBar, 'toggle')
 
-    waitFor(() => {
+    await waitFor(() => {
       const exampleName1 = screen.getByText('toggle all');
       expect(exampleName1).toBeInTheDocument();
-      const exampleName2 = screen.getByText('global styles');
+      const exampleName2 = screen.queryByText('global styles');
       expect(exampleName2).toBeNull()
     })    
   });
