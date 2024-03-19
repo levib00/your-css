@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import * as storageHandlers from '../scripts/storage-handlers';
 import * as importExportCss from '../scripts/import-export-css'
+import * as router from 'react-router'
 
 interface FormTestProps {
   styles : {[key: string]: {isActive: boolean, css: string}}
@@ -167,5 +168,26 @@ describe("Form renders", () => {
     });
 
     expect(setEditModeMock).toHaveBeenCalledTimes(1)
+  })
+
+  test('Cancel on new listing form navigates to home.', async () => {
+    const mockNavigate = jest.fn()
+
+    jest.spyOn(router, 'useNavigate').mockImplementation(() => mockNavigate)
+
+    render(
+      <MemoryRouter>
+        <Form website='' customCss='css'/>
+      </MemoryRouter>
+    );
+
+    const cancelButton = screen.getByText('cancel');
+
+    await act( async() => { 
+      await userEvent.click(cancelButton)
+    });
+
+    expect(mockNavigate).toHaveBeenCalledTimes(1)
+    expect(mockNavigate).toHaveBeenCalledWith('/')
   })
 })
