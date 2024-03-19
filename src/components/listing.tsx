@@ -33,7 +33,6 @@ function Listing(props: ListingProps) {
 
   const openEditPage = () => {
     setEditMode(true)
-    // TODO: cancel button on form is gonna have to set this to false when pressed and isEdit
   }
 
   const firstUpdate = useRef(true);
