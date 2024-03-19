@@ -2,30 +2,30 @@
 import { setStyles, styles } from '../objects/styles';
 import { assembleCssForExport, parseCssFile, parseJsonFile } from '../scripts/import-export-css';
 
-describe.skip("your-css style", () => {
+// describe.skip("your-css style", () => {
 
-  const stylesMock = {
-    domain1: {
-      isActive: true,
-      css: 'css'
-    },
-    domain2: {
-      isActive: false,
-      css: 'css'
-    },
-    ___toggleAll: {
-      isActive: true,
-      css: ''
-    },
-    __global: {
-      isActive: false,
-      css: 'global'
-    }
-  }
+//   const stylesMock = {
+//     domain1: {
+//       isActive: true,
+//       css: 'css'
+//     },
+//     domain2: {
+//       isActive: false,
+//       css: 'css'
+//     },
+//     ___toggleAll: {
+//       isActive: true,
+//       css: ''
+//     },
+//     __global: {
+//       isActive: false,
+//       css: 'global'
+//     }
+//   }
 
-  beforeEach(() => {
-    setStyles(stylesMock)
-  })
+//   beforeEach(() => {
+//     setStyles(stylesMock)
+//   })
 
   // test('Active style returns css', () => {
   //   const mock111 = getStyleValue(stylesMock.domain1)
@@ -107,7 +107,7 @@ describe.skip("your-css style", () => {
   //   const mock111 = getStyleValue(stylesMock.domain2)
   //   expect(mock111).toBe('global')
   // });
-})
+// })
 
 describe('Import/export css', () => {
   test('css url is created if object is passed', () => {
