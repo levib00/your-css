@@ -79,6 +79,23 @@ describe("Form renders", () => {
     expect(testStylesObject.styles.websitetest.isActive).toBeTruthy()
   });
 
+  test('Save button on edit form calls function to close form.', async () => {
+    const setEditModeMock = jest.fn()
+    
+    render(
+      <MemoryRouter>
+        <Form website='test' customCss='test' setEditMode={setEditModeMock}/>
+      </MemoryRouter>
+    );
+    const saveButton = screen.getByText('save');
+
+    await act( async() => {
+      await userEvent.click(saveButton)
+    });
+
+    expect(setEditModeMock).toHaveBeenCalledTimes(1)
+  });
+
   test('Update css.', async () => {
     render(
       <MemoryRouter>
