@@ -1,10 +1,9 @@
 let testStylesObject: FormTestProps
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import Form from '../components/form';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
 import * as storageHandlers from '../scripts/storage-handlers';
 import * as importExportCss from '../scripts/import-export-css'
 
@@ -126,11 +125,9 @@ describe("Form renders", () => {
 
     const importButton = screen.getByText('import');
 
-    jest.spyOn(importExportCss, 'parseCssFile').mockImplementationOnce(async () => 'Updated')
+    jest.spyOn(importExportCss, 'parseCssFile').mockResolvedValueOnce('Updated')
 
-    await act( async() => { 
-      await userEvent.click(importButton)
-    });
+    await userEvent.click(importButton)    
 
     expect(importExportCss.parseCssFile).toHaveBeenCalledTimes(1)
     const cssBox = screen.getByDisplayValue('Updated')
