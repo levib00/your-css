@@ -97,8 +97,10 @@ describe("Listing renders", () => {
       await userEvent.click(deleteButton)
     });
 
-    expect(storageHandlers.saveToStorage).toHaveBeenCalledTimes(1)
-    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith(deletedStylesMock)
+    //@ts-ignore
+    expect(global.browser.storage.local.remove).toHaveBeenCalledTimes(1)
+    //@ts-ignore
+    expect(global.browser.storage.local.remove).toHaveBeenCalledWith('styleName')
     expect(setAllStylesMock).toHaveBeenCalledWith(deletedStylesMock)
   });
 
