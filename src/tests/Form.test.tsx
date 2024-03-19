@@ -143,12 +143,12 @@ describe("Form renders", () => {
 
     const exportButton = screen.getByText('export');
 
-    jest.spyOn(importExportCss, 'assembleCssForExport').mockImplementationOnce(() => 'Updated')
+    jest.spyOn(importExportCss, 'handleDownloadClick').mockImplementationOnce(() => 'Updated')
 
     await act( async() => { 
       await userEvent.click(exportButton)
     });
 
-    expect(importExportCss.assembleCssForExport).toHaveBeenCalledTimes(1)
+    expect(importExportCss.handleDownloadClick).toHaveBeenCalledTimes(1)
   })
 })
