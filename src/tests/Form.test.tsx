@@ -97,9 +97,11 @@ describe("Form renders", () => {
   });
 
   test('Update css.', async () => {
+    const setEditModeMock = jest.fn()
+
     render(
       <MemoryRouter>
-        <Form website='exampleName1' customCss='example style text 1'/>
+        <Form website='exampleName1' customCss='example style text 1' setEditMode={setEditModeMock}/>
       </MemoryRouter>
     );
 
@@ -115,9 +117,11 @@ describe("Form renders", () => {
   });
 
   test('Update website name.', async () => {
+    const setEditModeMock = jest.fn()
+
     render(
       <MemoryRouter>
-        <Form website='exampleName1' customCss='example style text 1'/>
+        <Form website='exampleName1' customCss='example style text 1' setEditMode={setEditModeMock} />
       </MemoryRouter>
     );
 
