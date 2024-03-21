@@ -1,5 +1,4 @@
 import { ChangeEvent, useState } from "react";
-import { styles } from "../objects/styles";
 import { saveToStorage } from "../scripts/storage-handlers";
 import { useNavigate } from "react-router-dom";
 import { handleDownloadClick, parseCssFile } from "../scripts/import-export-css";
@@ -13,7 +12,7 @@ interface FormProps {
 
 const Form = (props: FormProps) => {
   const { setEditMode } = props
-  const [websiteInput, setWebsiteInput] = useState(props.website || '');
+  const [websiteInput, setWebsiteInput] = useState(props.website || ''); // TODO: get website domain on open new form
   const [cssInput, setCssInput] = useState(props.customCss || '')
   const [isActive, setIsActive] = useState(props.isActive || false)
   const [file, setFile] = useState<File>()
@@ -21,16 +20,14 @@ const Form = (props: FormProps) => {
 
   // TODO: add a warning if it isn't an edit. allow user to confirm update. 
   const saveCss = (website: string, css: string, isActive: boolean) => {
-    if (props.website !== website) {
-      styles[website] = styles[props.website];
-      delete styles[props.website];
-    }
-    styles[website] = {isActive, css}
-    saveToStorage(styles)
-    navigate('/')
+    const newListing = {[website]: {isActive, css}}
+    saveToStorage(newListing)
     if (setEditMode) { // TODO: update allStyles so listing shows new css
+      // @ts-ignore
+      browser.storage.local.remove(props.website)
       setEditMode(false)
     }
+    navigate('/')
   }
 
   const importCss = async (file: File | undefined) => {
@@ -47,7 +44,7 @@ const Form = (props: FormProps) => {
     }
     setFile(e.target.files[0])
   }
-
+  // TODO: disable website field on special listings
   return (
     <>
       <label htmlFor="website-input">Website</label>
