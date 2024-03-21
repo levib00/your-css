@@ -56,7 +56,7 @@ describe("Form renders", () => {
     expect(textAreaText).toBeInTheDocument()
   });
 
-  test('New submissions are added to object.', async () => {
+  test('New submissions are added to storage.', async () => {
     render(
       <MemoryRouter>
         <Form website='' customCss=''/>
@@ -75,8 +75,9 @@ describe("Form renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(testStylesObject.styles.websitetest.css).toBe('css test')
-    expect(testStylesObject.styles.websitetest.isActive).toBeTruthy()
+    jest.spyOn(storageHandlers, 'saveToStorage').mockImplementation()
+
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith({"websitetest": {"css": "css test", "isActive": true}})
   });
 
   test('Save button on edit form calls function to close form.', async () => {
