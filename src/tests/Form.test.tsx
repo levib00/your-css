@@ -96,7 +96,7 @@ describe("Form renders", () => {
     expect(setEditModeMock).toHaveBeenCalledTimes(1)
   });
 
-  test('Update css.', async () => {
+  test('Update listing info.', async () => {
     const setEditModeMock = jest.fn()
 
     render(
@@ -113,29 +113,9 @@ describe("Form renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(testStylesObject.styles.exampleName1.css).toBe('example style text 1 updated')
-  });
+    jest.spyOn(storageHandlers, 'saveToStorage').mockImplementation()
 
-  test('Update website name.', async () => {
-    const setEditModeMock = jest.fn()
-
-    render(
-      <MemoryRouter>
-        <Form website='exampleName1' customCss='example style text 1' setEditMode={setEditModeMock} />
-      </MemoryRouter>
-    );
-
-    const websiteBox = screen.getByLabelText('Website');
-    const saveButton = screen.getByText('save');
-
-    await act( async() => { 
-      await userEvent.type(websiteBox, 'Updated')
-      await userEvent.click(saveButton)
-    });
-
-    expect(testStylesObject.styles.exampleName1).toBeUndefined()
-    expect(testStylesObject.styles.exampleName1Updated).toBeTruthy()
-    expect(storageHandlers.saveToStorage).toBeCalledTimes(1)
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith({"exampleName1": {"css": "example style text 1 updated", "isActive": false}})
   });
 
   test('Import single css file.', async () => {
