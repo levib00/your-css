@@ -29,7 +29,7 @@ interface IStyle {
   const domainStyle: HTMLStyleElement = document.createElement('style');
 
   const url = new URL(window.location.href);
-  const domain: string | undefined = url.hostname.split('.')[0];
+  const domain: string | undefined = url.hostname;
 
   const getStyleValue = (styles: IStyle | undefined) => {
     if (!styles) {
