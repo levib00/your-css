@@ -4,7 +4,8 @@
   "version": "1.0",
   "permissions": [
     "scripting",
-    "storage"
+    "storage",
+    "activeTab"
   ],
   "description": "Add and save your own custom css for whatever websites you want.",
 
