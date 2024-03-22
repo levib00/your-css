@@ -65,11 +65,11 @@ const Form = (props: FormProps) => {
     }
     setFile(e.target.files[0])
   }
-  // TODO: disable website field on special listings
+
   return (
     <>
-      <label htmlFor="website-input">Website</label>
-      <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>
+      {!styles?.undeleteable && <label htmlFor="website-input">Website</label>}
+      {!styles?.undeleteable &&<input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
       <textarea name="css-input" id="css-input" onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
       <label htmlFor="active-checkbox">activate</label>
