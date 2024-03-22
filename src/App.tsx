@@ -12,7 +12,7 @@ function App() {
         <NavBar />
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path="/form"  element={<Form website="" customCss="" /> } />
+          <Route path="/form"  element={<Form /> } />
         </Routes>
       </MemoryRouter>
     </div>
