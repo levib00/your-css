@@ -82,10 +82,11 @@ describe("Form renders", () => {
 
   test('Save button on edit form calls function to close form.', async () => {
     const setEditModeMock = jest.fn()
-    
+    const setAllStylesMock = jest.fn()
+
     render(
       <MemoryRouter>
-        <Form website='test' customCss='test' setEditMode={setEditModeMock}/>
+        <Form website='test' customCss='test' setEditMode={setEditModeMock} setAllStyles={setAllStylesMock}/>
       </MemoryRouter>
     );
     const saveButton = screen.getByText('save');
