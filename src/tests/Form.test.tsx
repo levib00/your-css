@@ -21,17 +21,23 @@ jest.mock('../objects/styles', () => {
   const object = {
     exampleName1: {isActive: true, css: 'example style text 1'},
     exampleName2: {isActive: true, css: 'example style text 2'},
+
   }
   testStylesObject = {styles: object}
   return testStylesObject
 });
+
+const Website = {
+  isActive: false,
+  css: 'css'
+}
 
 describe("Form renders", () => {
 
   test('Create new form renders.', () => {
     render(
       <MemoryRouter>
-        <Form website='' customCss='' />
+        <Form />
       </MemoryRouter>
     );
 
@@ -42,9 +48,15 @@ describe("Form renders", () => {
   });
 
   test('edit form renders with previous text.', () => {
+
+    const Website = {
+      isActive: true,
+      css: 'exampleCss'
+    }
+
     render(
       <MemoryRouter>
-        <Form website='example website' customCss='exampleCss' isActive={true}/>
+        <Form styles={Website} domain='example website'/>
       </MemoryRouter>
     );
 
@@ -59,7 +71,7 @@ describe("Form renders", () => {
   test('New submissions are added to storage.', async () => {
     render(
       <MemoryRouter>
-        <Form website='' customCss=''/>
+        <Form />
       </MemoryRouter>
     );
 
@@ -86,7 +98,7 @@ describe("Form renders", () => {
 
     render(
       <MemoryRouter>
-        <Form website='test' customCss='test' setEditMode={setEditModeMock} setAllStyles={setAllStylesMock}/>
+        <Form styles={Website} domain='Website' setEditMode={setEditModeMock} setAllStyles={setAllStylesMock}/>
       </MemoryRouter>
     );
     const saveButton = screen.getByText('save');
@@ -101,9 +113,16 @@ describe("Form renders", () => {
   test('Update listing info.', async () => {
     const setEditModeMock = jest.fn()
 
+    const styleObject = {
+      exampleName1: {
+        css: "example style text 1",
+        isActive: false
+      }
+    }
+
     render(
       <MemoryRouter>
-        <Form website='exampleName1' customCss='example style text 1' setEditMode={setEditModeMock}/>
+        <Form styles={styleObject.exampleName1} domain='exampleName1' setEditMode={setEditModeMock}/>
       </MemoryRouter>
     );
 
@@ -123,7 +142,7 @@ describe("Form renders", () => {
   test('Import single css file.', async () => {
     render(
       <MemoryRouter>
-        <Form website='' customCss=''/>
+        <Form />
       </MemoryRouter>
     );
 
@@ -139,9 +158,15 @@ describe("Form renders", () => {
   })
 
   test('Export single listing css file.', async () => {
+
+    const Website = {
+      isActive: false,
+      css: 'css'
+    }
+    
     render(
       <MemoryRouter>
-        <Form website='' customCss='css'/>
+        <Form styles={Website}/>
       </MemoryRouter>
     );
 
@@ -158,9 +183,15 @@ describe("Form renders", () => {
 
   test('Cancel toggles state to close edit box.', async () => {
     const setEditModeMock = jest.fn()
+
+    const Website = {
+      isActive: false,
+      css: 'css'
+    }
+    
     render(
       <MemoryRouter>
-        <Form website='' customCss='css' setEditMode={setEditModeMock}/>
+        <Form styles={Website} setEditMode={setEditModeMock}/>
       </MemoryRouter>
     );
 
@@ -177,10 +208,10 @@ describe("Form renders", () => {
     const mockNavigate = jest.fn()
 
     jest.spyOn(router, 'useNavigate').mockImplementation(() => mockNavigate)
-
+    
     render(
       <MemoryRouter>
-        <Form website='' customCss='css'/>
+        <Form />
       </MemoryRouter>
     );
 
