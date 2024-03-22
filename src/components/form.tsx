@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { saveToStorage } from "../scripts/storage-handlers";
 import { useNavigate } from "react-router-dom";
 import { handleDownloadClick, parseCssFile } from "../scripts/import-export-css";
@@ -20,6 +20,16 @@ const Form = (props: FormProps) => {
   const [isActive, setIsActive] = useState(props.isActive || false)
   const [file, setFile] = useState<File>()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!websiteInput) {
+      // @ts-ignore
+      browser.tabs.query({active: true, lastFocusedWindow: true}, tabs => {
+        let url = new URL(tabs[0].url).hostname;
+        setWebsiteInput(url)
+      });
+    }
+  })
 
   // TODO: add a warning if it isn't an edit. allow user to confirm update. 
   const saveCss = (website: string, css: string, isActive: boolean) => {
