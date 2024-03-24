@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState, KeyboardEvent } from "react";
 import { saveToStorage } from "../scripts/storage-handlers";
 import { useNavigate } from "react-router-dom";
 import { handleDownloadClick, parseCssFile } from "../scripts/import-export-css";
@@ -20,7 +20,7 @@ interface FormProps {
 const Form = (props: FormProps) => {
   const { setEditMode, setAllStyles, allStyles, styles, domain } = props
   const [websiteInput, setWebsiteInput] = useState(domain || '');
-  const [cssInput, setCssInput] = useState(styles?.css || '')
+  const [cssInput, setCssInput] = useState(styles?.css ? `${styles?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '')
   const [isActive, setIsActive] = useState(styles?.isActive || false)
   const [file, setFile] = useState<File>()
   const navigate = useNavigate();
@@ -51,6 +51,21 @@ const Form = (props: FormProps) => {
     navigate('/')
   }
 
+  const indentOnTab = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Tab') {
+
+      e.preventDefault();
+
+      const target = e.target as HTMLTextAreaElement;
+      const { value, selectionEnd } = target;
+      target.value = `${value.substring(0, selectionEnd)}\t${value.substring(selectionEnd)}`;
+      target.selectionStart = target.selectionEnd = selectionEnd + 1;
+
+      // @ts-ignore
+      setCssInput(`${target.value}`)
+    }
+  }
+
   const importCss = async (file: File | undefined) => {
     const importedCss = await parseCssFile(file)
     if (!importedCss) {
@@ -71,7 +86,7 @@ const Form = (props: FormProps) => {
       {!styles?.undeleteable && <label htmlFor="website-input">Website</label>}
       {!styles?.undeleteable &&<input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
-      <textarea name="css-input" id="css-input" onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
+      <textarea name="css-input" id="css-input" className="css-input" onKeyDown={(e) => indentOnTab(e)} onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => {setIsActive(!isActive)}} />
       <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
