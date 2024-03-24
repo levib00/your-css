@@ -52,7 +52,7 @@ const Form = (props: FormProps) => {
   }
 
   const indentOnTab = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Tab') {
+    if (e.key === 'Tab' && e.shiftKey) {
 
       e.preventDefault();
 
@@ -87,6 +87,7 @@ const Form = (props: FormProps) => {
       {!styles?.undeleteable &&<input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
       <textarea name="css-input" id="css-input" className="css-input" onKeyDown={(e) => indentOnTab(e)} onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
+      <div>Shift + Tab to indent</div>
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => {setIsActive(!isActive)}} />
       <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
