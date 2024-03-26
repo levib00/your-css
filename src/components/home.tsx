@@ -9,6 +9,7 @@ const Home = () => {
   const [allStyles, setAllStyles] = useState<IStyle>(styles)
   const [listings, setListings] = useState<React.ReactElement[]>([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
   const [searchResults, setSearchResults] = useState({})
 
   const search = (obj:  IStyle, searchQuery: string) => {
@@ -34,24 +35,16 @@ const Home = () => {
   }, [searchQuery])
 
   useEffect(() => {
-      const stylesArray = []
+      let stylesArray: any
       if (searchQuery) {
-        for (let style in searchResults) {
-          if (allStyles.hasOwnProperty(style)) {
-            stylesArray.push(
-              <Listing key={Math.random()} style={ style } allStyles={ allStyles } styles={ allStyles[style] } setAllStyles={setAllStyles} />
-            )
-          }
-        }
+        stylesArray = Object.entries(searchResults).map((e) => ( { [e[0]]: e[1] } ))
       } else {
-      for (let style in allStyles) {
-        if (allStyles.hasOwnProperty(style)) {
-          stylesArray.push(
-            <Listing key={Math.random()} style={ style } allStyles={ allStyles } styles={allStyles[style] } setAllStyles={setAllStyles} />
-          )}
-        }
+        stylesArray = Object.entries(allStyles).map((e) => ( { [e[0]]: e[1] } ))
       }
-      setListings(stylesArray.sort((a, b) => a.props.style.localeCompare(b.props.style)))
+      setListings(stylesArray.sort((a: any, b: any) => {
+        Object.keys(a)[0].localeCompare(Object.keys(b)[0])
+      
+      }))
   }, [allStyles, searchResults])
 
   return (
@@ -60,7 +53,7 @@ const Home = () => {
       <input type="text" id='search' placeholder='website' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
       <Link to='/form'><button>+</button></Link>
       <div>
-        {listings.map((listing: React.ReactElement) => listing)}
+        {listings.map((thisStyle, index) => <Listing key={Math.random()} toggleEditing={() => setIsBeingEdited((s) => (s === index ? null : index))} isBeingEdited={isBeingEdited === index} style={ Object.keys(thisStyle)[0] } allStyles={ allStyles } styles={ Object.values(thisStyle)[0] } setAllStyles={setAllStyles} />)}
       </div>
     </>
   )

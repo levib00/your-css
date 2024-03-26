@@ -12,13 +12,13 @@ interface FormProps {
     displayName?: string
   }
   domain?: string
-  setEditMode?: React.Dispatch<React.SetStateAction<boolean>>
+  toggleEditing?: () => void
   setAllStyles?: React.Dispatch<React.SetStateAction<IStyle>>
   allStyles?: IStyle
 };
 
 const Form = (props: FormProps) => {
-  const { setEditMode, setAllStyles, allStyles, styles, domain } = props
+  const { toggleEditing, setAllStyles, allStyles, styles, domain } = props
   const [websiteInput, setWebsiteInput] = useState(domain || '');
   const [cssInput, setCssInput] = useState(styles?.css ? `${styles?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '')
   const [isActive, setIsActive] = useState(styles?.isActive || false)
@@ -38,10 +38,10 @@ const Form = (props: FormProps) => {
   // TODO: add a warning if it isn't an edit. allow user to confirm update. 
   const saveCss = (website: string, css: string, isActive: boolean) => {
     const newListing = {[website]: {isActive, css}}
-    if (setEditMode && setAllStyles && domain) {
+    if (toggleEditing && setAllStyles && domain) {
       // @ts-ignore
-      browser.storage.local.remove(styles?.website)
-      setEditMode(false)
+      browser.storage.local.remove(domain)
+      toggleEditing()
       const allStylesCopy = {...allStyles}
       delete allStylesCopy[domain]
       allStylesCopy[website] = newListing[website]
@@ -91,7 +91,7 @@ const Form = (props: FormProps) => {
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => {setIsActive(!isActive)}} />
       <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
-      <button onClick={() => {setEditMode ? setEditMode(false) : navigate('/')}}>cancel</button>
+      <button onClick={() => {toggleEditing ? toggleEditing() : navigate('/')}}>cancel</button>
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
       <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>

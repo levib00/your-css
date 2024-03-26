@@ -8,11 +8,12 @@ interface ListingProps {
   styles : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string} // TODO: fix these names.
   setAllStyles: React.Dispatch<React.SetStateAction<IStyle>>
   allStyles: IStyle
+  toggleEditing: () => void
+  isBeingEdited: boolean
 };
 
 function Listing(props: ListingProps) {
-  const {style, setAllStyles, styles, allStyles} = props
-  const [editMode, setEditMode] = useState(false)
+  const {style, setAllStyles, styles, allStyles, toggleEditing, isBeingEdited} = props
   const [isActive, setIsActive] = useState(styles.isActive)
 
   const deleteListing = () => {
@@ -32,7 +33,7 @@ function Listing(props: ListingProps) {
   }
 
   const openEditPage = () => {
-    setEditMode(true)
+    toggleEditing()
   }
 
   const firstUpdate = useRef(true);
@@ -50,8 +51,8 @@ function Listing(props: ListingProps) {
   return (
     <>
       {
-        editMode ?
-        <Form styles={styles} domain={style} setEditMode={setEditMode} allStyles={allStyles} setAllStyles={setAllStyles} />
+        isBeingEdited ?
+        <Form styles={styles} domain={style} toggleEditing={toggleEditing} allStyles={allStyles} setAllStyles={setAllStyles} />
         : 
         <>
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
