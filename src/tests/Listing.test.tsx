@@ -16,12 +16,12 @@ describe("Listing renders", () => {
     }
   }
 
-  const setAllStylesMock = jest.fn()
+  const setAllStylesMock = jest.fn() // TODO: write test to make sure that only 1 edit form can be open
 
   test('Listing renders with correct text', () => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName}toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -32,9 +32,12 @@ describe("Listing renders", () => {
   });
 
   test('Edit button works', async() => {
+
+    const toggleEditingMock = jest.fn()
+
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} toggleEditing={toggleEditingMock} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -44,10 +47,7 @@ describe("Listing renders", () => {
       await userEvent.click(editButton)
     });
 
-    const websiteLabel = screen.getByText('Website');
-    expect(websiteLabel).toBeInTheDocument();
-    const textAreaLabel = screen.getByText('custom css');
-    expect(textAreaLabel).toBeInTheDocument()
+    expect(toggleEditingMock).toHaveBeenCalledTimes(1);
   });
 
   test('Delete button calls function', async() => {
@@ -87,7 +87,7 @@ describe("Listing renders", () => {
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -116,7 +116,7 @@ describe("Listing renders", () => {
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -140,7 +140,7 @@ describe('Special master styles', () => {
   test('Toggle all does not have any buttons but does have checkbox', async () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.___toggleAll} allStyles={styles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.___toggleAll} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -160,7 +160,7 @@ describe('Special master styles', () => {
   test('Extension has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles._extension} allStyles={styles} style={'_extension'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles._extension} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'_extension'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 
@@ -180,7 +180,7 @@ describe('Special master styles', () => {
   test('Global has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.__global} allStyles={styles} style={'__global'} setAllStyles={setAllStylesMock} />
+        <Listing styles={styles.__global} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'__global'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>
     );
 

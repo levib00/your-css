@@ -93,12 +93,12 @@ describe("Form renders", () => {
   });
 
   test('Save button on edit form calls function to close form.', async () => {
-    const setEditModeMock = jest.fn()
+    const toggleEditingMock = jest.fn()
     const setAllStylesMock = jest.fn()
 
     render(
       <MemoryRouter>
-        <Form styles={Website} domain='Website' setEditMode={setEditModeMock} setAllStyles={setAllStylesMock}/>
+        <Form styles={Website} domain='Website' toggleEditing={toggleEditingMock} setAllStyles={setAllStylesMock}/>
       </MemoryRouter>
     );
     const saveButton = screen.getByText('save');
@@ -107,11 +107,11 @@ describe("Form renders", () => {
       await userEvent.click(saveButton)
     });
 
-    expect(setEditModeMock).toHaveBeenCalledTimes(1)
+    expect(toggleEditingMock).toHaveBeenCalledTimes(1)
   });
 
   test('Update listing info.', async () => {
-    const setEditModeMock = jest.fn()
+    const toggleEditingMock = jest.fn()
 
     const styleObject = {
       exampleName1: {
@@ -122,7 +122,7 @@ describe("Form renders", () => {
 
     render(
       <MemoryRouter>
-        <Form styles={styleObject.exampleName1} domain='exampleName1' setEditMode={setEditModeMock}/>
+        <Form styles={styleObject.exampleName1} domain='exampleName1' toggleEditing={toggleEditingMock} />
       </MemoryRouter>
     );
 
@@ -182,7 +182,7 @@ describe("Form renders", () => {
   })
 
   test('Cancel toggles state to close edit box.', async () => {
-    const setEditModeMock = jest.fn()
+    const toggleEditingMock = jest.fn()
 
     const Website = {
       isActive: false,
@@ -191,7 +191,7 @@ describe("Form renders", () => {
     
     render(
       <MemoryRouter>
-        <Form styles={Website} setEditMode={setEditModeMock}/>
+        <Form styles={Website} toggleEditing={toggleEditingMock}/>
       </MemoryRouter>
     );
 
@@ -201,7 +201,7 @@ describe("Form renders", () => {
       await userEvent.click(cancelButton)
     });
 
-    expect(setEditModeMock).toHaveBeenCalledTimes(1)
+    expect(toggleEditingMock).toHaveBeenCalledTimes(1)
   })
 
   test('Cancel on new listing form navigates to home.', async () => {
