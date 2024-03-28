@@ -5,44 +5,55 @@ export interface IStyle {
     undeleteable?: boolean
     displayName?: string
   }
-};
+}
 
 export let styles: IStyle = {
   ___toggleAll: {
     isActive: true,
     css: '',
     undeleteable: true,
-    displayName: 'toggle all'
+    displayName: 'toggle all',
   },
   __global: {
-    isActive: false, 
+    isActive: false,
     css: '',
     undeleteable: true,
-    displayName: 'global styles'
+    displayName: 'global styles',
   },
   _extension: {
     isActive: false,
     css: '',
     undeleteable: true,
-    displayName: 'extension styles'
+    displayName: 'extension styles',
   },
 };
 
-export const setStyles = (newStyles: {[key: string] : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string}}) => {
-  if (!newStyles.___toggleAll) {
-    newStyles.___toggleAll = styles.___toggleAll
+export const setStyles = (
+  newStyles: {
+    [key: string] : {
+      isActive?: boolean,
+      css?: string,
+      undeleteable?:
+      boolean,
+      displayName?: string
+    }
+  },
+) => {
+  const newStyleCopy = newStyles
+  if (!newStyleCopy.___toggleAll) {
+    newStyleCopy.___toggleAll = styles.___toggleAll;
   }
-  newStyles.___toggleAll.undeleteable = true
-  newStyles.___toggleAll.displayName = 'toggle all'
-  if (!newStyles.__global) {
-    newStyles.__global = styles.__global
+  newStyleCopy.___toggleAll.undeleteable = true;
+  newStyleCopy.___toggleAll.displayName = 'toggle all';
+  if (!newStyleCopy.__global) {
+    newStyleCopy.__global = styles.__global;
   }
-  newStyles.__global.undeleteable = true
-  newStyles.__global.displayName = 'global styles'
-  if (!newStyles._extension) {
-    newStyles._extension = styles._extension
+  newStyleCopy.__global.undeleteable = true;
+  newStyleCopy.__global.displayName = 'global styles';
+  if (!newStyleCopy._extension) {
+    newStyleCopy._extension = styles._extension;
   }
-  newStyles._extension.undeleteable = true
-  newStyles._extension.displayName = 'extension styles'
-  styles = newStyles
-}
+  newStyleCopy._extension.undeleteable = true;
+  newStyleCopy._extension.displayName = 'extension styles';
+  styles = newStyleCopy;
+};

@@ -1,55 +1,58 @@
-import { IStyle } from "../objects/styles";
+import { IStyle } from '../objects/styles';
 
-export const assembleCssForExport = ( masterStyles: IStyle | null, css: string | null) => {
-  let jsonString
+export const assembleCssForExport = (masterStyles: IStyle | null, css: string | null) => {
+  let jsonString;
   if (css) {
-    jsonString = css
+    jsonString = css;
   } else if (masterStyles) {
     jsonString = JSON.stringify(masterStyles, null, 2);
   } else {
-    return 
+    return '';
   }
 
   // Create a Blob from the JSON string
-  const file = new Blob([jsonString], {type: 'application/json'});
+  const file = new Blob([jsonString], { type: 'application/json' });
 
   // Create a URL for the Blob
   const jsonURL = URL.createObjectURL(file);
-  return jsonURL
-}
+  return jsonURL;
+};
 
 export const parseCssFile = async (file: File | undefined) => {
   if (!file) {
-    return
+    return '';
   }
-  return await file.text()
-}
+  return file.text();
+};
 
 export const parseJsonFile = async (file: File | undefined, masterStyles: IStyle) => {
-  const json = await parseCssFile(file)
+  const json = await parseCssFile(file);
   if (!json) {
-    return
+    return '';
   }
-  const parsedJSON = JSON.parse(json)
+  const parsedJSON = JSON.parse(json);
 
-  return {...parsedJSON, ...masterStyles}
-}
+  return { ...parsedJSON, ...masterStyles };
+};
 
-export const handleDownloadClick = (css: string | null, domain: string | null, masterStyles: IStyle | null) => {
+export const handleDownloadClick = (
+  css: string | null,
+  domain: string | null,
+  masterStyles: IStyle | null,
+) => {
   const link = document.createElement('a');
-  let url
-  console.log
+  let url;
   if (masterStyles) {
-    url = assembleCssForExport(masterStyles, null)
+    url = assembleCssForExport(masterStyles, null);
     link.download = 'your-css.json';
   } else if (css) {
-    url = assembleCssForExport(null, css)
+    url = assembleCssForExport(null, css);
     link.download = `${domain}.css`;
   }
   if (!url) {
-    return
+    return;
   }
-  
+
   link.href = url;
 
   // Append to html link element page
@@ -62,4 +65,4 @@ export const handleDownloadClick = (css: string | null, domain: string | null, m
   if (link.parentNode) {
     link.parentNode.removeChild(link);
   }
-}
+};

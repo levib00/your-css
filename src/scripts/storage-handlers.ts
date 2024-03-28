@@ -1,29 +1,40 @@
-import { styles } from '../objects/styles'
-export const saveToStorage = (newObject : {[key: string] : {isActive?: boolean, css?: string}}) => {
-  // @ts-ignore
-  browser.storage.local.set(newObject)
-}
+import { styles } from '../objects/styles';
 
-export const getFromStorage = (domain: string | null) => {
+export const saveToStorage = (
+  newObject : { [key: string] : { isActive?: boolean, css?: string } },
+) => {
   // @ts-ignore
-  return browser.storage.local.get(domain)
-}
+  browser.storage.local.set(newObject);
+};
 
-export const populateSpecialStyles = (newStyles: {[key: string] : {isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string}}) => {
-  if (!newStyles.___toggleAll) {
-    newStyles.___toggleAll = styles.___toggleAll
+// @ts-ignore
+export const getFromStorage = (domain: string | null) => browser.storage.local.get(domain);
+
+export const populateSpecialStyles = (
+  newStyle: {
+    [key: string] : {
+      isActive?: boolean,
+      css?: string,
+      undeleteable?: boolean,
+      displayName?: string,
+    },
+  },
+) => {
+  const newStyleCopy = newStyle;
+  if (!newStyleCopy.___toggleAll) {
+    newStyleCopy.___toggleAll = styles.___toggleAll;
   }
-  newStyles.___toggleAll.undeleteable = true
-  newStyles.___toggleAll.displayName = 'toggle all'
-  if (!newStyles.__global) {
-    newStyles.__global = styles.__global
+  newStyleCopy.___toggleAll.undeleteable = true;
+  newStyleCopy.___toggleAll.displayName = 'toggle all';
+  if (!newStyleCopy.__global) {
+    newStyleCopy.__global = styles.__global;
   }
-  newStyles.__global.undeleteable = true
-  newStyles.__global.displayName = 'global styles'
-  if (!newStyles._extension) {
-    newStyles._extension = styles._extension
+  newStyleCopy.__global.undeleteable = true;
+  newStyleCopy.__global.displayName = 'global styles';
+  if (!newStyleCopy._extension) {
+    newStyleCopy._extension = styles._extension;
   }
-  newStyles._extension.undeleteable = true
-  newStyles._extension.displayName = 'extension styles'
-  return newStyles
-}
+  newStyleCopy._extension.undeleteable = true;
+  newStyleCopy._extension.displayName = 'extension styles';
+  return newStyleCopy;
+};

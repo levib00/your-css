@@ -1,51 +1,50 @@
-
 import { render, screen } from '@testing-library/react';
-import Settings from '../components/settings';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as importExport from '../scripts/import-export-css';
 import { setStyles } from '../objects/styles';
+import Settings from '../components/settings';
 
-describe('Settings page component',() => {
+describe('Settings page component', () => {
   test('Renders properly', () => {
     render(
       <MemoryRouter>
         <Settings />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const importButton = screen.getByText('import');
     expect(importButton).toBeInTheDocument();
-    const exportButton = screen.getByText('export')
+    const exportButton = screen.getByText('export');
     expect(exportButton).toBeInTheDocument();
-  })
+  });
 
   test('export fires', async () => {
-    const mock = jest.spyOn(importExport, 'assembleCssForExport').mockImplementation(jest.fn())
+    const mock = jest.spyOn(importExport, 'assembleCssForExport').mockImplementation(jest.fn());
     render(
       <MemoryRouter>
         <Settings />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     const masterStylesMock = {
-      styleName: {isActive: true, css: 'style text',},
-      styleName2: {isActive: true, css: 'style text 2'}
-    }
+      styleName: { isActive: true, css: 'style text' },
+      styleName2: { isActive: true, css: 'style text 2' },
+    };
 
-    setStyles(masterStylesMock)
+    setStyles(masterStylesMock);
 
-    jest.spyOn(importExport, 'assembleCssForExport').mockImplementationOnce(() => 'Updated')
+    jest.spyOn(importExport, 'assembleCssForExport').mockImplementationOnce(() => 'Updated');
 
     const exportButton = screen.getByText('export');
     expect(exportButton).toBeInTheDocument();
 
     await act(async () => {
-      await userEvent.click(exportButton)
-    })
+      await userEvent.click(exportButton);
+    });
 
-    expect(mock).toHaveBeenCalledWith(masterStylesMock, null)
-  })
-})
+    expect(mock).toHaveBeenCalledWith(masterStylesMock, null);
+  });
+});
