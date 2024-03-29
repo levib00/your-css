@@ -84,7 +84,7 @@ const Form = (props: FormProps) => {
     }
     setFile(e.target.files[0]);
   };
-  console.log(useNavigate);
+
   return (
     <>
       {!styles?.undeleteable && <label htmlFor="website-input">Website</label>}
