@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Form from './form';
 import { IStyle } from '../objects/styles';
 import { saveToStorage } from '../scripts/storage-handlers';
+import ConfirmModal from './confirm-modal';
 
 interface ListingProps {
   style : string // TODO: fix these names.
@@ -17,6 +18,7 @@ function Listing(props: ListingProps) {
     style, setAllStyles, styles, allStyles, toggleEditing, isBeingEdited,
   } = props;
   const [isActive, setIsActive] = useState(styles.isActive);
+  const [ModalIsShowing, setModalIsShowing] = useState(false);
 
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
@@ -62,6 +64,7 @@ function Listing(props: ListingProps) {
             setAllStyles={setAllStyles}
           />
           : <>
+          {ModalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} type={'delete'} deleteListing={deleteListing} />}
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { styles.displayName || style }
@@ -70,7 +73,7 @@ function Listing(props: ListingProps) {
             { styles.css }
           </div>
           {style !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
-          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={clearListing}>clear</button> : <button onClick={deleteListing}>delete</button>)}
+          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={clearListing}>clear</button> : <button onClick={() => setModalIsShowing(true)}>remove</button>)}
         </>
       }
     </>
