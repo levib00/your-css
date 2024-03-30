@@ -1,14 +1,3 @@
-// interface Domain {
-//   isActive?: boolean,
-//   css?: string
-//   undeleteable?: boolean
-//   displayName?: string
-// }
-
-// interface IStyle {
-//   [key: string] : Domain
-// }
-
 (() => {
   const getFromStorage = async (domain: string | undefined) => {
     if (!domain) {
