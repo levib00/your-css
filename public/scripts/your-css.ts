@@ -44,7 +44,7 @@
     }
     const { domain: stylesForDomain, ___toggleAll: toggleAll, __global: global } = styles;
     let css = '';
-    if ((!stylesForDomain?.isActive && !global?.isActive) || !toggleAll?.isActive) {
+    if ((!stylesForDomain?.isActive && !global?.isActive) || (toggleAll && !toggleAll?.isActive)) {
       return '';
     }
     if (global?.isActive && global?.css) {
