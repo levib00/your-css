@@ -88,7 +88,13 @@ describe('Listing renders', () => {
       </MemoryRouter>,
     );
 
-    const deleteButton = screen.getByRole('button', { name: 'delete' });
+    const removeButton = screen.getByRole('button', { name: 'remove' });
+
+    await act(async () => {
+      await userEvent.click(removeButton);
+    });
+
+    const deleteButton = screen.getByText('Delete');
 
     await act(async () => {
       await userEvent.click(deleteButton);
