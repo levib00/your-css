@@ -3,16 +3,17 @@ import React from 'react';
 interface IModalProps {
   type: string,
   setModalIsShowing: React.Dispatch<React.SetStateAction<boolean>>
+  deleteListing?: () => void
 }
 
 function ConfirmModal(props: IModalProps) {
-  const { type, setModalIsShowing } = props;
+  const { type, setModalIsShowing, deleteListing } = props;
 
   return (
     <dialog>
       {type === 'delete' && <>
         <div>Are you sure you want to permanently delete this group?</div>
-        <button>Delete</button>
+        <button onClick={deleteListing}>Delete</button>
         <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
       {type === 'overwrite' && <>
