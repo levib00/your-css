@@ -37,4 +37,18 @@ describe('Modal renders', () => {
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
   });
+  test('Delete modal renders with correct text', () => {
+    render(
+      <MemoryRouter>
+        <ConfirmModal type={'clear'} setModalIsShowing={setModalIsShowingMock}/>
+      </MemoryRouter>,
+    );
+
+    const prompt = screen.getByText('Are you sure you want to clear all css for this entry?');
+    expect(prompt).toBeInTheDocument();
+    const deletes = screen.getByText('Clear');
+    expect(deletes).toBeInTheDocument();
+    const cancel = screen.getByText('Cancel');
+    expect(cancel).toBeInTheDocument();
+  });
 });
