@@ -9,7 +9,7 @@ describe('Modal renders', () => {
   test('Overwrite Modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal type={'overwrite'} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal type={'overwrite'} setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={jest.fn()} />
       </MemoryRouter>,
     );
 
@@ -17,8 +17,6 @@ describe('Modal renders', () => {
     expect(prompt).toBeInTheDocument();
     const overwrite = screen.getByText('Overwrite previous style');
     expect(overwrite).toBeInTheDocument();
-    const saveAnyways = screen.getByText('Save as a separate group');
-    expect(saveAnyways).toBeInTheDocument();
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
   });
@@ -37,6 +35,7 @@ describe('Modal renders', () => {
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
   });
+
   test('Delete modal renders with correct text', () => {
     render(
       <MemoryRouter>
