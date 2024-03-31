@@ -18,7 +18,8 @@ function Listing(props: ListingProps) {
     style, setAllStyles, styles, allStyles, toggleEditing, isBeingEdited,
   } = props;
   const [isActive, setIsActive] = useState(styles.isActive);
-  const [ModalIsShowing, setModalIsShowing] = useState(false);
+  const [deleteModalIsShowing, setDeleteModalIsShowing] = useState(false);
+  const [clearModalIsShowing, setClearModalIsShowing] = useState(false);
 
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
@@ -26,6 +27,7 @@ function Listing(props: ListingProps) {
     // @ts-ignore
     browser.storage.local.remove(style);
     setAllStyles(allStylesCopy);
+    setDeleteModalIsShowing(false);
   };
 
   const clearListing = () => {
@@ -34,6 +36,7 @@ function Listing(props: ListingProps) {
     // @ts-ignore
     saveToStorage({ [style]: allStylesCopy[style] });
     setAllStyles(allStylesCopy);
+    setClearModalIsShowing(false);
   };
 
   const openEditPage = () => {
@@ -64,7 +67,8 @@ function Listing(props: ListingProps) {
             setAllStyles={setAllStyles}
           />
           : <>
-          {ModalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} type={'delete'} deleteListing={deleteListing} />}
+          {deleteModalIsShowing && <ConfirmModal setModalIsShowing={setDeleteModalIsShowing} type={'delete'} deleteListing={deleteListing} />}
+          {clearModalIsShowing && <ConfirmModal setModalIsShowing={setClearModalIsShowing} type={'clear'} clearListing={clearListing} />}
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { styles.displayName || style }
@@ -73,7 +77,7 @@ function Listing(props: ListingProps) {
             { styles.css }
           </div>
           {style !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
-          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={clearListing}>clear</button> : <button onClick={() => setModalIsShowing(true)}>remove</button>)}
+          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={() => setClearModalIsShowing(true)}>clear</button> : <button onClick={() => setDeleteModalIsShowing(true)}>remove</button>)}
         </>
       }
     </>
