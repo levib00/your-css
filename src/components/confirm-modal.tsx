@@ -4,10 +4,13 @@ interface IModalProps {
   type: string,
   setModalIsShowing: React.Dispatch<React.SetStateAction<boolean>>
   deleteListing?: () => void
+  clearListing?: () => void
 }
 
 function ConfirmModal(props: IModalProps) {
-  const { type, setModalIsShowing, deleteListing } = props;
+  const {
+    type, setModalIsShowing, deleteListing, clearListing,
+  } = props;
 
   return (
     <dialog>
@@ -20,6 +23,11 @@ function ConfirmModal(props: IModalProps) {
         <div>A style already exists for this website</div>
         <button>Overwrite previous style</button>
         <button>Save as a separate group</button>
+        <button onClick={() => setModalIsShowing(false)}>Cancel</button>
+      </>}
+      {type === 'clear' && <>
+        <div>Are you sure you want to clear all css for this entry?</div>
+        <button onClick={clearListing}>Clear</button>
         <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
     </dialog>
