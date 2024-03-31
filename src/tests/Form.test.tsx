@@ -74,6 +74,21 @@ describe('Form renders', () => {
   });
 
   test('New submissions are added to storage.', async () => {
+    const mockStorageGet = jest.fn().mockResolvedValue(null);
+    const mockStorageRemove = jest.fn();
+    // @ts-ignore
+    global.browser = {
+      tabs: {
+        query: jest.fn(),
+      },
+      storage: {
+        local: {
+          get: mockStorageGet,
+          remove: mockStorageRemove,
+        },
+      },
+    };
+
     render(
       <MemoryRouter>
         <Form />
@@ -209,8 +224,6 @@ describe('Form renders', () => {
   });
 
   test('Cancel on new listing form navigates to home.', async () => {
-    
-
     render(
       <MemoryRouter>
         <Form />
