@@ -5,11 +5,22 @@ interface IModalProps {
   setModalIsShowing: React.Dispatch<React.SetStateAction<boolean>>
   deleteListing?: () => void
   clearListing?: () => void
+  saveCss?: (
+    website: string,
+    css: string,
+    activeStatus: boolean
+  ) => void
+  listingInfo?: {
+    websiteInput: string,
+    cssInput: string,
+    isActive: boolean
+  }
 }
 
 function ConfirmModal(props: IModalProps) {
+  // TODO: think about maybe not passing type string and just using functions for typing
   const {
-    type, setModalIsShowing, deleteListing, clearListing,
+    type, setModalIsShowing, deleteListing, clearListing, saveCss, listingInfo,
   } = props;
 
   return (
@@ -19,10 +30,13 @@ function ConfirmModal(props: IModalProps) {
         <button onClick={deleteListing}>Delete</button>
         <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
-      {type === 'overwrite' && <>
+      {(type === 'overwrite' && listingInfo && saveCss) && <>
         <div>A style already exists for this website</div>
-        <button>Overwrite previous style</button>
-        <button>Save as a separate group</button>
+        <button onClick={() => saveCss(
+          listingInfo.websiteInput,
+          listingInfo.cssInput,
+          listingInfo.isActive,
+        )}>Overwrite previous style</button>
         <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
       {type === 'clear' && <>
