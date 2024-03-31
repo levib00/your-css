@@ -2,9 +2,10 @@ import React, {
   ChangeEvent, useEffect, useState, KeyboardEvent,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { saveToStorage } from '../scripts/storage-handlers';
+import { getFromStorage, saveToStorage } from '../scripts/storage-handlers';
 import { handleDownloadClick, parseCssFile } from '../scripts/import-export-css';
 import { IStyle } from '../objects/styles';
+import ConfirmModal from './confirm-modal';
 
 interface FormProps {
   styles?: {
@@ -26,6 +27,7 @@ const Form = (props: FormProps) => {
   const [websiteInput, setWebsiteInput] = useState(domain || '');
   const [cssInput, setCssInput] = useState(styles?.css ? `${styles?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '');
   const [isActive, setIsActive] = useState(styles?.isActive || false);
+  const [modalIsShowing, setModalIsShowing] = useState(false);
   const [file, setFile] = useState<File>();
   const navigate = useNavigate();
 
@@ -39,20 +41,28 @@ const Form = (props: FormProps) => {
     }
   });
 
-  // TODO: add a warning if it isn't an edit. allow user to confirm update.
-  const saveCss = (website: string, css: string, activeStatus: boolean) => {
+  const saveCss = async (
+    website: string,
+    css: string,
+    activeStatus: boolean,
+    overwrite: boolean = false,
+  ) => {
     const newListing = { [website]: { isActive: activeStatus, css } };
-    if (toggleEditing && setAllStyles && domain) {
-      // @ts-ignore
-      browser.storage.local.remove(domain);
-      toggleEditing();
-      const allStylesCopy = { ...allStyles };
-      delete allStylesCopy[domain];
-      allStylesCopy[website] = newListing[website];
-      setAllStyles(allStylesCopy);
+    if (await getFromStorage(website) && !overwrite) {
+      setModalIsShowing(true);
+    } else {
+      if (toggleEditing && setAllStyles && domain) {
+        // @ts-ignore
+        browser.storage.local.remove(domain);
+        toggleEditing();
+        const allStylesCopy = { ...allStyles };
+        delete allStylesCopy[domain];
+        allStylesCopy[website] = newListing[website];
+        setAllStyles(allStylesCopy);
+      }
+      saveToStorage(newListing);
+      navigate('/');
     }
-    saveToStorage(newListing);
-    navigate('/');
   };
 
   const indentOnTab = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -87,6 +97,7 @@ const Form = (props: FormProps) => {
 
   return (
     <>
+      {modalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} type={'overwrite'} saveCss={saveCss} listingInfo={{ websiteInput, cssInput, isActive }}/>}
       {!styles?.undeleteable && <label htmlFor="website-input">Website</label>}
       {!styles?.undeleteable && <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
