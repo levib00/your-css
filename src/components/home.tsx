@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Listing from './listing';
-import { IStyle, styles } from '../objects/styles';
+import { IStyle, defaultStyles } from '../objects/styles';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
 
 const Home = () => {
-  const [allStyles, setAllStyles] = useState<IStyle>(styles);
+  const [allStyles, setAllStyles] = useState<IStyle>(defaultStyles);
   const [listings, setListings] = useState<React.ReactElement[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
