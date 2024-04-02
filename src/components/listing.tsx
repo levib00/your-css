@@ -7,8 +7,8 @@ import ConfirmModal from './confirm-modal';
 interface ListingProps {
   style : string // TODO: fix these names.
   styles : { isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string }
-  setAllStyles: React.Dispatch<React.SetStateAction<IStyle>>
-  allStyles: IStyle
+  setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>
+  allStyles?: IStyle
   toggleEditing: () => void
   isBeingEdited: boolean
 }
