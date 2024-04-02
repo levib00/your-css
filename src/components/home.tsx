@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Listing from './listing';
-import { IStyle, defaultStyles } from '../objects/styles';
+import { IStyle } from '../objects/styles';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
 
 const Home = () => {
-  const [allStyles, setAllStyles] = useState<IStyle>(defaultStyles);
+  const [allStyles, setAllStyles] = useState<IStyle | undefined>();
   const [listings, setListings] = useState<React.ReactElement[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
@@ -24,7 +24,9 @@ const Home = () => {
   };
 
   useEffect(() => {
-    search(allStyles, searchQuery);
+    if (allStyles) {
+      search(allStyles, searchQuery);
+    }
   }, [searchQuery]);
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const Home = () => {
     let stylesArray: any;
     if (searchQuery) {
       stylesArray = Object.entries(searchResults).map((e) => ({ [e[0]]: e[1] }));
-    } else {
+    } else if (allStyles) {
       stylesArray = Object.entries(allStyles).map((e) => ({ [e[0]]: e[1] }));
     }
     setListings(
