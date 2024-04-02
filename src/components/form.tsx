@@ -16,7 +16,7 @@ interface FormProps {
   }
   domain?: string
   toggleEditing?: () => void
-  setAllStyles?: React.Dispatch<React.SetStateAction<IStyle>>
+  setAllStyles?: React.Dispatch<React.SetStateAction<IStyle | undefined>>
   allStyles?: IStyle
 }
 
