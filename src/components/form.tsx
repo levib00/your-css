@@ -48,7 +48,8 @@ const Form = (props: FormProps) => {
     overwrite: boolean = false,
   ) => {
     const newListing = { [website]: { isActive: activeStatus, css } };
-    if (await getFromStorage(website) && !overwrite) {
+
+    if (Object.keys(await getFromStorage(website)).length > 0 && (!overwrite && !toggleEditing)) {
       setModalIsShowing(true);
     } else {
       if (toggleEditing && setAllStyles && domain) {
