@@ -1,11 +1,14 @@
 import { IStyle } from '../objects/styles';
 
-export const assembleCssForExport = (masterStyles: IStyle | null, css: string | null) => {
+export const assembleCssForExport = (
+  allStyles: IStyle | null | undefined,
+  css: string | null,
+) => {
   let jsonString;
   if (css) {
     jsonString = css;
-  } else if (masterStyles) {
-    jsonString = JSON.stringify(masterStyles, null, 2);
+  } else if (allStyles) {
+    jsonString = JSON.stringify(allStyles, null, 2);
   } else {
     return '';
   }
@@ -25,25 +28,25 @@ export const parseCssFile = async (file: File | undefined) => {
   return file.text();
 };
 
-export const parseJsonFile = async (file: File | undefined, masterStyles: IStyle) => {
+export const parseJsonFile = async (file: File | undefined, allStyles: IStyle) => {
   const json = await parseCssFile(file);
   if (!json) {
     return '';
   }
   const parsedJSON = JSON.parse(json);
 
-  return { ...parsedJSON, ...masterStyles };
+  return { ...parsedJSON, ...allStyles };
 };
 
 export const handleDownloadClick = (
   css: string | null,
   domain: string | null,
-  masterStyles: IStyle | null,
+  allStyles: IStyle | null | undefined,
 ) => {
   const link = document.createElement('a');
   let url;
-  if (masterStyles) {
-    url = assembleCssForExport(masterStyles, null);
+  if (allStyles) {
+    url = assembleCssForExport(allStyles, null);
     link.download = 'your-css.json';
   } else if (css) {
     url = assembleCssForExport(null, css);
