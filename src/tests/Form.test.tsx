@@ -74,7 +74,7 @@ describe('Form renders', () => {
   });
 
   test('New submissions are added to storage.', async () => {
-    const mockStorageGet = jest.fn().mockResolvedValue(null);
+    const mockStorageGet = jest.fn().mockResolvedValue({});
     const mockStorageRemove = jest.fn();
     // @ts-ignore
     global.browser = {
