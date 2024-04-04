@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { styles } from './objects/styles';
 import './index.css';
+import { getFromStorage } from './scripts/storage-handlers';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -10,6 +10,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 );
 
-const domainStyle: HTMLStyleElement = document.createElement('style');
-domainStyle.appendChild(document.createTextNode(styles._extension?.isActive && styles._extension?.css ? styles._extension?.css : ''));
-document.head.appendChild(domainStyle);
+(async () => {
+  const extensionStyles = await getFromStorage('_extension');
+
+  const domainStyle: HTMLStyleElement = document.createElement('style');
+  domainStyle.appendChild(document.createTextNode(extensionStyles._extension?.isActive && extensionStyles._extension?.css ? extensionStyles._extension?.css : ''));
+  document.head.appendChild(domainStyle);
+})();
