@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as storageHandlers from '../scripts/storage-handlers';
-import { setStyles, styles } from '../objects/styles';
+import { defaultStyles } from '../objects/styles';
 import Listing from '../components/listing';
 
 describe('Listing renders', () => {
@@ -60,31 +60,11 @@ describe('Listing renders', () => {
         isActive: true,
         css: 'style text 2',
       },
-      ___toggleAll: {
-        css: '',
-        displayName: 'toggle all',
-        isActive: true,
-        undeleteable: true,
-      },
-      __global: {
-        css: '',
-        displayName: 'global styles',
-        isActive: false,
-        undeleteable: true,
-      },
-      _extension: {
-        css: '',
-        displayName: 'extension styles',
-        isActive: false,
-        undeleteable: true,
-      },
     };
-
-    setStyles(deleteStylesMock);
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styles={deleteStylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -115,8 +95,6 @@ describe('Listing renders', () => {
       styleName2: { isActive: true, css: 'style text 2' },
     };
 
-    setStyles(masterStylesMock);
-
     render(
       <MemoryRouter>
         <Listing styles={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
@@ -142,7 +120,7 @@ describe('Special master styles', () => {
   test('Toggle all does not have any buttons but does have checkbox', async () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.___toggleAll} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
+        <Listing styles={defaultStyles.___toggleAll} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -162,7 +140,7 @@ describe('Special master styles', () => {
   test('Extension has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles._extension} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'_extension'} setAllStyles={setAllStylesMock} />
+        <Listing styles={defaultStyles._extension} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'_extension'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -182,7 +160,7 @@ describe('Special master styles', () => {
   test('Global has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={styles.__global} toggleEditing={jest.fn} isBeingEdited={false} allStyles={styles} style={'__global'} setAllStyles={setAllStylesMock} />
+        <Listing styles={defaultStyles.__global} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'__global'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
