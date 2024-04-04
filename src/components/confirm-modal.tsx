@@ -24,7 +24,7 @@ function ConfirmModal(props: IModalProps) {
   } = props;
 
   return (
-    <dialog>
+    <div>
       {type === 'delete' && <>
         <div>Are you sure you want to permanently delete this group?</div>
         <button onClick={deleteListing}>Delete</button>
@@ -44,7 +44,7 @@ function ConfirmModal(props: IModalProps) {
         <button onClick={clearListing}>Clear</button>
         <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
-    </dialog>
+    </div>
   );
 }
 
