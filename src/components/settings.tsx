@@ -14,8 +14,10 @@ function Settings() {
 
   return (
     <>
+    {allStyles ? <>
       <button onClick={() => handleDownloadClick(null, null, allStyles)}>import</button>
       <button onClick={() => assembleCssForExport(allStyles, null)}>export</button>
+    </> : 'Loading...'}
     </>
   );
 }
