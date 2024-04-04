@@ -7,7 +7,7 @@ export interface IStyle {
   }
 }
 
-export let styles: IStyle = {
+export const defaultStyles: IStyle = {
   ___toggleAll: {
     isActive: true,
     css: '',
