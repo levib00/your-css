@@ -1,4 +1,4 @@
-const mockStorageGet = jest.fn().mockResolvedValue({ key: 'mockedValue' });
+const mockStorageGet = jest.fn().mockResolvedValue({});
 const mockStorageRemove = jest.fn();
 global.browser = {
   tabs: {
