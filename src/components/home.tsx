@@ -4,9 +4,18 @@ import Listing from './listing';
 import { IStyle } from '../objects/styles';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
 
+interface IDomainStyle {
+  [key:string]: {
+    isActive?: boolean
+    css?: string
+    undeleteable?: boolean
+    displayName?: string
+  }
+}
+
 const Home = () => {
   const [allStyles, setAllStyles] = useState<IStyle | undefined>();
-  const [listings, setListings] = useState<React.ReactElement[]>([]);
+  const [listings, setListings] = useState<IDomainStyle[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
   const [searchResults, setSearchResults] = useState({});
@@ -36,14 +45,18 @@ const Home = () => {
   }, [searchQuery]);
 
   useEffect(() => {
-    let stylesArray: any = [];
-    if (searchQuery) {
-      stylesArray = Object.entries(searchResults).map((e) => ({ [e[0]]: e[1] }));
+    let stylesArray: Array<{ [x:string]: IDomainStyle }> = [];
+    if (searchQuery) { // TODO: make cleaner
+      stylesArray = Object.entries(searchResults).map(
+        (e: [string, any]) => ({ [e[0]]: e[1] }),
+      );
     } else if (allStyles) {
-      stylesArray = Object.entries(allStyles).map((e) => ({ [e[0]]: e[1] }));
+      stylesArray = Object.entries(allStyles).map(
+        (e: [string, any]) => ({ [e[0]]: e[1] }),
+      );
     }
     setListings(
-      stylesArray.sort((a: any, b: any) => Object.keys(a)[0].localeCompare(Object.keys(b)[0])),
+      stylesArray.sort((a, b) => Object.keys(a)[0].localeCompare(Object.keys(b)[0])),
     );
   }, [allStyles, searchResults]);
 
