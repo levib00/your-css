@@ -36,7 +36,7 @@ const Home = () => {
   }, [searchQuery]);
 
   useEffect(() => {
-    let stylesArray: any;
+    let stylesArray: any = [];
     if (searchQuery) {
       stylesArray = Object.entries(searchResults).map((e) => ({ [e[0]]: e[1] }));
     } else if (allStyles) {
