@@ -28,7 +28,6 @@ function ConfirmModal(props: IModalProps) {
       {type === 'delete' && <>
         <div>Are you sure you want to permanently delete this group?</div>
         <button onClick={deleteListing}>Delete</button>
-        <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
       {(type === 'overwrite' && listingInfo && saveCss) && <>
         <div>A style already exists for this website</div>
@@ -37,13 +36,12 @@ function ConfirmModal(props: IModalProps) {
           listingInfo.cssInput,
           listingInfo.isActive,
         )}>Overwrite previous style</button>
-        <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
       {type === 'clear' && <>
         <div>Are you sure you want to clear all css for this entry?</div>
         <button onClick={clearListing}>Clear</button>
-        <button onClick={() => setModalIsShowing(false)}>Cancel</button>
       </>}
+      <button onClick={() => setModalIsShowing(false)}>Cancel</button>
     </div>
   );
 }
