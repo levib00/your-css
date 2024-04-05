@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
+import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 import ConfirmModal from '../components/confirm-modal';
 
 const setModalIsShowingMock = jest.fn();
@@ -19,6 +21,24 @@ describe('Modal renders', () => {
     expect(overwrite).toBeInTheDocument();
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
+  });
+
+  test('Overwrite button calls saveCss', async () => {
+    const saveCssMock = jest.fn();
+
+    render(
+      <MemoryRouter>
+        <ConfirmModal type={'overwrite'} setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={saveCssMock} />
+      </MemoryRouter>,
+    );
+
+    const overwrite = screen.getByText('Overwrite previous style');
+
+    await act(async () => {
+      await userEvent.click(overwrite);
+    });
+
+    expect(saveCssMock).toHaveBeenCalledTimes(1);
   });
 
   test('Delete modal renders with correct text', () => {
@@ -49,5 +69,21 @@ describe('Modal renders', () => {
     expect(deletes).toBeInTheDocument();
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
+  });
+
+  test('Cancel button works', async () => {
+    render(
+      <MemoryRouter>
+        <ConfirmModal type={'clear'} setModalIsShowing={setModalIsShowingMock}/>
+      </MemoryRouter>,
+    );
+
+    const cancel = screen.getByText('Cancel');
+
+    await act(async () => {
+      await userEvent.click(cancel);
+    });
+
+    expect(setModalIsShowingMock).toHaveBeenCalledWith(false);
   });
 });
