@@ -67,8 +67,8 @@ function Listing(props: ListingProps) {
             setAllStyles={setAllStyles}
           />
           : <>
-          {deleteModalIsShowing && <ConfirmModal setModalIsShowing={setDeleteModalIsShowing} type={'delete'} deleteListing={deleteListing} />}
-          {clearModalIsShowing && <ConfirmModal setModalIsShowing={setClearModalIsShowing} type={'clear'} clearListing={clearListing} />}
+          {deleteModalIsShowing && <ConfirmModal setModalIsShowing={setDeleteModalIsShowing} deleteListing={deleteListing} />}
+          {clearModalIsShowing && <ConfirmModal setModalIsShowing={setClearModalIsShowing} clearListing={clearListing} />}
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { styleInfo.displayName || domainName }

@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface IModalProps {
-  type: string,
   setModalIsShowing: React.Dispatch<React.SetStateAction<boolean>>
   deleteListing?: () => void
   clearListing?: () => void
@@ -18,18 +17,17 @@ interface IModalProps {
 }
 
 function ConfirmModal(props: IModalProps) {
-  // TODO: think about maybe not passing type string and just using functions for typing
   const {
-    type, setModalIsShowing, deleteListing, clearListing, saveCss, listingInfo,
+    setModalIsShowing, deleteListing, clearListing, saveCss, listingInfo,
   } = props;
 
   return (
     <div>
-      {type === 'delete' && <>
+      {deleteListing && <>
         <div>Are you sure you want to permanently delete this group?</div>
         <button onClick={deleteListing}>Delete</button>
       </>}
-      {(type === 'overwrite' && listingInfo && saveCss) && <>
+      {(listingInfo && saveCss) && <>
         <div>A style already exists for this website</div>
         <button onClick={() => saveCss(
           listingInfo.websiteInput,
@@ -37,7 +35,7 @@ function ConfirmModal(props: IModalProps) {
           listingInfo.isActive,
         )}>Overwrite previous style</button>
       </>}
-      {type === 'clear' && <>
+      {clearListing && <>
         <div>Are you sure you want to clear all css for this entry?</div>
         <button onClick={clearListing}>Clear</button>
       </>}

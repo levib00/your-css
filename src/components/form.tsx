@@ -111,7 +111,7 @@ const Form = (props: FormProps) => {
 
   return (
     <>
-      {modalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} type={'overwrite'} saveCss={saveCss} listingInfo={{ websiteInput, cssInput, isActive }}/>}
+      {modalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} saveCss={saveCss} listingInfo={{ websiteInput, cssInput, isActive }}/>}
       {!styleInfo?.undeleteable && <label htmlFor="website-input">Website</label>}
       {!styleInfo?.undeleteable && <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
