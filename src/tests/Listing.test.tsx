@@ -10,7 +10,7 @@ import Listing from '../components/listing';
 describe('Listing renders', () => {
   const stylesMock = {
     styleName: {
-      css: 'style text',
+      css: 'domainName text',
       isActive: true,
     },
   };
@@ -20,13 +20,13 @@ describe('Listing renders', () => {
   test('Listing renders with correct text', () => {
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName}toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={stylesMock.styleName}toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} domainName={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
     const styleName = screen.getByText('styleName');
     expect(styleName).toBeInTheDocument();
-    const styleText = screen.getByText('style text');
+    const styleText = screen.getByText('domainName text');
     expect(styleText).toBeInTheDocument();
   });
 
@@ -35,7 +35,7 @@ describe('Listing renders', () => {
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} toggleEditing={toggleEditingMock} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={stylesMock.styleName} toggleEditing={toggleEditingMock} isBeingEdited={false} allStyles={stylesMock} domainName={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -52,19 +52,19 @@ describe('Listing renders', () => {
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn());
 
     const deleteStylesMock = {
-      styleName: { isActive: true, css: 'style text' },
-      styleName2: { isActive: true, css: 'style text 2' },
+      styleName: { isActive: true, css: 'domainName text' },
+      styleName2: { isActive: true, css: 'domainName text 2' },
     };
     const deletedStylesMock = {
       styleName2: {
         isActive: true,
-        css: 'style text 2',
+        css: 'domainName text 2',
       },
     };
 
     render(
       <MemoryRouter>
-        <Listing styles={deleteStylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={deleteStylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={deleteStylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={deleteStylesMock} domainName={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -91,13 +91,13 @@ describe('Listing renders', () => {
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn());
 
     const masterStylesMock = {
-      styleName: { isActive: true, css: 'style text' },
-      styleName2: { isActive: true, css: 'style text 2' },
+      styleName: { isActive: true, css: 'domainName text' },
+      styleName2: { isActive: true, css: 'domainName text 2' },
     };
 
     render(
       <MemoryRouter>
-        <Listing styles={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} style={'styleName'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={stylesMock.styleName} toggleEditing={jest.fn} isBeingEdited={false} allStyles={stylesMock} domainName={'styleName'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -114,13 +114,13 @@ describe('Listing renders', () => {
   });
 });
 
-describe('Special master styles', () => {
+describe('Special master styleInfo', () => {
   const setAllStylesMock = jest.fn();
 
   test('Toggle all does not have any buttons but does have checkbox', async () => {
     render(
       <MemoryRouter>
-        <Listing styles={defaultStyles.___toggleAll} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'___toggleAll'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={defaultStyles.___toggleAll} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} domainName={'___toggleAll'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -140,7 +140,7 @@ describe('Special master styles', () => {
   test('Extension has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={defaultStyles._extension} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'_extension'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={defaultStyles._extension} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} domainName={'_extension'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 
@@ -160,7 +160,7 @@ describe('Special master styles', () => {
   test('Global has no delete button but does have clear', () => {
     render(
       <MemoryRouter>
-        <Listing styles={defaultStyles.__global} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} style={'__global'} setAllStyles={setAllStylesMock} />
+        <Listing styleInfo={defaultStyles.__global} toggleEditing={jest.fn} isBeingEdited={false} allStyles={defaultStyles} domainName={'__global'} setAllStyles={setAllStylesMock} />
       </MemoryRouter>,
     );
 

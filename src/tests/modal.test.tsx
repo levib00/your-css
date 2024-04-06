@@ -11,7 +11,7 @@ describe('Modal renders', () => {
   test('Overwrite Modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal type={'overwrite'} setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={jest.fn()} />
+        <ConfirmModal setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={jest.fn()} />
       </MemoryRouter>,
     );
 
@@ -28,7 +28,7 @@ describe('Modal renders', () => {
 
     render(
       <MemoryRouter>
-        <ConfirmModal type={'overwrite'} setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={saveCssMock} />
+        <ConfirmModal setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={saveCssMock} />
       </MemoryRouter>,
     );
 
@@ -44,7 +44,7 @@ describe('Modal renders', () => {
   test('Delete modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal type={'delete'} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal deleteListing={jest.fn()} setModalIsShowing={setModalIsShowingMock}/>
       </MemoryRouter>,
     );
 
@@ -59,7 +59,7 @@ describe('Modal renders', () => {
   test('Delete modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal type={'clear'} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal clearListing={jest.fn()} setModalIsShowing={setModalIsShowingMock}/>
       </MemoryRouter>,
     );
 
@@ -74,7 +74,7 @@ describe('Modal renders', () => {
   test('Cancel button works', async () => {
     render(
       <MemoryRouter>
-        <ConfirmModal type={'clear'} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal setModalIsShowing={setModalIsShowingMock}/>
       </MemoryRouter>,
     );
 

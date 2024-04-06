@@ -61,7 +61,7 @@ describe('Form renders', () => {
 
     render(
       <MemoryRouter>
-        <Form styles={editWebsite} domain='example website'/>
+        <Form styleInfo={editWebsite} domain='example website'/>
       </MemoryRouter>,
     );
 
@@ -118,7 +118,7 @@ describe('Form renders', () => {
 
     render(
       <MemoryRouter>
-        <Form styles={Website} domain='Website' toggleEditing={toggleEditingMock} setAllStyles={setAllStylesMock}/>
+        <Form styleInfo={Website} domain='Website' toggleEditing={toggleEditingMock} setAllStyles={setAllStylesMock}/>
       </MemoryRouter>,
     );
     const saveButton = screen.getByText('save');
@@ -142,7 +142,7 @@ describe('Form renders', () => {
 
     render(
       <MemoryRouter>
-        <Form styles={styleObject.exampleName1} domain='exampleName1' toggleEditing={toggleEditingMock} />
+        <Form styleInfo={styleObject.exampleName1} domain='exampleName1' toggleEditing={toggleEditingMock} />
       </MemoryRouter>,
     );
 
@@ -185,7 +185,7 @@ describe('Form renders', () => {
 
     render(
       <MemoryRouter>
-        <Form styles={exportWebsite}/>
+        <Form styleInfo={exportWebsite}/>
       </MemoryRouter>,
     );
 
@@ -210,7 +210,7 @@ describe('Form renders', () => {
 
     render(
       <MemoryRouter>
-        <Form styles={cancelWebsite} toggleEditing={toggleEditingMock}/>
+        <Form styleInfo={cancelWebsite} toggleEditing={toggleEditingMock}/>
       </MemoryRouter>,
     );
 
