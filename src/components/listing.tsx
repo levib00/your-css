@@ -5,8 +5,8 @@ import { saveToStorage } from '../scripts/storage-handlers';
 import ConfirmModal from './confirm-modal';
 
 interface ListingProps {
-  style : string // TODO: fix these names.
-  styles : { isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string }
+  domainName : string
+  styleInfo : { isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string }
   setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>
   allStyles?: IStyle
   toggleEditing: () => void
@@ -15,26 +15,26 @@ interface ListingProps {
 
 function Listing(props: ListingProps) {
   const {
-    style, setAllStyles, styles, allStyles, toggleEditing, isBeingEdited,
+    domainName, setAllStyles, styleInfo, allStyles, toggleEditing, isBeingEdited,
   } = props;
-  const [isActive, setIsActive] = useState(styles.isActive);
+  const [isActive, setIsActive] = useState(styleInfo.isActive);
   const [deleteModalIsShowing, setDeleteModalIsShowing] = useState(false);
   const [clearModalIsShowing, setClearModalIsShowing] = useState(false);
 
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
-    delete allStylesCopy[style];
+    delete allStylesCopy[domainName];
     // @ts-ignore
-    browser.storage.local.remove(style);
+    browser.storage.local.remove(domainName);
     setAllStyles(allStylesCopy);
     setDeleteModalIsShowing(false);
   };
 
   const clearListing = () => {
     const allStylesCopy = { ...allStyles };
-    allStylesCopy[style].css = '';
+    allStylesCopy[domainName].css = '';
     // @ts-ignore
-    saveToStorage({ [style]: allStylesCopy[style] });
+    saveToStorage({ [domainName]: allStylesCopy[domainName] });
     setAllStyles(allStylesCopy);
     setClearModalIsShowing(false);
   };
@@ -50,8 +50,8 @@ function Listing(props: ListingProps) {
       return;
     }
     const allStylesCopy = { ...allStyles };
-    allStylesCopy[style].isActive = isActive;
-    saveToStorage({ [style]: allStylesCopy[style] });
+    allStylesCopy[domainName].isActive = isActive;
+    saveToStorage({ [domainName]: allStylesCopy[domainName] });
     setAllStyles({ ...allStylesCopy });
   }, [isActive]);
 
@@ -60,8 +60,8 @@ function Listing(props: ListingProps) {
       {
         isBeingEdited
           ? <Form
-            styles={styles}
-            domain={style}
+            styleInfo={styleInfo}
+            domain={domainName}
             toggleEditing={toggleEditing}
             allStyles={allStyles}
             setAllStyles={setAllStyles}
@@ -71,13 +71,13 @@ function Listing(props: ListingProps) {
           {clearModalIsShowing && <ConfirmModal setModalIsShowing={setClearModalIsShowing} type={'clear'} clearListing={clearListing} />}
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
-            { styles.displayName || style }
+            { styleInfo.displayName || domainName }
           </div>
           <div>
-            { styles.css }
+            { styleInfo.css }
           </div>
-          {style !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
-          {style !== '___toggleAll' && (styles.undeleteable ? <button onClick={() => setClearModalIsShowing(true)}>clear</button> : <button onClick={() => setDeleteModalIsShowing(true)}>remove</button>)}
+          {domainName !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
+          {domainName !== '___toggleAll' && (styleInfo.undeleteable ? <button onClick={() => setClearModalIsShowing(true)}>clear</button> : <button onClick={() => setDeleteModalIsShowing(true)}>remove</button>)}
         </>
       }
     </>

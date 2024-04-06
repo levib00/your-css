@@ -70,9 +70,10 @@ const Home = () => {
           listings.map((thisStyle, index) => <Listing
           key={Math.random()}
           toggleEditing={() => setIsBeingEdited((s) => (s === index ? null : index))}
-          isBeingEdited={isBeingEdited === index} style={ Object.keys(thisStyle)[0] }
+          isBeingEdited={isBeingEdited === index}
+          domainName={ Object.keys(thisStyle)[0] }
           allStyles={ allStyles }
-          styles={ Object.values(thisStyle)[0] }
+          styleInfo={ Object.values(thisStyle)[0] }
           setAllStyles={setAllStyles} />)
         }
       </div>

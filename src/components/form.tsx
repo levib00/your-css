@@ -8,7 +8,7 @@ import { IStyle } from '../objects/styles';
 import ConfirmModal from './confirm-modal';
 
 interface FormProps {
-  styles?: {
+  styleInfo?: {
     css?: string
     isActive?: boolean
     undeleteable?: boolean
@@ -22,11 +22,11 @@ interface FormProps {
 
 const Form = (props: FormProps) => {
   const {
-    toggleEditing, setAllStyles, allStyles, styles, domain,
+    toggleEditing, setAllStyles, allStyles, styleInfo, domain,
   } = props;
   const [websiteInput, setWebsiteInput] = useState(domain || '');
-  const [cssInput, setCssInput] = useState(styles?.css ? `${styles?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '');
-  const [isActive, setIsActive] = useState(styles?.isActive || false);
+  const [cssInput, setCssInput] = useState(styleInfo?.css ? `${styleInfo?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '');
+  const [isActive, setIsActive] = useState(styleInfo?.isActive || false);
   const [modalIsShowing, setModalIsShowing] = useState(false);
   const [file, setFile] = useState<File>();
   const navigate = useNavigate();
@@ -112,14 +112,14 @@ const Form = (props: FormProps) => {
   return (
     <>
       {modalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} type={'overwrite'} saveCss={saveCss} listingInfo={{ websiteInput, cssInput, isActive }}/>}
-      {!styles?.undeleteable && <label htmlFor="website-input">Website</label>}
-      {!styles?.undeleteable && <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
+      {!styleInfo?.undeleteable && <label htmlFor="website-input">Website</label>}
+      {!styleInfo?.undeleteable && <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
       <label htmlFor="css-input">custom css</label>
       <textarea name="css-input" id="css-input" className="css-input" onKeyDown={(e) => indentOnTab(e)} onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
       <div>Shift + Tab to indent</div>
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => { setIsActive(!isActive); }} />
-      <button onClick={() => saveCss(websiteInput, cssInput, isActive, styles)}>save</button>
+      <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
       <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
