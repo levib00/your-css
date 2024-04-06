@@ -67,8 +67,18 @@ function Listing(props: ListingProps) {
             setAllStyles={setAllStyles}
           />
           : <>
-          {deleteModalIsShowing && <ConfirmModal setModalIsShowing={setDeleteModalIsShowing} deleteListing={deleteListing} />}
-          {clearModalIsShowing && <ConfirmModal setModalIsShowing={setClearModalIsShowing} clearListing={clearListing} />}
+          {
+            deleteModalIsShowing && <ConfirmModal
+              setModalIsShowing={setDeleteModalIsShowing}
+              deleteListing={deleteListing}
+            />
+          }
+          {
+            clearModalIsShowing && <ConfirmModal
+              setModalIsShowing={setClearModalIsShowing}
+              clearListing={clearListing}
+            />
+          }
           <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { styleInfo.displayName || domainName }
@@ -77,7 +87,15 @@ function Listing(props: ListingProps) {
             { styleInfo.css }
           </div>
           {domainName !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
-          {domainName !== '___toggleAll' && (styleInfo.undeleteable ? <button onClick={() => setClearModalIsShowing(true)}>clear</button> : <button onClick={() => setDeleteModalIsShowing(true)}>remove</button>)}
+          {domainName !== '___toggleAll' && (
+            styleInfo.undeleteable ? <button
+              onClick={() => setClearModalIsShowing(true)}>
+                clear
+              </button> : <button
+                onClick={() => setDeleteModalIsShowing(true)}>
+                remove
+              </button>
+          )}
         </>
       }
     </>

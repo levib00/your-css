@@ -62,8 +62,14 @@ const Home = () => {
 
   return (
     <>
-      <label htmlFor="search"></label>
-      <input type="text" id='search' placeholder='website' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
+      <label htmlFor='search'></label>
+      <input
+        type='text'
+        id='search'
+        placeholder='website'
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
       <Link to='/form'><button>+</button></Link>
       <div>
         {

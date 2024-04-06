@@ -111,17 +111,39 @@ const Form = (props: FormProps) => {
 
   return (
     <>
-      {modalIsShowing && <ConfirmModal setModalIsShowing={setModalIsShowing} saveCss={saveCss} listingInfo={{ websiteInput, cssInput, isActive }}/>}
-      {!styleInfo?.undeleteable && <label htmlFor="website-input">Website</label>}
-      {!styleInfo?.undeleteable && <input type="text" id="website-input" name="website" onChange={(e) => setWebsiteInput(e.target.value)} value={websiteInput}/>}
+      {
+        modalIsShowing && <ConfirmModal
+        setModalIsShowing={setModalIsShowing}
+        saveCss={saveCss}
+        listingInfo={{ websiteInput, cssInput, isActive }}
+      />}
+      {
+        !styleInfo?.undeleteable && <label htmlFor='website-input'>Website</label>
+      }
+      {
+        !styleInfo?.undeleteable && <input
+          type='text'
+          id='website-input'
+          name='website'
+          onChange={(e) => setWebsiteInput(e.target.value)}
+          value={websiteInput}
+        />
+      }
       <label htmlFor="css-input">custom css</label>
-      <textarea name="css-input" id="css-input" className="css-input" onKeyDown={(e) => indentOnTab(e)} onChange={(e) => setCssInput(e.target.value)} value={cssInput}/>
+      <textarea
+        name='css-input'
+        id='css-input'
+        className='css-input'
+        onKeyDown={(e) => indentOnTab(e)}
+        onChange={(e) => setCssInput(e.target.value)}
+        value={cssInput}
+      />
       <div>Shift + Tab to indent</div>
-      <label htmlFor="active-checkbox">activate</label>
-      <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => { setIsActive(!isActive); }} />
+      <label htmlFor='active-checkbox'>activate</label>
+      <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
       <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
       <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
-      <input type="file" onChange={(e) => handleFileUpload(e)} />
+      <input type='file' onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
       <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
     </>
