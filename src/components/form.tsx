@@ -45,9 +45,22 @@ const Form = (props: FormProps) => {
     website: string,
     css: string,
     activeStatus: boolean,
+    prevStyles?: {
+      css?: string,
+      isActive?: boolean,
+      undeleteable?: boolean,
+      displayName?: string,
+    },
     overwrite: boolean = false,
   ) => {
-    const newListing = { [website]: { isActive: activeStatus, css } };
+    const newListing = {
+      [website]: {
+        isActive: activeStatus,
+        css,
+        undeleteable: prevStyles?.undeleteable,
+        displayName: prevStyles?.displayName,
+      },
+    };
 
     if (Object.keys(await getFromStorage(website)).length > 0 && (!overwrite && !toggleEditing)) {
       setModalIsShowing(true);
@@ -106,7 +119,7 @@ const Form = (props: FormProps) => {
       <div>Shift + Tab to indent</div>
       <label htmlFor="active-checkbox">activate</label>
       <input type="checkbox" id="active-checkbox" checked={isActive} onChange={() => { setIsActive(!isActive); }} />
-      <button onClick={() => saveCss(websiteInput, cssInput, isActive)}>save</button>
+      <button onClick={() => saveCss(websiteInput, cssInput, isActive, styles)}>save</button>
       <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
       <input type="file" onChange={(e) => handleFileUpload(e)} />
       <button onClick={() => importCss(file)}>import</button>
