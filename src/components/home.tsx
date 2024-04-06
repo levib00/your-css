@@ -46,12 +46,9 @@ const Home = () => {
 
   useEffect(() => {
     let stylesArray: Array<{ [x:string]: IDomainStyle }> = [];
-    if (searchQuery) { // TODO: make cleaner
-      stylesArray = Object.entries(searchResults).map(
-        (e: [string, any]) => ({ [e[0]]: e[1] }),
-      );
-    } else if (allStyles) {
-      stylesArray = Object.entries(allStyles).map(
+    const shownListings = searchResults || allStyles;
+    if (shownListings) {
+      stylesArray = Object.entries(shownListings).map(
         (e: [string, any]) => ({ [e[0]]: e[1] }),
       );
     }
