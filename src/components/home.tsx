@@ -18,7 +18,7 @@ const Home = () => {
   const [listings, setListings] = useState<IDomainStyle[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
-  const [searchResults, setSearchResults] = useState({});
+  const [searchResults, setSearchResults] = useState<IStyle | undefined>();
 
   const search = (obj: IStyle, searchQueryString: string) => {
     const keys = Object.getOwnPropertyNames(obj);
