@@ -10,10 +10,10 @@
   "description": "Add and save your own custom css for whatever websites you want.",
 
   "icons": {
-    "48": "icons/border-48.png"
+    "48": "icons/your-css-logo.png"
   },
   "browser_action": {
-    "default_icon": "icons/border-48.png",
+    "default_icon": "icons/your-css-logo.png",
     "default_title": "your-css",
     "default_popup": "index.html"
   },
