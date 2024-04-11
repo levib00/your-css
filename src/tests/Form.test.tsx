@@ -1,7 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
-// import * as router from 'react-router';
 import Form from '../components/form';
 import '@testing-library/jest-dom';
 import * as storageHandlers from '../scripts/storage-handlers';
@@ -74,21 +73,6 @@ describe('Form renders', () => {
   });
 
   test('New submissions are added to storage.', async () => {
-    const mockStorageGet = jest.fn().mockResolvedValue({});
-    const mockStorageRemove = jest.fn();
-    // @ts-ignore
-    global.browser = {
-      tabs: {
-        query: jest.fn(),
-      },
-      storage: {
-        local: {
-          get: mockStorageGet,
-          remove: mockStorageRemove,
-        },
-      },
-    };
-
     render(
       <MemoryRouter>
         <Form />
