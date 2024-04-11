@@ -1,17 +1,16 @@
 (() => {
   const getFromStorage = async (domain: string | undefined) => {
+    const styles = await browser.storage.local.get('styles');
+
     if (!domain) {
       return {};
     }
-    // @ts-ignore
-    const domainStorage = await browser.storage.local.get(domain);
-    const domainObj = domainStorage[domain];
-    // @ts-ignore
-    const toggleAllStorage = await browser.storage.local.get('___toggleAll');
-    const toggleAll = toggleAllStorage.___toggleAll;
-    // @ts-ignore
-    const globalStorage = await browser.storage.local.get('__global');
-    const global = globalStorage.__global;
+    const domainObj = await styles.styles[domain];
+
+    const toggleAll = await styles.styles.___toggleAll;
+
+    const global = await styles.styles.__global;
+
     return { domain: domainObj, ___toggleAll: toggleAll, __global: global };
   };
 
