@@ -39,21 +39,6 @@ describe('Settings page component', () => {
       styleName2: { isActive: true, css: 'style text 2' },
     };
 
-    const mockStorageGet = jest.fn().mockResolvedValue(masterStylesMock);
-    const mockStorageRemove = jest.fn();
-    // @ts-ignore
-    global.browser = {
-      tabs: {
-        query: jest.fn(),
-      },
-      storage: {
-        local: {
-          get: mockStorageGet,
-          remove: mockStorageRemove,
-        },
-      },
-    };
-
     const mock = jest.spyOn(importExport, 'assembleCssForExport').mockImplementation(jest.fn());
     render(
       <MemoryRouter>
