@@ -15,6 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   const extensionStyles = await getFromStorage('_extension');
 
   const domainStyle: HTMLStyleElement = document.createElement('style');
-  domainStyle.appendChild(document.createTextNode(extensionStyles._extension?.isActive && extensionStyles._extension?.css ? extensionStyles._extension?.css : ''));
+  domainStyle.appendChild(document.createTextNode(await extensionStyles?.isActive && extensionStyles.css ? extensionStyles.css : ''));
   document.head.appendChild(domainStyle);
 })();
