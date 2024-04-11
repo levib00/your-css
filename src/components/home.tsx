@@ -40,7 +40,8 @@ const Home = () => {
 
   useEffect(() => {
     (async () => {
-      setAllStyles(populateSpecialStyles(await getFromStorage(null)));
+      const storageStyles = await getFromStorage(null) || {};
+      setAllStyles(populateSpecialStyles(await storageStyles));
     })();
   }, [searchQuery]);
 
