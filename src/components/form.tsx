@@ -33,7 +33,6 @@ const Form = (props: FormProps) => {
 
   useEffect(() => {
     if (!websiteInput) {
-      // @ts-ignore
       browser.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         const url = new URL(tabs[0].url).hostname;
         setWebsiteInput(url);
@@ -61,20 +60,17 @@ const Form = (props: FormProps) => {
         displayName: prevStyles?.displayName,
       },
     };
-
-    if (Object.keys(await getFromStorage(website)).length > 0 && (!overwrite && !toggleEditing)) {
+    if (await getFromStorage(website) && (!overwrite && !toggleEditing)) {
       setModalIsShowing(true);
     } else {
       if (toggleEditing && setAllStyles && domain) {
-        // @ts-ignore
-        browser.storage.local.remove(domain);
         toggleEditing();
         const allStylesCopy = { ...allStyles };
         delete allStylesCopy[domain];
         allStylesCopy[website] = newListing[website];
         setAllStyles(allStylesCopy);
       }
-      saveToStorage(newListing);
+      await saveToStorage(newListing);
       navigate('/');
     }
   };
@@ -89,7 +85,6 @@ const Form = (props: FormProps) => {
       target.selectionStart = selectionEnd + 1;
       target.selectionEnd = selectionEnd + 1;
 
-      // @ts-ignore
       setCssInput(`${target.value}`);
     }
   };
