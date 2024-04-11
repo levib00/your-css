@@ -1,14 +1,24 @@
 import { defaultStyles } from '../objects/styles';
 
-export const saveToStorage = (
+export const saveToStorage = async (
   newObject : { [key: string] : { isActive?: boolean, css?: string } },
 ) => {
-  // @ts-ignore
-  browser.storage.local.set(newObject);
+  const existingData = await browser.storage.local.get('styles');
+
+  const stylesObject = existingData.styles || {};
+
+  const mergedObject = { ...stylesObject, ...newObject };
+
+  await browser.storage.local.set({ styles: mergedObject });
 };
 
-// @ts-ignore
-export const getFromStorage = (domain: string | null) => browser.storage.local.get(domain);
+export const getFromStorage = async (domain: string | null) => {
+  const styles = await browser.storage.local.get('styles');
+  if (domain) {
+    return styles.styles ? styles.styles[domain] : null;
+  }
+  return styles.styles;
+};
 
 export const populateSpecialStyles = (
   newStyle: {
