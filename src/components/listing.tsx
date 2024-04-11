@@ -24,8 +24,7 @@ function Listing(props: ListingProps) {
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
     delete allStylesCopy[domainName];
-    // @ts-ignore
-    browser.storage.local.remove(domainName);
+    browser.storage.local.set({ styles: { ...allStylesCopy } });
     setAllStyles(allStylesCopy);
     setDeleteModalIsShowing(false);
   };
@@ -33,7 +32,6 @@ function Listing(props: ListingProps) {
   const clearListing = () => {
     const allStylesCopy = { ...allStyles };
     allStylesCopy[domainName].css = '';
-    // @ts-ignore
     saveToStorage({ [domainName]: allStylesCopy[domainName] });
     setAllStyles(allStylesCopy);
     setClearModalIsShowing(false);
