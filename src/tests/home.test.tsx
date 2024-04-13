@@ -22,7 +22,7 @@ describe('Home renders', () => {
     });
   });
 
-  test('Search bar works', () => {
+  test('Search bar works', async () => {
     render(
       <MemoryRouter>
         <Home />
@@ -33,7 +33,7 @@ describe('Home renders', () => {
 
     userEvent.type(searchBar, 'toggle');
 
-    waitFor(() => {
+    await waitFor(() => {
       const exampleName1 = screen.getByText('toggle all');
       expect(exampleName1).toBeInTheDocument();
       const exampleName2 = screen.queryByText('global styles');
