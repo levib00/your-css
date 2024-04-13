@@ -32,12 +32,13 @@ const Form = (props: FormProps) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!websiteInput) {
-      browser.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-        const url = new URL(tabs[0].url).hostname;
+    (async () => {
+      if (!websiteInput) {
+        const tabs = await browser.tabs.query({ active: true, lastFocusedWindow: true });
+        const url = new URL(tabs[0].url || '').hostname;
         setWebsiteInput(url);
-      });
-    }
+      }
+    })();
   });
 
   const saveCss = async (
