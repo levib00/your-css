@@ -1,9 +1,10 @@
 const mockStorageGet = jest.fn().mockResolvedValue({});
 const mockStorageRemove = jest.fn();
 const mockStorageSet = jest.fn();
+const mockTabQuery = jest.fn().mockResolvedValue([{ url: 'https://example.com/' }]);
 global.browser = {
   tabs: {
-    query: jest.fn(),
+    query: mockTabQuery,
   },
   storage: {
     local: {
