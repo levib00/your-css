@@ -1,5 +1,4 @@
 import { Routes, Route, MemoryRouter } from 'react-router-dom';
-import './App.css';
 import { useEffect, useState } from 'react';
 import NavBar from './components/nav.js';
 import Form from './components/form.js';
