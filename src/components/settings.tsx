@@ -23,8 +23,10 @@ function Settings(props: ISettingsProps) {
   const handleSelector = (option: string) => {
     if (option === 'dark') {
       setIsDarkMode(true);
+      browser.storage.local.set({ darkMode: true });
     } else {
       setIsDarkMode(false);
+      browser.storage.local.set({ darkMode: false });
     }
     setDarModeSelector(option);
   };
