@@ -5,13 +5,13 @@ import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import ConfirmModal from '../components/confirm-modal';
 
-const setModalIsShowingMock = jest.fn();
+const toggleModalMock = jest.fn();
 
 describe('Modal renders', () => {
   test('Overwrite Modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={jest.fn()} />
+        <ConfirmModal toggleModal={toggleModalMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={jest.fn()} />
       </MemoryRouter>,
     );
 
@@ -28,7 +28,7 @@ describe('Modal renders', () => {
 
     render(
       <MemoryRouter>
-        <ConfirmModal setModalIsShowing={setModalIsShowingMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={saveCssMock} />
+        <ConfirmModal toggleModal={toggleModalMock} listingInfo={{ websiteInput: 'website', cssInput: 'css', isActive: true }} saveCss={saveCssMock} />
       </MemoryRouter>,
     );
 
@@ -44,7 +44,7 @@ describe('Modal renders', () => {
   test('Delete modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal deleteListing={jest.fn()} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal deleteListing={jest.fn()} toggleModal={toggleModalMock}/>
       </MemoryRouter>,
     );
 
@@ -59,7 +59,7 @@ describe('Modal renders', () => {
   test('Delete modal renders with correct text', () => {
     render(
       <MemoryRouter>
-        <ConfirmModal clearListing={jest.fn()} setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal clearListing={jest.fn()} toggleModal={toggleModalMock}/>
       </MemoryRouter>,
     );
 
@@ -74,7 +74,7 @@ describe('Modal renders', () => {
   test('Cancel button works', async () => {
     render(
       <MemoryRouter>
-        <ConfirmModal setModalIsShowing={setModalIsShowingMock}/>
+        <ConfirmModal toggleModal={toggleModalMock}/>
       </MemoryRouter>,
     );
 
@@ -84,6 +84,6 @@ describe('Modal renders', () => {
       await userEvent.click(cancel);
     });
 
-    expect(setModalIsShowingMock).toHaveBeenCalledWith(false);
+    expect(toggleModalMock).toHaveBeenCalledTimes(1);
   });
 });
