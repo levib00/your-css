@@ -109,7 +109,7 @@ const Form = (props: FormProps) => {
     <>
       {
         modalIsShowing && <ConfirmModal
-        setModalIsShowing={setModalIsShowing}
+        toggleModal={() => setModalIsShowing(!modalIsShowing)}
         saveCss={saveCss}
         listingInfo={{ websiteInput, cssInput, isActive }}
       />}

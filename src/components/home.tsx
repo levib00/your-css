@@ -18,6 +18,7 @@ const Home = () => {
   const [listings, setListings] = useState<IDomainStyle[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isBeingEdited, setIsBeingEdited] = useState<null | number>(null);
+  const [modalIsShowing, setModalIsShowing] = useState<null | number>(null);
   const [searchResults, setSearchResults] = useState<IStyle | undefined>();
 
   const search = (obj: IStyle, searchQueryString: string) => {
@@ -74,7 +75,9 @@ const Home = () => {
           listings.map((thisStyle, index) => <Listing
           key={Math.random()}
           toggleEditing={() => setIsBeingEdited((s) => (s === index ? null : index))}
+          toggleModal={() => setModalIsShowing((s) => (s === index ? null : index))}
           isBeingEdited={isBeingEdited === index}
+          modalIsShowing={modalIsShowing === index}
           domainName={ Object.keys(thisStyle)[0] }
           allStyles={ allStyles }
           styleInfo={ Object.values(thisStyle)[0] }

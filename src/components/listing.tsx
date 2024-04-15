@@ -11,22 +11,30 @@ interface ListingProps {
   allStyles?: IStyle
   toggleEditing: () => void
   isBeingEdited: boolean
+  toggleModal: () => void
+  modalIsShowing: boolean
 }
 
 function Listing(props: ListingProps) {
   const {
-    domainName, setAllStyles, styleInfo, allStyles, toggleEditing, isBeingEdited,
+    domainName,
+    setAllStyles,
+    styleInfo,
+    allStyles,
+    toggleEditing,
+    isBeingEdited,
+    toggleModal,
+    modalIsShowing,
   } = props;
+
   const [isActive, setIsActive] = useState(styleInfo.isActive);
-  const [deleteModalIsShowing, setDeleteModalIsShowing] = useState(false);
-  const [clearModalIsShowing, setClearModalIsShowing] = useState(false);
 
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
     delete allStylesCopy[domainName];
     browser.storage.local.set({ styles: { ...allStylesCopy } });
     setAllStyles(allStylesCopy);
-    setDeleteModalIsShowing(false);
+    toggleModal();
   };
 
   const clearListing = () => {
@@ -34,7 +42,7 @@ function Listing(props: ListingProps) {
     allStylesCopy[domainName].css = '';
     saveToStorage({ [domainName]: allStylesCopy[domainName] });
     setAllStyles(allStylesCopy);
-    setClearModalIsShowing(false);
+    toggleModal();
   };
 
   const openEditPage = () => {
@@ -66,14 +74,14 @@ function Listing(props: ListingProps) {
           />
           : <>
           {
-            deleteModalIsShowing && <ConfirmModal
-              setModalIsShowing={setDeleteModalIsShowing}
+            (!styleInfo.undeleteable && modalIsShowing) && <ConfirmModal
+              toggleModal={toggleModal}
               deleteListing={deleteListing}
             />
           }
           {
-            clearModalIsShowing && <ConfirmModal
-              setModalIsShowing={setClearModalIsShowing}
+            (styleInfo.undeleteable && modalIsShowing) && <ConfirmModal
+              toggleModal={toggleModal}
               clearListing={clearListing}
             />
           }
@@ -87,10 +95,10 @@ function Listing(props: ListingProps) {
           {domainName !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
           {domainName !== '___toggleAll' && (
             styleInfo.undeleteable ? <button
-              onClick={() => setClearModalIsShowing(true)}>
+              onClick={toggleModal}>
                 clear
               </button> : <button
-                onClick={() => setDeleteModalIsShowing(true)}>
+                onClick={toggleModal}>
                 remove
               </button>
           )}

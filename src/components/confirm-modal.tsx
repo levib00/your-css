@@ -1,7 +1,5 @@
-import React from 'react';
-
 interface IModalProps {
-  setModalIsShowing: React.Dispatch<React.SetStateAction<boolean>>
+  toggleModal: () => void
   deleteListing?: () => void
   clearListing?: () => void
   saveCss?: (
@@ -18,7 +16,7 @@ interface IModalProps {
 
 function ConfirmModal(props: IModalProps) {
   const {
-    setModalIsShowing, deleteListing, clearListing, saveCss, listingInfo,
+    toggleModal, deleteListing, clearListing, saveCss, listingInfo,
   } = props;
 
   return (
@@ -39,7 +37,7 @@ function ConfirmModal(props: IModalProps) {
         <div>Are you sure you want to clear all css for this entry?</div>
         <button onClick={clearListing}>Clear</button>
       </>}
-      <button onClick={() => setModalIsShowing(false)}>Cancel</button>
+      <button onClick={toggleModal}>Cancel</button>
     </div>
   );
 }
