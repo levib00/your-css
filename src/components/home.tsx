@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Listing from './listing';
 import { IStyle } from '../objects/styles';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
+import { AddOutlined } from '@mui/icons-material';
 
 interface IDomainStyle {
   [key:string]: {
@@ -69,7 +70,7 @@ const Home = () => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Link to='/form'><button>+</button></Link>
+      <Link to='/form' title='Add a new style'><button><AddOutlined /></button></Link>
       <div>
         {
           listings.map((thisStyle, index) => <Listing

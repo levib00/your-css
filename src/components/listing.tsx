@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { CancelPresentationOutlined, DeleteForever,EditOutlined } from '@mui/icons-material';
 import Form from './form';
 import { IStyle } from '../objects/styles';
 import { saveToStorage } from '../scripts/storage-handlers';
@@ -95,11 +96,13 @@ function Listing(props: ListingProps) {
           {domainName !== '___toggleAll' && <button onClick={openEditPage}>edit</button>}
           {domainName !== '___toggleAll' && (
             styleInfo.undeleteable ? <button
+              title='clear'
               onClick={toggleModal}>
-                clear
+                <CancelPresentationOutlined />
               </button> : <button
+                title='remove'
                 onClick={toggleModal}>
-                remove
+                <DeleteForever />
               </button>
           )}
         </>
