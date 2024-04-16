@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { AddOutlined } from '@mui/icons-material';
 import Listing from './listing';
 import { IStyle } from '../objects/styles';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
-import { AddOutlined } from '@mui/icons-material';
 
 interface IDomainStyle {
   [key:string]: {
