@@ -11,12 +11,11 @@ describe('Nav bar renders', () => {
       </MemoryRouter>,
     );
 
-    // TODO: will have to change to aria labels or something once these are changed to icons
-    const home = screen.getByText('Home');
+    const home = screen.getByTitle('Home');
     expect(home).toBeInTheDocument();
-    const settings = screen.getByText('Settings');
+    const settings = screen.getByTitle('Settings');
     expect(settings).toBeInTheDocument();
-    const about = screen.getByText('About');
+    const about = screen.getByTitle('About');
     expect(about).toBeInTheDocument();
   });
 });

@@ -112,9 +112,9 @@ describe('Special master styleInfo', () => {
 
     const displayName = screen.queryByText('toggle all');
     const styleActive = screen.getByRole('checkbox');
-    const clearButton = screen.queryByText('clear');
-    const editButton = screen.queryByText('edit');
-    const deleteButton = screen.queryByText('delete');
+    const clearButton = screen.queryByTitle('clear');
+    const editButton = screen.queryByTitle('edit');
+    const deleteButton = screen.queryByTitle('delete');
 
     expect(displayName).toBeInTheDocument();
     expect(styleActive).toBeInTheDocument();
@@ -132,9 +132,9 @@ describe('Special master styleInfo', () => {
 
     const displayName = screen.queryByText('extension styles');
     const styleActive = screen.getByRole('checkbox');
-    const clearButton = screen.queryByText('clear');
-    const editButton = screen.queryByText('edit');
-    const deleteButton = screen.queryByText('delete');
+    const clearButton = screen.queryByTitle('clear');
+    const editButton = screen.queryByTitle('edit');
+    const deleteButton = screen.queryByTitle('delete');
 
     expect(displayName).toBeInTheDocument();
     expect(styleActive).toBeInTheDocument();
@@ -152,9 +152,9 @@ describe('Special master styleInfo', () => {
 
     const displayName = screen.queryByText('global styles');
     const styleActive = screen.getByRole('checkbox');
-    const clearButton = screen.queryByText('clear');
-    const editButton = screen.queryByText('edit');
-    const deleteButton = screen.queryByText('delete');
+    const clearButton = screen.queryByTitle('clear');
+    const editButton = screen.queryByTitle('edit');
+    const deleteButton = screen.queryByTitle('delete');
 
     expect(displayName).toBeInTheDocument();
     expect(styleActive).toBeInTheDocument();
