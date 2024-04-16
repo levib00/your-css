@@ -93,7 +93,7 @@ function Listing(props: ListingProps) {
           <div>
             { styleInfo.css }
           </div>
-          {domainName !== '___toggleAll' && <button onClick={openEditPage}><EditOutlined /></button>}
+          {domainName !== '___toggleAll' && <button onClick={openEditPage} title='edit'><EditOutlined /></button>}
           {domainName !== '___toggleAll' && (
             styleInfo.undeleteable ? <button
               title='clear'
