@@ -17,15 +17,17 @@ function App() {
   }, []);
 
   return (
-    <div className={isDarkMode ? 'dark-mode' : ''}>
+    <div className={isDarkMode ? 'top-container dark-mode' : 'top-container'}>
       <MemoryRouter>
         <NavBar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path="/form" element={<Form /> } />
-          <Route path="/about" element={<About /> } />
-          <Route path="/settings" element={<Settings setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} /> } />
-        </Routes>
+        <div className='main'>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path="/form" element={<Form /> } />
+            <Route path="/about" element={<About /> } />
+            <Route path="/settings" element={<Settings setIsDarkMode={setIsDarkMode} isDarkMode={isDarkMode} /> } />
+          </Routes>
+        </div>
       </MemoryRouter>
     </div>
   );
