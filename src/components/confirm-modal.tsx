@@ -20,24 +20,32 @@ function ConfirmModal(props: IModalProps) {
   } = props;
 
   return (
-    <div>
+    <div className="confirm-modal">
       {deleteListing && <>
         <div>Are you sure you want to permanently delete this group?</div>
-        <button onClick={deleteListing}>Delete</button>
+        <div className="modal-button">
+          <button className="modal-action" onClick={deleteListing}>Delete</button>
+          <button onClick={toggleModal}>Cancel</button>
+        </div>
       </>}
       {(listingInfo && saveCss) && <>
         <div>A style already exists for this website</div>
-        <button onClick={() => saveCss(
-          listingInfo.websiteInput,
-          listingInfo.cssInput,
-          listingInfo.isActive,
-        )}>Overwrite previous style</button>
+        <div className="modal-buttons">
+          <button className="modal-action" onClick={() => saveCss(
+            listingInfo.websiteInput,
+            listingInfo.cssInput,
+            listingInfo.isActive,
+          )}>Overwrite previous style</button>
+          <button onClick={toggleModal}>Cancel</button>
+        </div>
       </>}
       {clearListing && <>
         <div>Are you sure you want to clear all css for this entry?</div>
-        <button onClick={clearListing}>Clear</button>
+        <div className="modal-buttons">
+          <button className="modal-action" onClick={clearListing}>Clear</button>
+          <button onClick={toggleModal}>Cancel</button>
+        </div>
       </>}
-      <button onClick={toggleModal}>Cancel</button>
     </div>
   );
 }
