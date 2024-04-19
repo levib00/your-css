@@ -71,7 +71,7 @@ const Home = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <Link to='/form' title='Add a new style'><button><AddOutlined /></button></Link>
-      <div>
+      <div className='listings'>
         {
           listings.map((thisStyle, index) => <Listing
           key={Math.random()}

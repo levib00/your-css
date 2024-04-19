@@ -63,7 +63,7 @@ function Listing(props: ListingProps) {
   }, [isActive]);
 
   return (
-    <>
+    <div className='listing'>
       {
         isBeingEdited
           ? <Form
@@ -86,28 +86,27 @@ function Listing(props: ListingProps) {
               clearListing={clearListing}
             />
           }
-          <input type="checkbox" checked={isActive} onChange={() => setIsActive(!isActive)}/>
           <div>
             { styleInfo.displayName || domainName }
           </div>
-          <div>
-            { styleInfo.css }
-          </div>
-          {domainName !== '___toggleAll' && <button onClick={openEditPage} title='edit'><EditOutlined /></button>}
-          {domainName !== '___toggleAll' && (
-            styleInfo.undeleteable ? <button
-              title='clear'
-              onClick={toggleModal}>
-                <CancelPresentationOutlined />
-              </button> : <button
-                title='remove'
+          <div className='button-container'>
+            {domainName !== '___toggleAll' && <button onClick={openEditPage} title='edit'><EditOutlined /></button>}
+            {domainName !== '___toggleAll' && (
+              styleInfo.undeleteable ? <button
+                title='clear'
                 onClick={toggleModal}>
-                <DeleteForever />
-              </button>
-          )}
+                  <CancelPresentationOutlined />
+                </button> : <button
+                  title='remove'
+                  onClick={toggleModal}>
+                  <DeleteForever />
+                </button>
+            )}
+             <input type="checkbox" className='active-checkbox' checked={isActive} onChange={() => setIsActive(!isActive)}/>
+          </div>
         </>
       }
-    </>
+    </div>
   );
 }
 

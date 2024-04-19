@@ -5,8 +5,10 @@ function NavBar() {
   return (
     <nav>
       <Link to={'/'} title='Home'><HomeOutlined /></Link>
-      <Link to={'/settings'} title='Settings'><SettingsOutlined /></Link>
-      <Link to={'/about'} title='About'><DataObjectOutlined /></Link>
+      <div className='bottom-spacing-nav'>
+        <Link to={'/settings'} title='Settings'><SettingsOutlined /></Link>
+        <Link to={'/about'} title='About'><DataObjectOutlined /></Link>
+      </div>
     </nav>
   );
 }
