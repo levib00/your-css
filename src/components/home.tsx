@@ -62,16 +62,18 @@ const Home = () => {
 
   return (
     <>
-      <label htmlFor='search'></label>
-      <input
-        type='text'
-        id='search'
-        placeholder='website'
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
+      <search>
+        <label htmlFor='search'></label>
+        <input
+          type='text'
+          id='search'
+          placeholder='website'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </search>
       <Link to='/form' title='Add a new style'><button><AddOutlined /></button></Link>
-      <div className='listings'>
+      <section className='listings'>
         {
           listings.map((thisStyle, index) => <Listing
           key={Math.random()}
@@ -84,7 +86,7 @@ const Home = () => {
           styleInfo={ Object.values(thisStyle)[0] }
           setAllStyles={setAllStyles} />)
         }
-      </div>
+      </section>
     </>
   );
 };
