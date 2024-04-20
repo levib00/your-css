@@ -136,11 +136,53 @@ nav {
   .bottom-spacing-nav {
     display: flex;
     flex-direction: column;
+    justify-content: end;
+    height: 25%;
+    gap: 10px;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%
   }
 }
  
 .top-container {
   height: 100%;
+}
+
+.confirm-modal {
+  position: absolute;
+  width: 240px;
+  height: 140px;
+  top: calc(50% - 70px);
+  left: calc(50% - 120px);
+  border: #ddd 2px solid;
+  background-color: $light-mode;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px;
+  .modal-buttons {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    justify-content: center;
+    button {
+      font-weight: 700;
+      background-color: #444;
+      border: #ddd 2px solid;
+      width: unset;
+    }
+    .modal-action {
+      background-color: rgb(160, 0, 0);
+    }
+  }
 }
 
 .dark-mode{
@@ -155,6 +197,9 @@ nav {
     color: white;
   }
   .listing {
+    background-color: $dark-mode;
+  }
+  .confirm-modal {
     background-color: $dark-mode;
   }
 }
