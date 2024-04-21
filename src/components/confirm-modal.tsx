@@ -5,7 +5,9 @@ interface IModalProps {
   saveCss?: (
     website: string,
     css: string,
-    activeStatus: boolean
+    activeStatus: boolean,
+    prevStyles: null,
+    overwrite: boolean,
   ) => void
   listingInfo?: {
     websiteInput: string,
@@ -35,6 +37,8 @@ function ConfirmModal(props: IModalProps) {
             listingInfo.websiteInput,
             listingInfo.cssInput,
             listingInfo.isActive,
+            null,
+            true,
           )}>Overwrite</button>
           <button onClick={toggleModal}>Cancel</button>
         </div>
