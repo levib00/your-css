@@ -23,7 +23,7 @@ function ConfirmModal(props: IModalProps) {
     <div className="confirm-modal">
       {deleteListing && <>
         <div>Are you sure you want to permanently delete this group?</div>
-        <div className="modal-button">
+        <div className="modal-buttons">
           <button className="modal-action" onClick={deleteListing}>Delete</button>
           <button onClick={toggleModal}>Cancel</button>
         </div>
@@ -35,7 +35,7 @@ function ConfirmModal(props: IModalProps) {
             listingInfo.websiteInput,
             listingInfo.cssInput,
             listingInfo.isActive,
-          )}>Overwrite previous style</button>
+          )}>Overwrite</button>
           <button onClick={toggleModal}>Cancel</button>
         </div>
       </>}
