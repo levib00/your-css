@@ -17,7 +17,7 @@ describe('Modal renders', () => {
 
     const prompt = screen.getByText('A style already exists for this website');
     expect(prompt).toBeInTheDocument();
-    const overwrite = screen.getByText('Overwrite previous style');
+    const overwrite = screen.getByText('Overwrite');
     expect(overwrite).toBeInTheDocument();
     const cancel = screen.getByText('Cancel');
     expect(cancel).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('Modal renders', () => {
       </MemoryRouter>,
     );
 
-    const overwrite = screen.getByText('Overwrite previous style');
+    const overwrite = screen.getByText('Overwrite');
 
     await act(async () => {
       await userEvent.click(overwrite);
@@ -74,7 +74,7 @@ describe('Modal renders', () => {
   test('Cancel button works', async () => {
     render(
       <MemoryRouter>
-        <ConfirmModal toggleModal={toggleModalMock}/>
+        <ConfirmModal clearListing={jest.fn()} toggleModal={toggleModalMock}/>
       </MemoryRouter>,
     );
 
