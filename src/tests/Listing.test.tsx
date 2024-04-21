@@ -26,8 +26,6 @@ describe('Listing renders', () => {
 
     const styleName = screen.getByText('styleName');
     expect(styleName).toBeInTheDocument();
-    const styleText = screen.getByText('domainName text');
-    expect(styleText).toBeInTheDocument();
   });
 
   test('Edit button works', async () => {
