@@ -50,7 +50,7 @@ const Form = (props: FormProps) => {
       isActive?: boolean,
       undeleteable?: boolean,
       displayName?: string,
-    },
+    } | null,
     overwrite: boolean = false,
   ) => {
     const newListing = {
