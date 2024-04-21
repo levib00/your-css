@@ -62,17 +62,19 @@ const Home = () => {
 
   return (
     <>
-      <search>
-        <label htmlFor='search'></label>
-        <input
-          type='text'
-          id='search'
-          placeholder='website'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </search>
-      <Link to='/form' title='Add a new style'><button><AddOutlined /></button></Link>
+      <div className='home-head'>
+        <search>
+          <label htmlFor='search'></label>
+          <input
+            type='text'
+            id='search'
+            placeholder='website'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </search>
+        <Link to='/form' className='Add-new-listing' title='Add a new style'><AddOutlined /></Link>
+      </div>
       <section className='listings'>
         {
           listings.map((thisStyle, index) => <Listing
