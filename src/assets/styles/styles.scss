@@ -1,6 +1,7 @@
 $light-mode: #fff;
 $dark-mode: #222;
 $base-color: #c6538c;
+$border-light: rgba($base-color, 0.88);
 $border-dark: rgba($base-color, 0.88);
 
 body {
@@ -98,6 +99,24 @@ a {
     display: flex;
     align-items: center;
     justify-content: end;
+  }
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.form-input-container {
+  display: flex;
+  gap: 8px;
+  button {
+    width: unset;
+    border: 2px solid $border-light;
+    display: flex;
+    place-items: center;
   }
 }
 
