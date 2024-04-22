@@ -106,7 +106,7 @@ const Form = (props: FormProps) => {
   };
 
   return (
-    <>
+    <form>
       {
         modalIsShowing && <ConfirmModal
         toggleModal={() => setModalIsShowing(!modalIsShowing)}
@@ -135,14 +135,20 @@ const Form = (props: FormProps) => {
         value={cssInput}
       />
       <div>Shift + Tab to indent</div>
-      <label htmlFor='active-checkbox'>activate</label>
-      <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
-      <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
-      <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
+      <div className='form-input-container'>
+        <label htmlFor='active-checkbox'>activate</label>
+        <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
+      </div>
+      <div className="style-form-button-container form-input-container">
+        <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
+        <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
+      </div>
       <input type='file' onChange={(e) => handleFileUpload(e)} />
-      <button onClick={() => importCss(file)}>import</button>
-      <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
-    </>
+      <div className="import-export-button-container form-input-container">
+        <button onClick={() => importCss(file)}>import</button>
+        <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
+      </div>
+    </form>
   );
 };
 
