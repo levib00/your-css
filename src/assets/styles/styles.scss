@@ -110,7 +110,9 @@ form {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 6px 0;
+  margin: auto 0;
+  width: 80%;
+  box-sizing: border-box;
   .file-input {
     margin: 16px 0;
   }
@@ -122,6 +124,17 @@ form {
     display: flex;
     justify-content: center;
   }
+}
+
+.new-form {
+  border: #111 solid 2px;
+  border-radius: 8px;
+  padding: 8px 5px;
+}
+
+.editing-form {
+  width: 100%;
+  margin: 6px 0;
 }
 
 .form-input-container {
@@ -193,6 +206,8 @@ nav {
     background-color: $light-mode;
     padding: 10px;
     background-color: transparent;
+    display: flex;
+    place-items: center;
   }
   .bottom-spacing-nav {
     display: flex;
@@ -204,7 +219,7 @@ nav {
   ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
+    margin: 5px 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
