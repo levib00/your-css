@@ -143,8 +143,8 @@ const Form = (props: FormProps) => {
         <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
         <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
       </div>
-      <input type='file' onChange={(e) => handleFileUpload(e)} />
-      <div className="import-export-button-container form-input-container">
+      <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
+      <div className="style-form-button-container form-input-container">
         <button onClick={() => importCss(file)}>import</button>
         <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
       </div>
