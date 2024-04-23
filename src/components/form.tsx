@@ -106,7 +106,7 @@ const Form = (props: FormProps) => {
   };
 
   return (
-    <form>
+    <form className={ toggleEditing ? 'editing-form' : 'new-form' }>
       {
         modalIsShowing && <ConfirmModal
         toggleModal={() => setModalIsShowing(!modalIsShowing)}
