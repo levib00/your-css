@@ -63,16 +63,21 @@ function Listing(props: ListingProps) {
   }, [isActive]);
 
   return (
-    <div className='listing'>
+    <div className={isBeingEdited ? 'listing editing-listing' : 'listing'}>
       {
         isBeingEdited
-          ? <Form
-            styleInfo={styleInfo}
-            domain={domainName}
-            toggleEditing={toggleEditing}
-            allStyles={allStyles}
-            setAllStyles={setAllStyles}
-          />
+          ? <>
+            <div className='editing-display-name'>
+              { styleInfo.displayName || domainName }
+            </div>
+            <Form
+              styleInfo={styleInfo}
+              domain={domainName}
+              toggleEditing={toggleEditing}
+              allStyles={allStyles}
+              setAllStyles={setAllStyles}
+            />
+          </>
           : <>
           {
             (!styleInfo.undeleteable && modalIsShowing) && <ConfirmModal
