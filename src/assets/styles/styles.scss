@@ -111,6 +111,17 @@ form {
   flex-direction: column;
   gap: 8px;
   margin: 6px 0;
+  .file-input {
+    margin: 16px 0;
+  }
+  .css-input {
+    resize: vertical;
+  }
+  .style-form-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .form-input-container {
@@ -235,6 +246,17 @@ nav {
     .modal-action {
       background-color: rgb(160, 0, 0);
     }
+  }
+}
+
+.editing-listing {
+  flex-direction: column;
+  padding: 0 5px;
+  .editing-display-name {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
   }
 }
 
