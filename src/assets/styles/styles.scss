@@ -275,6 +275,27 @@ nav {
   }
 }
 
+.settings-page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18px;
+
+  .settings-buttons-container {
+    display: flex;
+    gap: 12px;
+    button {
+      border: solid 1px $border-light;
+    }
+  }
+
+  .light-dark-selector-container {
+    display: flex;
+    justify-content: center;
+  }
+}
+
 .dark-mode{
   nav a svg path {
     fill: white;
