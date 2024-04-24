@@ -32,18 +32,18 @@ function Settings(props: ISettingsProps) {
   };
 
   return (
-    <>
-      {allStyles ? <>
+    <div className='settings-page'>
+      {allStyles ? <div className='settings-buttons-container'>
         <button onClick={() => handleDownloadClick(null, null, allStyles)}>import</button>
         <button onClick={() => assembleCssForExport(allStyles, null)}>export</button>
-      </> : 'Loading...'}
-      <div>
-        <select defaultValue={darkModeSelector} placeholder='Select light or dark mode.'>
+      </div> : 'Loading...'}
+      <div className='light-dark-selector-container' >
+        <select className='light-dark-selector' defaultValue={darkModeSelector} placeholder='Select light or dark mode.'>
           <option onClick={() => handleSelector('light')}>Light</option>
           <option onClick={() => handleSelector('dark')}>Dark</option>
         </select>
       </div>
-    </>
+    </div>
   );
 }
 
