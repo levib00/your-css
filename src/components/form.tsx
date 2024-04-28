@@ -1,7 +1,8 @@
 import React, {
   ChangeEvent, useEffect, useState, KeyboardEvent,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronLeft } from '@mui/icons-material';
 import { getFromStorage, saveToStorage } from '../scripts/storage-handlers';
 import { handleDownloadClick, parseCssFile } from '../scripts/import-export-css';
 import { IStyle } from '../objects/styles';
@@ -106,49 +107,56 @@ const Form = (props: FormProps) => {
   };
 
   return (
-    <form className='new-form'>
-      {
-        modalIsShowing && <ConfirmModal
-        toggleModal={() => setModalIsShowing(!modalIsShowing)}
-        saveCss={saveCss}
-        listingInfo={{ websiteInput, cssInput, isActive }}
-      />}
-      {
-        !styleInfo?.undeleteable && <label htmlFor='website-input'>Website</label>
-      }
-      {
-        !styleInfo?.undeleteable && <input
-          type='text'
-          id='website-input'
-          name='website'
-          onChange={(e) => setWebsiteInput(e.target.value)}
-          value={websiteInput}
-        />
-      }
-      <label htmlFor="css-input">custom css</label>
-      <textarea
-        name='css-input'
-        id='css-input'
-        className='css-input'
-        onKeyDown={(e) => indentOnTab(e)}
-        onChange={(e) => setCssInput(e.target.value)}
-        value={cssInput}
-      />
-      <div>Shift + Tab to indent</div>
-      <div className='form-input-container'>
-        <label htmlFor='active-checkbox'>activate</label>
-        <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
-      </div>
-      <div className="style-form-button-container form-input-container">
-        <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
-        <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
-      </div>
-      <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
-      <div className="style-form-button-container form-input-container">
-        <button onClick={() => importCss(file)}>import</button>
-        <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
-      </div>
-    </form>
+    <div className={!toggleEditing ? 'new-listing' : 'editing-listing-form-container'}>
+      {!toggleEditing ? <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'><ChevronLeft /></Link> : <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button> }
+      <form className='new-form'>
+        {
+          modalIsShowing && <ConfirmModal
+          toggleModal={() => setModalIsShowing(!modalIsShowing)}
+          saveCss={saveCss}
+          listingInfo={{ websiteInput, cssInput, isActive }}
+        />}
+        {
+          !styleInfo?.undeleteable && <>
+            <label htmlFor='website-input' className='website-input'>
+              Website:
+              <input
+                type='text'
+                id='website-input'
+                name='website'
+                onChange={(e) => setWebsiteInput(e.target.value)}
+                value={websiteInput}
+              />
+            </label>
+          </>
+        }
+        <label htmlFor="css-input">
+          custom css:
+          <textarea
+            name='css-input'
+            id='css-input'
+            className='css-input'
+            onKeyDown={(e) => indentOnTab(e)}
+            onChange={(e) => setCssInput(e.target.value)}
+            value={cssInput}
+          />
+          <div>Shift + Tab to indent</div>
+        </label>
+        <div className='form-input-container'>
+          <label htmlFor='active-checkbox'>activate:</label>
+          <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
+        </div>
+        <div className="style-form-button-container form-input-container">
+          <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
+          <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
+        </div>
+        <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
+        <div className="style-form-button-container form-input-container">
+          <button onClick={() => importCss(file)}>import</button>
+          <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
+        </div>
+      </form>
+    </div>
   );
 };
 

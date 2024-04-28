@@ -3,7 +3,6 @@ import {
   CancelPresentationOutlined,
   DeleteForever,
   EditOutlined,
-  ChevronLeft,
 } from '@mui/icons-material';
 import Form from './form';
 import { IStyle } from '../objects/styles';
@@ -72,7 +71,6 @@ function Listing(props: ListingProps) {
       {
         isBeingEdited
           ? <>
-            <button className='go-back-edit-listing-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button>
             <div className='editing-display-name'>
               { styleInfo.displayName || domainName }
             </div>
