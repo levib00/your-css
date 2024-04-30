@@ -1,8 +1,14 @@
 $light-mode: #fff;
 $dark-mode: #222;
+$main-dark: #444;
 $base-color: #c6538c;
+$very-dark: #151515;
 $border-light: rgba($base-color, 0.88);
 $border-dark: rgba($base-color, 0.88);
+
+html, body, #root {
+  overflow-y: hidden;
+}
 
 body {
   height: 100%;
@@ -32,7 +38,7 @@ body {
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: $very-dark;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -86,6 +92,7 @@ a {
   background-color: $light-mode;
   border-radius: 6px;
   padding-left: 5px;
+  height: 44px;
   button {
     width: 2.5rem;
     height: 2.5rem;
@@ -98,6 +105,7 @@ a {
     height: 2.5rem;
     margin: 0;
     border-radius: 8px;
+    margin-right: 2px;
   }
   .button-container {
     display: flex;
@@ -118,7 +126,7 @@ form {
   flex-direction: column;
   gap: 8px;
   margin: auto auto;
-  width: 80%;
+  width: 100%;
   box-sizing: border-box;
   .file-input {
     margin: 16px 0;
@@ -131,13 +139,38 @@ form {
     display: flex;
     justify-content: center;
   }
+
+  label, .checkbox-container, .import-export-container {
+    background-color: $base-color;
+    border-radius: 8px;
+    padding: 5px;
+    box-sizing: border-box;
+    height: min-content;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    input, textarea {
+      border: none;
+    }
+  }
+
+  .import-export-container {
+    margin-top: 41px;
+  }
 }
 
-.new-form {
-  border: #111 solid 2px;
-  border-radius: 8px;
+.new-form, .editing-form {
+  border-radius: 0 !important;
   padding: 8px 5px;
-  margin: auto auto;
+  margin: auto auto auto auto;
+}
+
+.editing-form {
+  margin-top: 5px;
 }
 
 .form-input-container {
@@ -161,27 +194,30 @@ body {
 .listings {
   display: flex;
   flex-direction: column;
-  background-color: #111;
-  padding: 2px;
-  gap: 2px;
+  background-color: unset;
+  padding: 5px;
+  gap: 4px;
   border-radius: 8px;
-  width: 80%;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .home-head {
   display: flex;
   align-items: center;
-  margin: 5px 2px;
-  width: 80%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5px 5px 2px 5px;
   search {
-    width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
+    width: calc(100% - 40px);
     input {
-      width: 95%;
-      height: 36px;
+      box-sizing: border-box;
+      height: 40px;
       font-size: 1.5rem;
+      width: 100%;
     }
   }
   a {
@@ -190,7 +226,8 @@ body {
     justify-content: center;
     height: 40px;
     width: 40px;
-    margin-right: 2px;
+    box-sizing: border-box;
+    border: $border-light 1px solid;
   }
 }
 
@@ -202,7 +239,7 @@ h1 {
 nav {
   display: flex;
   flex-direction: column;
-  background-color: #111;
+  background-color: $main-dark;
   height: 100%;
   justify-content: space-between;
   a {
@@ -275,6 +312,8 @@ nav {
   top: 0;
   flex-direction: column;
   padding: 0 0;
+  background-color: $main-dark;
+  overflow-y: auto;
 }
 
 .website-input {
@@ -295,12 +334,21 @@ nav {
   position: absolute;
   border: 1px solid $border-light;
   border-radius: 8px;
-  left: 0px;
-  top: 0px;
-
+  box-sizing: border-box;
+  left: 5px;
+  top: 5px;
+  height: 40px;
+  width: 40px;
   svg {
     transform: scale(1.5);
   }
+}
+
+.go-back-new-form-button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .editing-display-name {
@@ -310,7 +358,6 @@ nav {
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  margin-bottom: -20px;
 }
 
 .settings-page {
@@ -393,7 +440,7 @@ nav {
     background-color: $dark-mode;
   }
   .confirm-modal {
-    background-color: $dark-mode;
+    background-color: $main-dark;
   }
   .about-page {
     svg {
@@ -404,8 +451,17 @@ nav {
   }
   .about-links {
     a {
-      background-color: #333;
+      background-color: $main-dark;
     }
   }   
+  form {
+    label, .checkbox-container, .import-export-container {
+      background-color: $main-dark;
+    }
+  }
+
+  .editing-listing {
+    background-color: $very-dark;
+  }
 }
 
