@@ -109,7 +109,7 @@ const Form = (props: FormProps) => {
   return (
     <div className={!toggleEditing ? 'new-listing' : 'editing-listing-form-container'}>
       {!toggleEditing ? <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'><ChevronLeft /></Link> : <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button> }
-      <form className='new-form'>
+      <form className={!toggleEditing ? 'new-form' : 'editing-form'}>
         {
           modalIsShowing && <ConfirmModal
           toggleModal={() => setModalIsShowing(!modalIsShowing)}
@@ -142,7 +142,7 @@ const Form = (props: FormProps) => {
           />
           <div>Shift + Tab to indent</div>
         </label>
-        <div className='form-input-container'>
+        <div className='form-input-container checkbox-container'>
           <label htmlFor='active-checkbox'>activate:</label>
           <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
         </div>
@@ -150,10 +150,16 @@ const Form = (props: FormProps) => {
           <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
           <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
         </div>
-        <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
-        <div className="style-form-button-container form-input-container">
-          <button onClick={() => importCss(file)}>import</button>
-          <button onClick={() => handleDownloadClick(cssInput, websiteInput, null)}>export</button>
+        <div className="import-export-container">
+          <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
+          <div className="style-form-button-container form-input-container">
+            <button onClick={() => importCss(file)}>import</button>
+            <button onClick={() => handleDownloadClick(
+              cssInput,
+              websiteInput,
+              null,
+            )}>export</button>
+        </div>
         </div>
       </form>
     </div>
