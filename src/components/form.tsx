@@ -131,7 +131,7 @@ const Form = (props: FormProps) => {
           </>
         }
         <label htmlFor="css-input">
-          custom css:
+          Custom css:
           <textarea
             name='css-input'
             id='css-input'
@@ -143,7 +143,7 @@ const Form = (props: FormProps) => {
           <div>Shift + Tab to indent</div>
         </label>
         <div className='form-input-container checkbox-container'>
-          <label htmlFor='active-checkbox'>activate:</label>
+          <label className='checkbox-label' htmlFor='active-checkbox'>Activate:</label>
           <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
         </div>
         <div className="style-form-button-container form-input-container">
