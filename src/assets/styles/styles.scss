@@ -1,6 +1,6 @@
 $light-mode: #fff;
 $dark-mode: #222;
-$main-dark: #444;
+$main-dark: #333333;
 $base-color: #c6538c;
 $very-dark: #151515;
 $border-light: rgba($base-color, 0.88);
@@ -29,6 +29,7 @@ body {
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  scrollbar-width: thin;
 }
 
 :root {
@@ -128,12 +129,17 @@ form {
   margin: auto auto;
   width: 100%;
   box-sizing: border-box;
+  font-size: 16px;
+
   .file-input {
     margin: 16px 0;
   }
+
   .css-input {
     resize: vertical;
+    font-size: 16px;
   }
+
   .style-form-button-container {
     width: 100%;
     display: flex;
@@ -148,28 +154,63 @@ form {
     height: min-content;
   }
 
-  label {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+  .checkbox-label {
+    background-color: transparent !important;
+  }
 
-    input, textarea {
-      border: none;
+  .checkbox-container, label, .import-export-container {
+    &:focus-within {
+      background-color: #444 !important;
+    }
+
+    &:hover {
+      background-color: #444 !important;
     }
   }
 
+  label {
+    input, textarea {
+      border: none;
+      color: #ffffff;
+      background-color: transparent;
+    }
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    color: #dbdbdb;
+  }
+  
   .import-export-container {
     margin-top: 41px;
+  }
+
+  .website-input {
+    display: flex;
+    gap: 8px;
+  }
+
+  textarea {
+    margin-top: 4px;
+  }
+  
+  #website-input {
+    margin-top: -5px;
+    height: 22px;
+    font-size: 18px;
   }
 }
 
 .new-form, .editing-form {
   border-radius: 0 !important;
-  padding: 8px 5px;
+  padding: 5px 5px;
   margin: auto auto auto auto;
 }
 
 .editing-form {
+  margin-top: 8px;
+}
+
+.new-form {
   margin-top: 5px;
 }
 
@@ -314,11 +355,7 @@ nav {
   padding: 0 0;
   background-color: $main-dark;
   overflow-y: auto;
-}
-
-.website-input {
-  display: flex;
-  gap: 8px;
+  scrollbar-width: thin;
 }
 
 .new-listing {
