@@ -111,7 +111,10 @@ function Listing(props: ListingProps) {
                   <DeleteForever />
                 </button>
             )}
-             <input type="checkbox" className='active-checkbox' checked={isActive} onChange={() => setIsActive(!isActive)}/>
+              <div className="checkbox-container" >
+                <input type="checkbox" className='active-checkbox' checked={isActive} />
+                <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
+              </div>
           </div>
         </>
       }

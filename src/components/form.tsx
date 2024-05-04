@@ -142,9 +142,12 @@ const Form = (props: FormProps) => {
           />
           <div>Shift + Tab to indent</div>
         </label>
-        <div className='form-input-container checkbox-container'>
+        <div className='form-input-container style-active-container'>
           <label className='checkbox-label' htmlFor='active-checkbox'>Activate:</label>
-          <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => { setIsActive(!isActive); }} />
+          <div className="checkbox-container form-checkbox-container">
+            <input type='checkbox' id='active-checkbox' checked={isActive} />
+            <span className="checkmark" onClick={() => { setIsActive(!isActive); }}></span>
+          </div>
         </div>
         <div className="style-form-button-container form-input-container">
           <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
