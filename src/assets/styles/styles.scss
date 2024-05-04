@@ -112,6 +112,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: end;
+    margin-right: 6px;
   }
 }
 
@@ -146,7 +147,7 @@ form {
     justify-content: center;
   }
 
-  label, .checkbox-container, .import-export-container {
+  label, .style-active-container, .import-export-container {
     background-color: $base-color;
     border-radius: 8px;
     padding: 5px;
@@ -154,11 +155,16 @@ form {
     height: min-content;
   }
 
+  .style-active-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .checkbox-label {
     background-color: transparent !important;
   }
 
-  .checkbox-container, label, .import-export-container {
+  .style-active-container, label, .import-export-container {
     &:focus-within {
       background-color: #444 !important;
     }
@@ -223,6 +229,67 @@ form {
     display: flex;
     place-items: center;
   }
+}
+
+.form-checkbox-container {
+  margin-top: 3px;
+  margin-right: 5px;
+}
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 22px;
+  height: 30px;
+  width: 30px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+.checkmark {
+  display: block;
+  height: 30px !important;
+  width: 30px !important;
+  background-color: $dark-mode;
+  border: $border-light 2px solid;
+  box-sizing: border-box;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: $main-dark;
+}
+
+.checkmark:after {
+  content: "";
+  display: none;
+  margin: 4px 0 0 4px;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  width: 18px;
+  height: 18px;
+  background-color: $border-light;
 }
 
 body {
@@ -492,7 +559,7 @@ nav {
     }
   }   
   form {
-    label, .checkbox-container, .import-export-container {
+    label, .style-active-container, .import-export-container {
       background-color: $main-dark;
     }
   }
