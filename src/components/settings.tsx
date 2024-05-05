@@ -11,6 +11,7 @@ interface ISettingsProps {
 function Settings(props: ISettingsProps) {
   const { setIsDarkMode, isDarkMode } = props;
   const [allStyles, setAllStyles] = useState<IStyle | undefined>();
+  const [isOpen, setIsOpen] = useState(false);
   const [darkModeSelector, setDarModeSelector] = useState(isDarkMode ? 'dark' : 'light');
 
   useEffect(() => {
@@ -31,6 +32,11 @@ function Settings(props: ISettingsProps) {
     setDarModeSelector(option);
   };
 
+  const handleOptionClick = (option: string) => {
+    handleSelector(option);
+    setIsOpen(false);
+  };
+
   return (
     <div className='settings-page'>
       {allStyles ? <div className='settings-buttons-container'>
@@ -38,10 +44,25 @@ function Settings(props: ISettingsProps) {
         <button onClick={() => assembleCssForExport(allStyles, null)}>export</button>
       </div> : 'Loading...'}
       <div className='light-dark-selector-container' >
-        <select className='light-dark-selector' defaultValue={darkModeSelector} placeholder='Select light or dark mode.'>
-          <option onClick={() => handleSelector('light')}>Light</option>
-          <option onClick={() => handleSelector('dark')}>Dark</option>
-        </select>
+        <div className='custom-select'>
+          <div
+            className={`selected-option ${isOpen ? 'open' : ''}`}
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {darkModeSelector}
+            <div className='arrow'>&#9660;</div>
+          </div>
+          {isOpen && (
+            <div className='options'>
+              <div className='option' onClick={() => handleOptionClick('light')}>
+                light
+              </div>
+              <div className='option' onClick={() => handleOptionClick('dark')}>
+                dark
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
