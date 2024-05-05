@@ -482,6 +482,53 @@ nav {
   .light-dark-selector-container {
     display: flex;
     justify-content: center;
+    height: 100px;
+    
+  }
+}
+
+.custom-select {
+  width: 80px;
+  height: min-content;
+  border-radius: 8px;
+}
+
+.selected-option {
+  padding: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+  height: 36px;
+  box-sizing: border-box;
+
+  .arrow {
+    box-sizing: border-box;
+
+  }
+
+  &.open .arrow {
+    transform:  rotateX(180deg);
+  }
+}
+
+.options {
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: $light-mode;
+  color: black;
+  z-index: 1;
+}
+
+.option {
+  padding: 5px;
+  cursor: pointer;
+  height: 36px;
+  box-sizing: border-box;
+
+  &:hover {
+    background-color: #f0f0f0;
   }
 }
 
@@ -566,6 +613,21 @@ nav {
 
   .editing-listing {
     background-color: $very-dark;
+  }
+  .selected-option {
+    background-color: $main-dark;
+  }
+  
+  .options {
+    border: 1px solid #ccc;
+    background-color: $dark-mode;
+    color: white;
+  }
+  
+  .option {
+    &:hover {
+      background-color: $main-dark;
+    }
   }
 }
 
