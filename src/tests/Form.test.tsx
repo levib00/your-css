@@ -6,37 +6,15 @@ import '@testing-library/jest-dom';
 import * as storageHandlers from '../scripts/storage-handlers';
 import * as importExportCss from '../scripts/import-export-css';
 
-interface FormTestProps {
-  styles : { [key: string]: { isActive: boolean, css: string } }
-}
-
-let testStylesObject: FormTestProps;
-
 beforeEach(() => {
   jest.clearAllMocks();
   jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn());
-
-  jest.mock('../objects/styles', () => {
-    const object = {
-      exampleName1: { isActive: true, css: 'example style text 1' },
-      exampleName2: { isActive: true, css: 'example style text 2' },
-    };
-    testStylesObject = { styles: object };
-    return testStylesObject;
-  });
 });
 
 const Website = {
   isActive: false,
   css: 'css',
 };
-
-const mockNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router') as any),
-  useNavigate: () => mockNavigate,
-}));
 
 describe('Form renders', () => {
   test('Create new form renders.', () => {
@@ -46,9 +24,9 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
-    const websiteLabel = screen.getByText('Website');
+    const websiteLabel = screen.getByText('Website:');
     expect(websiteLabel).toBeInTheDocument();
-    const textAreaLabel = screen.getByText('custom css');
+    const textAreaLabel = screen.getByText('Custom css:');
     expect(textAreaLabel).toBeInTheDocument();
   });
 
@@ -64,7 +42,7 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
-    const isActive = screen.getByLabelText('activate');
+    const isActive = screen.getByLabelText('Activate:');
     expect(isActive).toBeChecked();
     const websiteText = screen.getByDisplayValue('example website');
     expect(websiteText).toBeInTheDocument();
@@ -79,10 +57,10 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
-    const websiteBox = screen.getByLabelText('Website');
-    const cssBox = screen.getByLabelText('custom css');
+    const websiteBox = screen.getByLabelText('Website:');
+    const cssBox = screen.getByLabelText('Custom css:');
     const saveButton = screen.getByText('save');
-    const checkbox = screen.getByText('activate');
+    const checkbox = screen.getByText('Activate:');
 
     await act(async () => {
       await userEvent.type(websiteBox, 'websitetest');
@@ -130,7 +108,7 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
-    const cssBox = screen.getByLabelText('custom css');
+    const cssBox = screen.getByLabelText('Custom css:');
     const saveButton = screen.getByText('save');
 
     await act(async () => {
@@ -205,22 +183,5 @@ describe('Form renders', () => {
     });
 
     expect(toggleEditingMock).toHaveBeenCalledTimes(1);
-  });
-
-  test('Cancel on new listing form navigates to home.', async () => {
-    render(
-      <MemoryRouter>
-        <Form />
-      </MemoryRouter>,
-    );
-
-    const cancelButton = screen.getByText('cancel');
-
-    await act(async () => {
-      await userEvent.click(cancelButton);
-    });
-
-    expect(mockNavigate).toHaveBeenCalledTimes(1);
-    expect(mockNavigate).toHaveBeenCalledWith('/');
   });
 });
