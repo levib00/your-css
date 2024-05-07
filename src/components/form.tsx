@@ -54,14 +54,33 @@ const Form = (props: FormProps) => {
     } | null,
     overwrite: boolean = false,
   ) => {
-    const newListing = {
-      [website]: {
-        isActive: activeStatus,
-        css,
-        undeleteable: prevStyles?.undeleteable,
-        displayName: prevStyles?.displayName,
-      },
+    let newListing: {
+      [website: string]: {
+        css?: string,
+        isActive?: boolean,
+        undeleteable?: boolean,
+        displayName?: string,
+      }
     };
+
+    if (prevStyles?.undeleteable) {
+      newListing = {
+        [website]: {
+          isActive: activeStatus,
+          css,
+          undeleteable: prevStyles?.undeleteable,
+          displayName: prevStyles?.displayName,
+        },
+      };
+    } else {
+      newListing = {
+        [website]: {
+          isActive: activeStatus,
+          css,
+        },
+      };
+    }
+
     if (await getFromStorage(website) && (!overwrite && !toggleEditing)) {
       setModalIsShowing(true);
     } else {
@@ -131,7 +150,7 @@ const Form = (props: FormProps) => {
           </>
         }
         <label htmlFor="css-input">
-          Custom css:
+          <div>Custom css:</div>
           <textarea
             name='css-input'
             id='css-input'
@@ -140,13 +159,13 @@ const Form = (props: FormProps) => {
             onChange={(e) => setCssInput(e.target.value)}
             value={cssInput}
           />
-          <div>Shift + Tab to indent</div>
         </label>
+        <div>Shift + Tab to indent</div>
         <div className='form-input-container style-active-container'>
           <label className='checkbox-label' htmlFor='active-checkbox'>Activate:</label>
           <div className="checkbox-container form-checkbox-container">
-            <input type='checkbox' id='active-checkbox' checked={isActive} />
-            <span className="checkmark" onClick={() => { setIsActive(!isActive); }}></span>
+            <input type='checkbox' id='active-checkbox' checked={isActive} onClick={() => setIsActive(!isActive)} />
+            <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
           </div>
         </div>
         <div className="style-form-button-container form-input-container">
