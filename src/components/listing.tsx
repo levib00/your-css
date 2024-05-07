@@ -112,7 +112,7 @@ function Listing(props: ListingProps) {
                 </button>
             )}
               <div className="checkbox-container" >
-                <input type="checkbox" className='active-checkbox' defaultChecked={isActive} />
+                <input type="checkbox" className='active-checkbox' defaultChecked={isActive} onClick={() => setIsActive(!isActive)}/>
                 <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
               </div>
           </div>
