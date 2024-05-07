@@ -128,7 +128,7 @@ const Form = (props: FormProps) => {
   return (
     <div className={!toggleEditing ? 'new-listing' : 'editing-listing-form-container'}>
       {!toggleEditing ? <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'><ChevronLeft /></Link> : <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button> }
-      <form className={!toggleEditing ? 'new-form' : 'editing-form'}>
+      <form className={!toggleEditing ? 'new-form' : 'editing-form'} onSubmit={(e) => e.preventDefault()}>
         {
           modalIsShowing && <ConfirmModal
           toggleModal={() => setModalIsShowing(!modalIsShowing)}
@@ -164,7 +164,7 @@ const Form = (props: FormProps) => {
         <div className='form-input-container style-active-container'>
           <label className='checkbox-label' htmlFor='active-checkbox'>Activate:</label>
           <div className="checkbox-container form-checkbox-container">
-            <input type='checkbox' id='active-checkbox' checked={isActive} onClick={() => setIsActive(!isActive)} />
+            <input type='checkbox' id='active-checkbox' defaultChecked={isActive} onClick={() => setIsActive(!isActive)} />
             <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
           </div>
         </div>
