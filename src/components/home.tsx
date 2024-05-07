@@ -63,7 +63,7 @@ const Home = () => {
   return (
     <>
       <div className='home-head'>
-        <search>
+        <div>
           <label htmlFor='search'></label>
           <input
             type='text'
@@ -72,7 +72,7 @@ const Home = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </search>
+        </div>
         <Link to='/form' className='Add-new-listing' title='Add a new style'><AddOutlined /></Link>
       </div>
       <section className='listings'>
