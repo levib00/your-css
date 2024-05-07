@@ -1,129 +1,126 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
-import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
 import * as importExport from '../scripts/import-export-css';
+import * as storageHandlers from '../scripts/storage-handlers';
 import Settings from '../components/settings';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe('Settings page component', () => {
-  test('Renders properly', () => {
-    render(
-      <MemoryRouter>
-        <Settings setIsDarkMode={jest.fn()} isDarkMode={true} />
-      </MemoryRouter>,
-    );
-
-    waitFor(async () => {
-      const importButton = screen.getByText('import');
-      expect(importButton).toBeInTheDocument();
-      const exportButton = screen.getByText('export');
-      expect(exportButton).toBeInTheDocument();
-    });
+  beforeEach(() => {
+    jest.clearAllMocks(); // Reset mocks before each test
   });
 
-  test('Renders loading', () => {
+  test('Renders properly', async () => {
     render(
       <MemoryRouter>
         <Settings setIsDarkMode={jest.fn()} isDarkMode={true} />
       </MemoryRouter>,
     );
 
-    const importButton = screen.getByText('Loading...');
+    const importButton = await screen.findByText('import');
+    const exportButton = await screen.findByText('export');
+
     expect(importButton).toBeInTheDocument();
+    expect(exportButton).toBeInTheDocument();
   });
 
-  test('export fires', () => {
+  test('Renders loading', async () => {
+    render(
+      <MemoryRouter>
+        <Settings setIsDarkMode={jest.fn()} isDarkMode={true} />
+      </MemoryRouter>,
+    );
+
+    const loadingText = await screen.findByText('Loading...');
+
+    expect(loadingText).toBeInTheDocument();
+  });
+
+  test('export fires', async () => {
     const masterStylesMock = {
       styleName: { isActive: true, css: 'style text' },
       styleName2: { isActive: true, css: 'style text 2' },
     };
 
-    const mock = jest.spyOn(importExport, 'assembleCssForExport').mockImplementation(jest.fn());
+    const mock = jest.spyOn(importExport, 'assembleCssForExport').mockReturnValue('Updated');
+
+    jest.spyOn(storageHandlers, 'getFromStorage').mockResolvedValue(masterStylesMock);
+
     render(
       <MemoryRouter>
         <Settings setIsDarkMode={jest.fn()} isDarkMode={true} />
       </MemoryRouter>,
     );
 
-    jest.spyOn(importExport, 'assembleCssForExport').mockImplementationOnce(() => 'Updated');
+    const exportButton = await screen.findByText('export');
 
-    waitFor(async () => {
-      const exportButton = screen.getByText('export');
-      expect(exportButton).toBeInTheDocument();
-
-      await act(async () => {
-        await userEvent.click(exportButton);
-      });
-      expect(mock).toHaveBeenCalledWith(masterStylesMock, null);
+    await act(async () => {
+      await userEvent.click(exportButton);
     });
+
+    expect(mock).toHaveBeenCalledWith(masterStylesMock, null);
   });
 });
 
 describe('Dark mode', () => {
   const mockSetMode = jest.fn();
+
   beforeEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks(); // Reset mocks before each test
   });
 
-  test('Selector renders with options', () => {
+  test('Selector renders with options', async () => {
     render(
       <MemoryRouter>
         <Settings setIsDarkMode={jest.fn()} isDarkMode={true} />
       </MemoryRouter>,
     );
 
-    const selector = screen.getByPlaceholderText('Select light or dark mode.');
+    const selector = screen.getByText('dark');
     expect(selector).toBeInTheDocument();
-    const light = screen.getByText('Light');
+
+    await userEvent.click(selector);
+
+    const light = screen.getByText('light');
+    const dark = screen.getAllByText('dark')[1];
     expect(light).toBeInTheDocument();
-    const dark = screen.getByText('Dark');
     expect(dark).toBeInTheDocument();
   });
 
-  test('Light selector works', async () => {
+  test('Dark selector works', async () => {
     render(
       <MemoryRouter>
-        <Settings setIsDarkMode={mockSetMode} isDarkMode={true} />
+        <Settings setIsDarkMode={mockSetMode} isDarkMode={false} />
       </MemoryRouter>,
     );
 
-    const selector = screen.getByPlaceholderText('Select light or dark mode.');
-    const light = screen.getByText('Light');
+    const lightSelector = screen.getByText('light');
+    await userEvent.click(lightSelector);
 
-    await act(async () => {
-      await userEvent.click(selector);
-      await userEvent.click(light);
-    });
+    const darkSelector = screen.getByText('dark');
+    await userEvent.click(darkSelector);
 
     expect(mockSetMode).toHaveBeenCalledTimes(1);
-    expect(mockSetMode).toHaveBeenCalledWith(false);
+    expect(mockSetMode).toHaveBeenCalledWith(true);
   });
 
-  test('Dark selector works', () => {
-    render(
-      <MemoryRouter>
-        <Settings setIsDarkMode={mockSetMode} isDarkMode={true} />
-      </MemoryRouter>,
-    );
+  describe('light mode', () => {
+    test('Light selector toggles dark mode off', async () => {
+      render(
+        <MemoryRouter>
+          <Settings setIsDarkMode={mockSetMode} isDarkMode={true} />
+        </MemoryRouter>,
+      );
 
-    waitFor(async () => {
-      const selector = screen.getByPlaceholderText('Select light or dark mode.');
-      const dark = screen.getByText('Dark');
+      const darkSelector = screen.getByText('dark');
+      await userEvent.click(darkSelector);
 
-      await act(async () => {
-        if (selector) {
-          await userEvent.click(selector);
-        }
-        await userEvent.click(dark);
-      });
+      const lightSelector = screen.getByText('light');
+      await userEvent.click(lightSelector);
 
       expect(mockSetMode).toHaveBeenCalledTimes(1);
-      expect(mockSetMode).toHaveBeenCalledWith(true);
+      expect(mockSetMode).toHaveBeenCalledWith(false);
     });
   });
 });
