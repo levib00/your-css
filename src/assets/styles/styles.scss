@@ -176,6 +176,10 @@ form {
 
   label {
     input, textarea {
+      &:-moz-focusring {
+        outline: 0;
+        border: 0;
+      }
       border: none;
       color: #ffffff;
       background-color: transparent;
@@ -271,7 +275,6 @@ form {
   box-sizing: border-box;
 }
 
-/* On mouse-over, add a grey background color */
 .checkbox-container:hover input ~ .checkmark {
   background-color: $main-dark;
 }
