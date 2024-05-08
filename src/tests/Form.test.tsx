@@ -1,4 +1,9 @@
-import { render, screen, act } from '@testing-library/react';
+import {
+  render,
+  screen,
+  act,
+  waitFor,
+} from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import Form from '../components/form';
@@ -6,28 +11,37 @@ import '@testing-library/jest-dom';
 import * as storageHandlers from '../scripts/storage-handlers';
 import * as importExportCss from '../scripts/import-export-css';
 
-beforeEach(() => {
-  jest.clearAllMocks();
-  jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn());
-});
+const mockedUsedNavigate = jest.fn();
 
-const Website = {
-  isActive: false,
-  css: 'css',
-};
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockedUsedNavigate,
+}));
 
 describe('Form renders', () => {
-  test('Create new form renders.', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(storageHandlers, 'saveToStorage').mockImplementationOnce(jest.fn());
+  });
+
+  const Website = {
+    isActive: false,
+    css: 'css',
+  };
+
+  test('Create new form renders.', async () => {
     render(
       <MemoryRouter>
         <Form />
       </MemoryRouter>,
     );
 
-    const websiteLabel = screen.getByText('Website:');
-    expect(websiteLabel).toBeInTheDocument();
-    const textAreaLabel = screen.getByText('Custom css:');
-    expect(textAreaLabel).toBeInTheDocument();
+    await act(async () => {
+      const websiteLabel = screen.getByText('Website:');
+      expect(websiteLabel).toBeInTheDocument();
+      const textAreaLabel = screen.getByText('Custom css:');
+      expect(textAreaLabel).toBeInTheDocument();
+    });
   });
 
   test('edit form renders with previous text.', () => {
@@ -62,8 +76,13 @@ describe('Form renders', () => {
     const saveButton = screen.getByText('save');
     const checkbox = screen.getByText('Activate:');
 
+    await waitFor(async () => {
+      const tabQueryResult = await screen.findByDisplayValue('example.com');
+      expect(tabQueryResult).toBeInTheDocument();
+    });
+
     await act(async () => {
-      await userEvent.type(websiteBox, 'websitetest');
+      await userEvent.type(websiteBox, 'm');
       await userEvent.type(cssBox, 'css test');
       await userEvent.click(checkbox);
       await userEvent.click(saveButton);
@@ -71,7 +90,7 @@ describe('Form renders', () => {
 
     jest.spyOn(storageHandlers, 'saveToStorage').mockImplementation();
 
-    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith({ websitetest: { css: 'css test', isActive: true } });
+    expect(storageHandlers.saveToStorage).toHaveBeenCalledWith({ 'example.comm': { css: 'css test', isActive: true } });
   });
 
   test('Save button on edit form calls function to close form.', async () => {
@@ -151,6 +170,11 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
+    await waitFor(async () => {
+      const tabQueryResult = await screen.findByDisplayValue('example.com');
+      expect(tabQueryResult).toBeInTheDocument();
+    });
+
     const exportButton = screen.getByText('export');
 
     jest.spyOn(importExportCss, 'handleDownloadClick').mockImplementationOnce(() => 'Updated');
@@ -175,6 +199,11 @@ describe('Form renders', () => {
         <Form styleInfo={cancelWebsite} toggleEditing={toggleEditingMock}/>
       </MemoryRouter>,
     );
+
+    await waitFor(async () => {
+      const tabQueryResult = await screen.findByDisplayValue('example.com');
+      expect(tabQueryResult).toBeInTheDocument();
+    });
 
     const cancelButton = screen.getByText('cancel');
 

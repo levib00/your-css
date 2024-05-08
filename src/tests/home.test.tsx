@@ -12,7 +12,7 @@ describe('Home renders', () => {
       </MemoryRouter>,
     );
 
-    waitFor(() => {
+    await waitFor(() => {
       const globalStyles = screen.getByText('global styles');
       expect(globalStyles).toBeInTheDocument();
       const toggleAll = screen.getByText('toggle all');
