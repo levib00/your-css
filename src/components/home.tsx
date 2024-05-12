@@ -63,7 +63,7 @@ const Home = () => {
   return (
     <>
       <div className='home-head'>
-        <div>
+        <div className='search-container'>
           <label htmlFor='search'></label>
           <input
             type='text'
