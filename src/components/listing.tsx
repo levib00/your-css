@@ -71,7 +71,7 @@ function Listing(props: ListingProps) {
       {
         isBeingEdited
           ? <>
-            <div className='editing-display-name'>
+            <div className='editing-display-name display-name'>
               { styleInfo.displayName || domainName }
             </div>
             <Form
@@ -95,7 +95,7 @@ function Listing(props: ListingProps) {
               clearListing={clearListing}
             />
           }
-          <div>
+          <div className='display-name'>
             { styleInfo.displayName || domainName }
           </div>
           <div className='button-container'>
