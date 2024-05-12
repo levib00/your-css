@@ -149,7 +149,7 @@ const Form = (props: FormProps) => {
             </label>
           </>
         }
-        <label htmlFor="css-input">
+        <label htmlFor='css-input'>
           <div>Custom css:</div>
           <textarea
             name='css-input'
@@ -161,20 +161,20 @@ const Form = (props: FormProps) => {
           />
         </label>
         <div>Shift + Tab to indent</div>
-        <div className='form-input-container style-active-container'>
-          <label className='checkbox-label' htmlFor='active-checkbox'>Activate:</label>
+        <label className='checkbox-label form-input-container style-active-container' htmlFor='active-checkbox'>
+          <div className='activate-text'>Activate:</div>
           <div className="checkbox-container form-checkbox-container">
-            <input type='checkbox' id='active-checkbox' defaultChecked={isActive} onClick={() => setIsActive(!isActive)} />
-            <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
+            <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => setIsActive(!isActive)} />
+            <span className='checkmark'></span>
           </div>
-        </div>
-        <div className="style-form-button-container form-input-container">
+        </label>
+        <div className='style-form-button-container form-input-container'>
           <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
           <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
         </div>
-        <div className="import-export-container">
+        <div className='import-export-container'>
           <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
-          <div className="style-form-button-container form-input-container">
+          <div className='style-form-button-container form-input-container'>
             <button onClick={() => importCss(file)}>import</button>
             <button onClick={() => handleDownloadClick(
               cssInput,
