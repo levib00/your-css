@@ -1,10 +1,10 @@
 $light-mode: #f2f3f5;
 $main-light: #e3e5e8;
 $very-light: #ffffff;
-$dark-mode: #222;
-$main-dark: #333333;
+$dark-mode: #42444a;
+$main-dark: #313338;
+$very-dark: #202124;
 $base-color: #7371fc;
-$very-dark: #151515;
 $border-light: rgba($base-color, 0.88);
 $border-dark: rgba($base-color, 0.88);
 
@@ -107,6 +107,7 @@ a {
   .display-name {
     max-width: 200px;
     overflow-x: hidden;
+    overflow-y: visible;
     text-overflow: ellipsis;
   }
 }
@@ -230,10 +231,6 @@ form {
   margin: auto auto auto auto;
 }
 
-.editing-form {
-  margin-top: 8px;
-}
-
 .new-form {
   margin-top: 5px;
 }
@@ -250,9 +247,7 @@ form {
 }
 
 .form-checkbox-container {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 5px;
+  margin: auto 5px auto 0;
 }
 
 .checkbox-container {
@@ -268,6 +263,7 @@ form {
   -ms-user-select: none;
   user-select: none;
   box-sizing: border-box;
+  margin-left: 5px;
 }
 
 .checkbox-container input {
@@ -346,6 +342,7 @@ body {
       width: 100%;
       background-color: white;
       color: black;
+      border-radius: 8px 0 0 8px;
     }
   }
   a {
@@ -356,7 +353,8 @@ body {
     width: 40px;
     box-sizing: border-box;
     border: $border-light 1px solid;
-    
+    border-radius: 0 8px 8px 0;
+
     &:hover {
       background-color: $main-light;
     }
@@ -494,9 +492,17 @@ nav {
   align-items: center;
 }
 
+.display-name-text {
+  width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .editing-display-name {
-  width: 100%;
-  height: 40px;
+  width: 200px;
+  min-height: 40px;
+  max-height: 40px;
+  margin-top: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -631,29 +637,47 @@ nav {
   }  
 }
 
+textarea:focus, input:focus{
+  outline: none;
+}
+
 .dark-mode {
   nav {
     background-color: $main-dark;
     a {
+      &:hover {
+        path {
+          fill: #ffffff
+        }
+      }
       background-color: transparent;
 
       svg path {
-        fill: white;
+        fill: rgb(228, 229, 233);
       }
     }
   }
 
-  nav a svg path {
-    fill: white;
+  .home-head {
+    .search-container {
+      input {
+        border: 0;
+        background-color: $dark-mode;
+        color: white;
+      }
+    }
+    a {
+      border: 0;
+      background-color: $main-dark;
+      &:hover {
+        background-color:$dark-mode;
+      }
+    }
   }
 
   button {
     background-color: transparent;
     color: white;
-  }
-
-  nav a:visited { 
-    color: #213547;
   }
 
   :root {
@@ -677,6 +701,18 @@ nav {
 
   .listing {
     background-color: $dark-mode;
+    
+    button:hover {
+      background-color: $main-dark;
+    }
+  }
+
+  .editing-listing {
+    background-color: $very-dark;
+  }
+
+  path {
+    fill: #ffffff;
   }
 
   .confirm-modal {
@@ -692,7 +728,31 @@ nav {
 
     .about-links {
       a {
-        background-color: #ddd; /*//TODO:*/
+        color: #ffffff;
+        background-color: $main-dark;
+        &:hover {
+          background-color: $very-dark;
+        }
+      }
+    }
+  }
+
+  .file-input::file-selector-button {
+    background-color: $main-dark;
+    border-radius: 8px;
+    border: 1px solid $border-dark;
+    padding: 5px;
+    &:hover {
+      background-color: $dark-mode;
+    }
+  }
+
+  .settings-buttons-container {
+    button {
+      color: #ffffff;
+      background-color: $main-dark;
+      &:hover {
+        background-color: $very-dark;
       }
     }
   }
@@ -721,14 +781,27 @@ nav {
   form {
     label, .style-active-container, .import-export-container {
       &:focus-within {
-        background-color: #444 !important;
+        background-color: #3c3e44 !important;
       }
   
       &:hover {
-        background-color: #444 !important;
+        background-color: #3c3e44 !important;
       }
 
-      background-color: $main-dark;
+      background-color: $dark-mode;      
+    }
+
+    .file-input {
+      color: white;
+    }
+
+    .style-form-button-container {
+      button {
+        &:hover {
+          background-color: $main-dark;
+        }
+        background-color: $dark-mode;  
+      }
     }
 
     label {
@@ -739,20 +812,16 @@ nav {
     }
   }
 
-  .editing-listing {
-    background-color: $very-dark;
+  .go-back-form-button:hover {
+    background-color: $dark-mode;
   }
 
   .selected-option {
     background-color: $main-dark;
   }
-
-  .editing-listing {
-    background-color: $main-dark;
-  }
   
   .options {
-    border: 1px solid #ccc;
+    border: 1px solid $border-dark;
     background-color: $dark-mode;
     color: white;
   }
@@ -765,6 +834,6 @@ nav {
 }
 
 .top-container.dark-mode {
-  color: rgba(255, 255, 255, 0.87); /*//TODO:*/
-  background-color: $very-dark; /*//TODO:*/
+  color: #ffffff;
+  background-color: $very-dark;
 }
