@@ -72,7 +72,7 @@ function Listing(props: ListingProps) {
         isBeingEdited
           ? <>
             <div className='editing-display-name display-name'>
-              { styleInfo.displayName || domainName }
+              <div className='display-name-text'>{ styleInfo.displayName || domainName }</div>
             </div>
             <Form
               styleInfo={styleInfo}
