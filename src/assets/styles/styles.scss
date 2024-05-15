@@ -223,6 +223,17 @@ form {
       background-color: $main-light;
     }
   }
+
+  .file-input::file-selector-button {
+    background-color: $main-light;
+    border-radius: 8px;
+    border: 1px solid $border-light;
+    padding: 5px;
+    color: #000000;
+    &:hover {
+      background-color: $light-mode
+    }
+  }
 }
 
 .new-form, .editing-form {
@@ -739,9 +750,8 @@ textarea:focus, input:focus{
 
   .file-input::file-selector-button {
     background-color: $main-dark;
-    border-radius: 8px;
     border: 1px solid $border-dark;
-    padding: 5px;
+    color: #ffffff;
     &:hover {
       background-color: $dark-mode;
     }
