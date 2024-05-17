@@ -25,8 +25,13 @@ const Form = (props: FormProps) => {
   const {
     toggleEditing, setAllStyles, allStyles, styleInfo, domain,
   } = props;
+
+  const cssString = `${styleInfo?.css}`;
+
+  const checkFormatting = cssString.includes('{\n    ') && cssString.includes(';\n    ') && cssString.includes('}\n\n');
+
   const [websiteInput, setWebsiteInput] = useState(domain || '');
-  const [cssInput, setCssInput] = useState(styleInfo?.css ? `${styleInfo?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || '');
+  const [cssInput, setCssInput] = useState(checkFormatting ? `${styleInfo?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || (styleInfo?.css || ''));
   const [isActive, setIsActive] = useState(styleInfo?.isActive || false);
   const [modalIsShowing, setModalIsShowing] = useState(false);
   const [file, setFile] = useState<File>();
