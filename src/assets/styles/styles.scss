@@ -1,12 +1,11 @@
-$light-mode: #E6E8EA;
-$main-light: #e3e5e8;
+$light-mode: #e6e8ea;
+$main-light: #d5d7da;
 $very-light: #ffffff;
 $dark-mode: #42444a;
 $main-dark: #313338;
 $very-dark: #202124;
-$base-color: #7371fc;
-$border-light: rgba($base-color, 0.88);
-$border-dark: rgba($base-color, 0.88);
+$border-light: #a466df;
+$border-dark: #b96fff;
 
 html, body, #root {
   overflow-y: hidden;
@@ -304,7 +303,7 @@ form {
 .checkmark:after {
   content: "";
   display: none;
-  margin: 4px 0 0 4px;
+  margin: 3px auto;
 }
 
 .checkbox-container input:checked ~ .checkmark:after {
@@ -312,8 +311,8 @@ form {
 }
 
 .checkbox-container .checkmark:after {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   background-color: $border-light;
 }
 
@@ -613,14 +612,14 @@ nav {
   &:nth-child(2n+1) {
     background-color: $very-light;
   }
-  padding: 5px;
-  cursor: pointer;
-  height: 36px;
-  box-sizing: border-box;
-
   &:hover {
     background-color: $main-light;
   }
+  padding: 5px;
+  padding-left: 11px;
+  cursor: pointer;
+  height: 36px;
+  box-sizing: border-box;
 }
 
 .about-page {
@@ -802,7 +801,7 @@ textarea:focus, input:focus{
 
   .checkmark {
     background-color: $dark-mode;
-    border: $border-dark 2px solid;
+    border: #ffffff 2px solid;
   }
 
   .checkbox-container:hover input ~ .checkmark {
@@ -810,9 +809,7 @@ textarea:focus, input:focus{
   }
 
   .checkbox-container .checkmark:after {
-    width: 18px;
-    height: 18px;
-    background-color: $border-light;
+    background-color: $border-dark;
   }
 
   form {
@@ -856,6 +853,12 @@ textarea:focus, input:focus{
   .selected-option {
     background-color: $main-dark;
     border: $border-dark 1px solid;
+    &:hover {
+      background-color: $very-dark;
+    }
+  }
+
+  .selected-option.open {
     border-bottom: 0;
   }
   
@@ -866,9 +869,14 @@ textarea:focus, input:focus{
   }
   
   .option {
-    &:hover {
-      background-color: $main-dark;
+    background-color: $main-dark;
+    &:nth-child(2n+1) {
+      background-color: $dark-mode
     }
+    &:hover {
+      background-color: $very-dark;
+    }
+    
   }
 }
 
