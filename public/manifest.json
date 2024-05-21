@@ -8,7 +8,12 @@
     "activeTab"
   ],
   "description": "Add and save your own custom css for whatever websites you want.",
-
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@example.com",
+      "strict_min_version": "42.0"
+    }
+  },  
   "icons": {
     "48": "icons/your-css-logo.png"
   },
