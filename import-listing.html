@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en' class='options-ui-form'>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Vite + React + TS</title>
+    <link rel='stylesheet' href='./src/assets/styles/styles.scss'>
+    <script defer type="text/javascript" src='./scripts/asdf.js'></script>
+  </head>
+  <body class='top-container' id='top-container'>
+    <div class='new-listing'>
+      <form class='new-form' id='import-form'>
+        <label htmlFor='website-input' class='website-input'>
+          Website:
+          <input
+            type='text'
+            id='website-input'
+            name='website'
+          />
+        </label>
+        <div>Shift + Tab to indent</div>
+        <label class='checkbox-label form-input-container style-active-container' for='active-checkbox'>
+          <div class='activate-text'>Activate:</div>
+          <div class="checkbox-container form-checkbox-container">
+            <input type='checkbox' id='active-checkbox'/>
+            <span class='checkmark'></span>
+          </div>
+        </label>
+        <div class='import-export-container'>
+          <input type='file' id='file-input'/>
+          <div class='style-form-button-container form-input-container'>
+            <button type='button' id='save-button'>save</button>
+            <button type='button'>cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
