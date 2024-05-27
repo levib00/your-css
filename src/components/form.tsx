@@ -1,10 +1,10 @@
 import React, {
-  ChangeEvent, useEffect, useState, KeyboardEvent,
+  useEffect, useState, KeyboardEvent,
 } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronLeft } from '@mui/icons-material';
 import { getFromStorage, saveToStorage } from '../scripts/storage-handlers';
-import { handleDownloadClick, parseCssFile } from '../scripts/import-export-css';
+import { handleDownloadClick } from '../scripts/import-export-css';
 import { IStyle } from '../objects/styles';
 import ConfirmModal from './confirm-modal';
 
@@ -34,7 +34,6 @@ const Form = (props: FormProps) => {
   const [cssInput, setCssInput] = useState(checkFormatting ? `${styleInfo?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || (styleInfo?.css || ''));
   const [isActive, setIsActive] = useState(styleInfo?.isActive || false);
   const [modalIsShowing, setModalIsShowing] = useState(false);
-  const [file, setFile] = useState<File>();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -115,19 +114,21 @@ const Form = (props: FormProps) => {
     }
   };
 
-  const importCss = async (cssFile: File | undefined) => {
-    const importedCss = await parseCssFile(cssFile);
-    if (!importedCss) {
-      return;
-    }
-    setCssInput(cssInput.concat(' ', importedCss));
-  };
+  const importHandler = () => {
+    browser.storage.local.set({
+      temp: {
+        website: domain || websiteInput,
+        css: cssInput,
+        isActive,
+      },
+    });
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) {
-      return;
-    }
-    setFile(e.target.files[0]);
+    browser.windows.create({
+      url: browser.runtime.getURL('import-listing.html'),
+      type: 'popup',
+      width: 350,
+      height: 420,
+    });
   };
 
   return (
@@ -178,9 +179,8 @@ const Form = (props: FormProps) => {
           <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
         </div>
         <div className='import-export-container'>
-          <input className='file-input' type='file' onChange={(e) => handleFileUpload(e)} />
           <div className='style-form-button-container form-input-container'>
-            <button onClick={() => importCss(file)}>import</button>
+            <button onClick={importHandler}>import</button>
             <button onClick={() => handleDownloadClick(
               cssInput,
               websiteInput,
