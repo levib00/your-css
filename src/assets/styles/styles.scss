@@ -26,6 +26,20 @@ body {
   background-color: $very-light;
 }
 
+.options-ui-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  .top-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 .main {
   width: 100%;
   display: flex;
@@ -66,7 +80,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: transparent;
-  color: white; /*//TODO:*/
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -90,13 +104,6 @@ a {
     justify-content: center;
     align-items: center;
   }
-  .active-checkbox {
-    width: 2.5rem;
-    height: 2.5rem;
-    margin: 0;
-    border-radius: 8px;
-    margin-right: 2px;
-  }
   .button-container {
     display: flex;
     align-items: center;
@@ -109,6 +116,10 @@ a {
     overflow-y: visible;
     text-overflow: ellipsis;
   }
+}
+
+.checkbox {
+  display: none;
 }
 
 .form-container {
@@ -161,9 +172,7 @@ form {
     flex-direction: row;
   }
 
-  .checkbox {
-    display: none;
-  }
+  
 
   .activate-text {
     display: flex;
