@@ -5,21 +5,47 @@ const checkDarkMode = async () => {
   }
 };
 
+const closeForm = () => {
+  window.close();
+};
+
+const fillInputs = async () => {
+  const website: HTMLInputElement = (<HTMLInputElement>document.getElementById('website-input'));
+  const isActive: HTMLInputElement = (<HTMLInputElement>document.getElementById('active-checkbox'));
+
+  const temp = await browser.storage.local.get('temp');
+  const storageObject = await temp.temp;
+
+  if (storageObject) {
+    website.value = await storageObject.website;
+    isActive.checked = await storageObject.isActive;
+  }
+};
+
+const pageLoad = () => {
+  checkDarkMode();
+  fillInputs();
+};
+
 const form = document.getElementById('import-form');
 const saveButton = document.getElementById('save-button');
+const cancelButton = document.getElementById('cancel-button');
 
 form?.addEventListener('submit', (e) => e.preventDefault());
 
-const importCss = async () => {
+const importButtonHandler = async () => {
   const file: HTMLInputElement = (<HTMLInputElement>document.getElementById('file-input'));
   const website: HTMLInputElement = (<HTMLInputElement>document.getElementById('website-input'));
   const isActive: HTMLInputElement = (<HTMLInputElement>document.getElementById('active-checkbox'));
+
+  const temp = await browser.storage.local.get('temp');
+  const storageObject = await temp.temp;
 
   if (file && website && isActive && file.files) {
     const css = await file.files[0].text();
     const newListing = {
       [website.value]: {
-        css,
+        css: await storageObject.css.concat(css) || css,
         isActive: isActive.checked,
       },
     };
@@ -29,9 +55,12 @@ const importCss = async () => {
     const mergedObject = { ...stylesObject, ...newListing };
 
     browser.storage.local.set({ styles: mergedObject });
+
+    closeForm();
   }
 };
 
-saveButton?.addEventListener('click', importCss);
+saveButton?.addEventListener('click', importButtonHandler);
+cancelButton?.addEventListener('click', closeForm);
 
-window.onload = checkDarkMode;
+window.onload = pageLoad;
