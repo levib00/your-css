@@ -7,7 +7,8 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: 'index.html',
-        options_ui: 'import-listing.html'
+        importListing: 'import-listing.html',
+        importAll: 'import-all.html'
       }
     },
   },
