@@ -1,5 +1,6 @@
 const checkDarkMode = async () => {
-  if (await browser.storage.local.get('darkMode')) {
+  const darkmodeObject = await browser.storage.local.get('darkMode');
+  if (await darkmodeObject.darkMode) {
     const topContainer = document.getElementById('top-container');
     topContainer?.classList.add('dark-mode');
   }
