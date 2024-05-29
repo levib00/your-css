@@ -118,6 +118,8 @@ const Form = (props: FormProps) => {
     browser.storage.local.set({
       temp: {
         website: domain || websiteInput,
+        displayName: styleInfo?.displayName,
+        undeleteable: styleInfo?.undeleteable,
         css: cssInput,
         isActive,
       },
