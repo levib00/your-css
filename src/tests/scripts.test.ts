@@ -1,5 +1,5 @@
 import { defaultStyles } from '../objects/styles';
-import { assembleCssForExport, parseCssFile, parseJsonFile } from '../scripts/import-export-css';
+import { assembleCssForExport, parseJsonFile } from '../scripts/import-export-css';
 
 describe('Import/export css', () => {
   test('css url is created if object is passed', () => {
@@ -15,27 +15,6 @@ describe('Import/export css', () => {
   test('no url is created if no css or object is given', () => {
     global.URL.createObjectURL = jest.fn(() => 'url');
     expect(assembleCssForExport(null, null)).toBeFalsy();
-  });
-
-  test('css is parsed if file is passed', async () => {
-    const fileMock = {
-      text: jest.fn(async () => 'css'),
-      lastModified: 0,
-      name: '',
-      webkitRelativePath: '',
-      size: 0,
-      type: '',
-      arrayBuffer: jest.fn(),
-      slice: jest.fn(),
-      stream: jest.fn(),
-    };
-
-    global.URL.createObjectURL = jest.fn(() => 'url');
-    expect(await parseCssFile(fileMock)).toBe('css');
-  });
-
-  test('parse css returns undefined if not passed a file', async () => {
-    expect(await parseCssFile(undefined)).toBeFalsy();
   });
 
   const jsonMock = `{
