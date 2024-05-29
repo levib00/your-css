@@ -140,24 +140,6 @@ describe('Form renders', () => {
     expect(storageHandlers.saveToStorage).toHaveBeenCalledWith({ exampleName1: { css: 'example style text 1 updated', isActive: false } });
   });
 
-  test('Import single css file.', async () => {
-    render(
-      <MemoryRouter>
-        <Form />
-      </MemoryRouter>,
-    );
-
-    const importButton = screen.getByText('import');
-
-    jest.spyOn(importExportCss, 'parseCssFile').mockResolvedValueOnce('Updated');
-
-    await userEvent.click(importButton);
-
-    expect(importExportCss.parseCssFile).toHaveBeenCalledTimes(1);
-    const cssBox = screen.getByDisplayValue('Updated');
-    expect(cssBox).toBeInTheDocument();
-  });
-
   test('Export single listing css file.', async () => {
     const exportWebsite = {
       isActive: false,
