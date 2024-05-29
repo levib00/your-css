@@ -1,3 +1,4 @@
+// @ts-nocheck
 const checkDarkMode = async () => {
   const darkmodeObject = await browser.storage.local.get('darkMode');
   if (await darkmodeObject.darkMode) {
@@ -18,8 +19,12 @@ const fillInputs = async () => {
   const storageObject = await temp.temp;
 
   if (storageObject) {
-    website.value = await storageObject.website;
+    website.value = await storageObject.displayName || storageObject.website;
     isActive.checked = await storageObject.isActive;
+  }
+
+  if (storageObject.undeleteable) {
+    website.readOnly = true;
   }
 };
 
@@ -44,12 +49,25 @@ const importButtonHandler = async () => {
 
   if (file && website && isActive && file.files) {
     const css = await file.files[0].text();
-    const newListing = {
-      [website.value]: {
-        css: await storageObject.css.concat(css) || css,
-        isActive: isActive.checked,
-      },
-    };
+    const savedName = storageObject.undeleteable ? storageObject.website : website.value;
+    let newListing;
+    if (storageObject.undeleteable) {
+      newListing = {
+        [savedName]: {
+          css: await storageObject.css.concat(css) || css,
+          isActive: isActive.checked,
+          undeleteable: storageObject.undeleteable,
+          displayName: storageObject.displayName,
+        },
+      };
+    } else {
+      newListing = {
+        [savedName]: {
+          css: await storageObject.css.concat(css) || css,
+          isActive: isActive.checked,
+        },
+      };
+    }
 
     const existingData = await browser.storage.local.get('styles');
     const stylesObject = existingData.styles || {};
