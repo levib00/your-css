@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { assembleCssForExport, handleDownloadClick } from '../scripts/import-export-css';
+import { handleDownloadClick } from '../scripts/import-export-css';
 import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handlers';
 import { IStyle } from '../objects/styles';
 
@@ -16,7 +16,7 @@ function Settings(props: ISettingsProps) {
 
   useEffect(() => {
     (async () => {
-      const storageStyles = await getFromStorage('styles') || {};
+      const storageStyles = await getFromStorage(null);
       setAllStyles(populateSpecialStyles(await storageStyles));
     })();
   }, []);
@@ -37,11 +37,20 @@ function Settings(props: ISettingsProps) {
     setIsOpen(false);
   };
 
+  const importHandler = () => {
+    browser.windows.create({
+      url: browser.runtime.getURL('import-all.html'),
+      type: 'popup',
+      width: 350,
+      height: 420,
+    });
+  };
+
   return (
     <div className='settings-page'>
       {allStyles ? <div className='settings-buttons-container'>
-        <button onClick={() => handleDownloadClick(null, null, allStyles)}>import</button>
-        <button onClick={() => assembleCssForExport(allStyles, null)}>export</button>
+        <button onClick={importHandler}>import</button>
+        <button onClick={() => handleDownloadClick(null, null, allStyles)}>export</button>
       </div> : 'Loading...'}
       <div className='light-dark-selector-container' >
         <div className='custom-select'>
