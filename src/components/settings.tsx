@@ -17,7 +17,7 @@ function Settings(props: ISettingsProps) {
   useEffect(() => {
     (async () => {
       const storageStyles = await getFromStorage(null);
-      setAllStyles(populateSpecialStyles(await storageStyles));
+      setAllStyles(populateSpecialStyles(await storageStyles || {}));
     })();
   }, []);
 
