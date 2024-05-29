@@ -21,15 +21,8 @@ export const assembleCssForExport = (
   return jsonURL;
 };
 
-export const parseCssFile = async (file: File | undefined) => {
-  if (!file) {
-    return '';
-  }
-  return file.text();
-};
-
 export const parseJsonFile = async (file: File | undefined, allStyles: IStyle) => {
-  const json = await parseCssFile(file);
+  const json = await file?.text();
   if (!json) {
     return '';
   }
