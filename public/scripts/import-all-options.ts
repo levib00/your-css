@@ -1,4 +1,3 @@
-// @ts-nocheck
 const checkDarkMode = async () => {
   const darkmodeObject = await browser.storage.local.get('darkMode');
   if (await darkmodeObject.darkMode) {
@@ -38,3 +37,5 @@ saveButton?.addEventListener('click', importAllButtonHandler);
 cancelButton?.addEventListener('click', closeForm);
 
 window.onload = checkDarkMode;
+
+export {}
