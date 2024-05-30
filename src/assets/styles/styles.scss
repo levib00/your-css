@@ -172,8 +172,6 @@ form {
     flex-direction: row;
   }
 
-  
-
   .activate-text {
     display: flex;
     align-items: center;
@@ -181,11 +179,11 @@ form {
 
   .style-active-container, label {
     &:focus-within {
-      background-color: #ddd !important; /*//TODO:*/
+      background-color: #ddd !important;
     }
 
     &:hover {
-      background-color: #ddd !important; /*//TODO:*/
+      background-color: #ddd !important;
     }
   }
 
@@ -842,9 +840,9 @@ textarea:focus, input:focus{
     .style-form-button-container {
       button {
         &:hover {
-          background-color: $main-dark;
+          background-color: $very-dark;
         }
-        background-color: $dark-mode;  
+        background-color: $main-dark;  
       }
     }
 
