@@ -4,13 +4,14 @@
     <meta charset='UTF-8' />
     <title>Vite + React + TS</title>
     <link rel='stylesheet' href='./src/assets/styles/styles.scss'>
-    <script defer type="text/javascript" src='./scripts/import-all-options.js'></script>
+    <script defer type='module' src='./public/scripts/import-all-options.ts'></script>
   </head>
   <body class='top-container' id='top-container'>
     <div class='new-listing'>
       <form class='new-form' id='import-form'>
         <div class='import-export-container'>
-          <input type='file' class='file-file' id='file-input'/>
+          <div>import a valid json file</div>
+          <input type='file' class='file-file' id='file-input' accept=".json"/>
           <div class='style-form-button-container form-input-container'>
             <button type='button' id='save-button'>save</button>
             <button type='button' id='cancel-button'>cancel</button>

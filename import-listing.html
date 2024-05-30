@@ -4,7 +4,7 @@
     <meta charset='UTF-8' />
     <title>Vite + React + TS</title>
     <link rel='stylesheet' href='./src/assets/styles/styles.scss'>
-    <script defer type="text/javascript" src='./scripts/import-listing-options.js'></script>
+    <script defer type='module' src='./public/scripts/import-listing-options.ts'></script>
   </head>
   <body class='top-container' id='top-container'>
     <div class='new-listing'>
@@ -25,7 +25,8 @@
           </div>
         </label>
         <div class='import-export-container'>
-          <input type='file' class='file-input' id='file-input'/>
+          <div>import any css file</div>
+          <input type='file' class='file-input' id='file-input' accept=".css"/>
           <div class='style-form-button-container form-input-container'>
             <button type='button' id='save-button'>save</button>
             <button type='button' id='cancel-button'>cancel</button>
