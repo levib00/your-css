@@ -48,11 +48,11 @@ function Settings(props: ISettingsProps) {
 
   return (
     <div className='settings-page'>
-      {allStyles ? <div className='settings-buttons-container'>
+      {allStyles ? <section className='settings-buttons-container'>
         <button onClick={importHandler}>import</button>
         <button onClick={() => handleDownloadClick(null, null, allStyles)}>export</button>
-      </div> : 'Loading...'}
-      <div className='light-dark-selector-container' >
+      </section> : 'Loading...'}
+      <section className='light-dark-selector-container' >
         <div className='custom-select'>
           <div
             className={`selected-option ${isOpen ? 'open' : ''}`}
@@ -72,7 +72,7 @@ function Settings(props: ISettingsProps) {
             </div>
           )}
         </div>
-      </div>
+      </section>
     </div>
   );
 }

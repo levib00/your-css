@@ -137,50 +137,52 @@ const Form = (props: FormProps) => {
     <div className={!toggleEditing ? 'new-listing' : 'editing-listing-form-container'}>
       {!toggleEditing ? <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'><ChevronLeft /></Link> : <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button> }
       <form className={!toggleEditing ? 'new-form' : 'editing-form'} onSubmit={(e) => e.preventDefault()}>
-        {
-          modalIsShowing && <ConfirmModal
-          toggleModal={() => setModalIsShowing(!modalIsShowing)}
-          saveCss={saveCss}
-          listingInfo={{ websiteInput, cssInput, isActive }}
-        />}
-        {
-          !styleInfo?.undeleteable && <>
-            <label htmlFor='website-input' className='website-input'>
-              Website:
-              <input
-                type='text'
-                id='website-input'
-                name='website'
-                onChange={(e) => setWebsiteInput(e.target.value)}
-                value={websiteInput}
-              />
-            </label>
-          </>
-        }
-        <label htmlFor='css-input'>
-          <div>Custom css:</div>
-          <textarea
-            name='css-input'
-            id='css-input'
-            className='css-input'
-            onKeyDown={(e) => indentOnTab(e)}
-            onChange={(e) => setCssInput(e.target.value)}
-            value={cssInput}
-          />
-        </label>
-        <div>Shift + Tab to indent</div>
-        <label className='checkbox-label form-input-container style-active-container' htmlFor='active-checkbox'>
-          <div className='activate-text'>Activate:</div>
-          <div className="checkbox-container form-checkbox-container">
-            <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => setIsActive(!isActive)} />
-            <span className='checkmark'></span>
+        <section>
+          {
+            modalIsShowing && <ConfirmModal
+            toggleModal={() => setModalIsShowing(!modalIsShowing)}
+            saveCss={saveCss}
+            listingInfo={{ websiteInput, cssInput, isActive }}
+          />}
+          {
+            !styleInfo?.undeleteable && <>
+              <label htmlFor='website-input' className='website-input'>
+                Website:
+                <input
+                  type='text'
+                  id='website-input'
+                  name='website'
+                  onChange={(e) => setWebsiteInput(e.target.value)}
+                  value={websiteInput}
+                />
+              </label>
+            </>
+          }
+          <label htmlFor='css-input'>
+            <div>Custom css:</div>
+            <textarea
+              name='css-input'
+              id='css-input'
+              className='css-input'
+              onKeyDown={(e) => indentOnTab(e)}
+              onChange={(e) => setCssInput(e.target.value)}
+              value={cssInput}
+            />
+          </label>
+          <label htmlFor='css-input'>Shift + Tab to indent</label>
+          <label className='checkbox-label form-input-container style-active-container' htmlFor='active-checkbox'>
+            <div className='activate-text'>Activate:</div>
+            <div className="checkbox-container form-checkbox-container">
+              <input type='checkbox' id='active-checkbox' checked={isActive} onChange={() => setIsActive(!isActive)} />
+              <span className='checkmark'></span>
+            </div>
+          </label>
+          <div className='style-form-button-container form-input-container'>
+            <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
+            <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
           </div>
-        </label>
-        <div className='style-form-button-container form-input-container'>
-          <button onClick={() => saveCss(websiteInput, cssInput, isActive, styleInfo)}>save</button>
-          <button onClick={toggleEditing ? () => toggleEditing() : () => navigate('/')}>cancel</button>
-        </div>
-        <div className='import-export-container'>
+        </section>
+        <section className='import-export-container'>
           <div className='style-form-button-container form-input-container'>
             <button onClick={importHandler}>import</button>
             <button onClick={() => handleDownloadClick(
@@ -188,8 +190,8 @@ const Form = (props: FormProps) => {
               websiteInput,
               null,
             )}>export</button>
-        </div>
-        </div>
+          </div>
+        </section>
       </form>
     </div>
   );

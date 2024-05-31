@@ -67,12 +67,12 @@ function Listing(props: ListingProps) {
   }, [isActive]);
 
   return (
-    <div className={isBeingEdited ? 'listing editing-listing' : 'listing'}>
+    <section className={isBeingEdited ? 'listing editing-listing' : 'listing'}>
       {
         isBeingEdited
           ? <>
             <div className='editing-display-name display-name'>
-              <div className='display-name-text'>{ styleInfo.displayName || domainName }</div>
+              <h2 className='display-name-text'>{ styleInfo.displayName || domainName }</h2>
             </div>
             <Form
               styleInfo={styleInfo}
@@ -118,7 +118,7 @@ function Listing(props: ListingProps) {
           </div>
         </>
       }
-    </div>
+    </section>
   );
 }
 

@@ -23,7 +23,7 @@ function ConfirmModal(props: IModalProps) {
 
   return (
     <div className="darken-box">
-      <div className="confirm-modal">
+      <section className="confirm-modal">
         {deleteListing && <>
           <div>Are you sure you want to permanently delete this group?</div>
           <div className="modal-buttons">
@@ -51,7 +51,7 @@ function ConfirmModal(props: IModalProps) {
             <button onClick={toggleModal}>Cancel</button>
           </div>
         </>}
-      </div>
+      </section>
     </div>
   );
 }
