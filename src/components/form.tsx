@@ -44,7 +44,7 @@ const Form = (props: FormProps) => {
         setWebsiteInput(url);
       }
     })();
-  });
+  }, []);
 
   const saveCss = async (
     website: string,
