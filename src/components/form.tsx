@@ -154,6 +154,8 @@ const Form = (props: FormProps) => {
                   name='website'
                   onChange={(e) => setWebsiteInput(e.target.value)}
                   value={websiteInput}
+                  required
+                  minLength={3}
                 />
               </label>
             </>
