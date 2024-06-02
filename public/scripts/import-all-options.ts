@@ -1,12 +1,15 @@
-const checkDarkMode = async () => {
-  const darkmodeObject = await browser.storage.local.get('darkMode');
-  if (await darkmodeObject.darkMode) {
-    const topContainer = document.getElementById('top-container');
-    topContainer?.classList.add('dark-mode');
+const checkDarkMode = async (): Promise<void> => {
+  try {
+    const { darkMode } = await browser.storage.local.get('darkMode');
+    if (darkMode) {
+      document.getElementById('top-container')?.classList.add('dark-mode');
+    }
+  } catch (error) {
+    console.error('Error checking dark mode:', error);
   }
 };
 
-const closeForm = () => {
+const closeForm = (): void => {
   window.close();
 };
 
@@ -16,26 +19,30 @@ const cancelButton = document.getElementById('cancel-button');
 
 form?.addEventListener('submit', (e) => e.preventDefault());
 
-async function importAllButtonHandler() {
-  const file: HTMLInputElement = (<HTMLInputElement>document.getElementById('file-input'));
-  const allStyles = await browser.storage.local.get('styles');
-  if (file && file.files) {
-    const json = await file?.files[0].text();
-    if (!json) {
-      return '';
+const importAllButtonHandler = async (): Promise<void> => {
+  try {
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    const { styles } = await browser.storage.local.get('styles');
+    const allStyles = styles || {};
+
+    if (fileInput?.files?.length) {
+      const json = await fileInput.files[0].text();
+      if (!json) return;
+
+      const parsedJSON = JSON.parse(json);
+      const mergedStyles = { ...allStyles, ...parsedJSON };
+      
+      await browser.storage.local.set({ styles: mergedStyles });
+      closeForm();
     }
-    const parsedJSON = JSON.parse(json);
-
-    browser.storage.local.set({ styles: { ...parsedJSON, ...allStyles.styles } });
-
-    return closeForm();
+  } catch (error) {
+    console.error('Error importing styles:', error);
   }
-  return null;
-}
+};
 
 saveButton?.addEventListener('click', importAllButtonHandler);
 cancelButton?.addEventListener('click', closeForm);
 
 window.onload = checkDarkMode;
 
-export {}
+export {};

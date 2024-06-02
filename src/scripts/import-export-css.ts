@@ -3,62 +3,52 @@ import { IStyle } from '../objects/styles';
 export const assembleCssForExport = (
   allStyles: IStyle | null | undefined,
   css: string | null,
-) => {
-  let jsonString;
-  if (css) {
-    jsonString = css;
-  } else if (allStyles) {
-    jsonString = JSON.stringify(allStyles, null, 2);
-  } else {
+): string => {
+  if (!allStyles && !css) {
     return '';
   }
 
-  // Create a Blob from the JSON string
-  const file = new Blob([jsonString], { type: 'application/json' });
+  const jsonString = css ? css : JSON.stringify(allStyles, null, 2);
 
-  // Create a URL for the Blob
-  const jsonURL = URL.createObjectURL(file);
-  return jsonURL;
+  const file = new Blob([jsonString], { type: 'application/json' });
+  return URL.createObjectURL(file);
 };
 
-export const parseJsonFile = async (file: File | undefined, allStyles: IStyle) => {
-  const json = await file?.text();
-  if (!json) {
-    return '';
+export const parseJsonFile = async (
+  file: File | undefined,
+  allStyles: IStyle
+): Promise<IStyle> => {
+  if (!file) {
+    return allStyles;
   }
-  const parsedJSON = JSON.parse(json);
 
-  return { ...parsedJSON, ...allStyles };
+  try {
+    const json = await file.text();
+    const parsedJSON = JSON.parse(json);
+    return { ...parsedJSON, ...allStyles };
+  } catch (error) {
+    console.error('Failed to parse JSON file', error);
+    return allStyles;
+  }
 };
 
 export const handleDownloadClick = (
   css: string | null,
   domain: string | null,
   allStyles: IStyle | null | undefined,
-) => {
-  const link = document.createElement('a');
-  let url;
-  if (allStyles) {
-    url = assembleCssForExport(allStyles, null);
-    link.download = 'your-css.json';
-  } else if (css) {
-    url = assembleCssForExport(null, css);
-    link.download = `${domain}.css`;
-  }
+): void => {
+  const url = assembleCssForExport(allStyles, css);
   if (!url) {
     return;
   }
 
+  const link = document.createElement('a');
   link.href = url;
+  link.download = allStyles ? 'your-css.json' : `${domain}.css`;
 
-  // Append to html link element page
   document.body.appendChild(link);
-
-  // Start download
   link.click();
+  document.body.removeChild(link);
 
-  // Clean up and remove the link
-  if (link.parentNode) {
-    link.parentNode.removeChild(link);
-  }
+  URL.revokeObjectURL(url);
 };

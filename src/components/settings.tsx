@@ -4,36 +4,38 @@ import { getFromStorage, populateSpecialStyles } from '../scripts/storage-handle
 import { IStyle } from '../objects/styles';
 
 interface ISettingsProps {
-  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>
-  isDarkMode: boolean
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
 }
 
-function Settings(props: ISettingsProps) {
+const fetchStyles = async (setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>) => {
+  const storageStyles = await getFromStorage(null);
+  setAllStyles(populateSpecialStyles(await storageStyles || {}));
+};
+
+const handleSelector = (
+  option: string, 
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>, 
+  setDarkModeSelector: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const isDark = option === 'dark';
+  setIsDarkMode(isDark);
+  browser.storage.local.set({ darkMode: isDark });
+  setDarkModeSelector(option);
+};
+
+const Settings = (props: ISettingsProps) => {
   const { setIsDarkMode, isDarkMode } = props;
   const [allStyles, setAllStyles] = useState<IStyle | undefined>();
   const [isOpen, setIsOpen] = useState(false);
-  const [darkModeSelector, setDarModeSelector] = useState(isDarkMode ? 'dark' : 'light');
+  const [darkModeSelector, setDarkModeSelector] = useState(isDarkMode ? 'dark' : 'light');
 
   useEffect(() => {
-    (async () => {
-      const storageStyles = await getFromStorage(null);
-      setAllStyles(populateSpecialStyles(await storageStyles || {}));
-    })();
+    fetchStyles(setAllStyles);
   }, []);
 
-  const handleSelector = (option: string) => {
-    if (option === 'dark') {
-      setIsDarkMode(true);
-      browser.storage.local.set({ darkMode: true });
-    } else {
-      setIsDarkMode(false);
-      browser.storage.local.set({ darkMode: false });
-    }
-    setDarModeSelector(option);
-  };
-
   const handleOptionClick = (option: string) => {
-    handleSelector(option);
+    handleSelector(option, setIsDarkMode, setDarkModeSelector);
     setIsOpen(false);
   };
 
@@ -48,11 +50,15 @@ function Settings(props: ISettingsProps) {
 
   return (
     <div className='settings-page'>
-      {allStyles ? <section className='settings-buttons-container'>
-        <button onClick={importHandler}>import</button>
-        <button onClick={() => handleDownloadClick(null, null, allStyles)}>export</button>
-      </section> : 'Loading...'}
-      <section className='light-dark-selector-container' >
+      {allStyles ? (
+        <section className='settings-buttons-container'>
+          <button onClick={importHandler}>import</button>
+          <button onClick={() => handleDownloadClick(null, null, allStyles)}>export</button>
+        </section>
+      ) : (
+        'Loading...'
+      )}
+      <section className='light-dark-selector-container'>
         <div className='custom-select'>
           <div
             className={`selected-option ${isOpen ? 'open' : ''}`}
@@ -75,6 +81,6 @@ function Settings(props: ISettingsProps) {
       </section>
     </div>
   );
-}
+};
 
 export default Settings;

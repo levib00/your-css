@@ -41,10 +41,11 @@ const Home = () => {
   }, [searchQuery]);
 
   useEffect(() => {
-    (async () => {
+    const fetchStyles = async () => {
       const storageStyles = await getFromStorage(null) || {};
       setAllStyles(populateSpecialStyles(await storageStyles));
-    })();
+    };
+    fetchStyles();
   }, [searchQuery]);
 
   useEffect(() => {
@@ -78,15 +79,16 @@ const Home = () => {
       <section className='listings'>
         {
           listings.map((thisStyle, index) => <Listing
-          key={Math.random()}
-          toggleEditing={() => setIsBeingEdited((s) => (s === index ? null : index))}
-          toggleModal={() => setModalIsShowing((s) => (s === index ? null : index))}
-          isBeingEdited={isBeingEdited === index}
-          modalIsShowing={modalIsShowing === index}
-          domainName={ Object.keys(thisStyle)[0] }
-          allStyles={ allStyles }
-          styleInfo={ Object.values(thisStyle)[0] }
-          setAllStyles={setAllStyles} />)
+            key={Math.random()}
+            toggleEditing={() => setIsBeingEdited((s) => (s === index ? null : index))}
+            toggleModal={() => setModalIsShowing((s) => (s === index ? null : index))}
+            isBeingEdited={isBeingEdited === index}
+            modalIsShowing={modalIsShowing === index}
+            domainName={ Object.keys(thisStyle)[0] }
+            allStyles={ allStyles }
+            styleInfo={ Object.values(thisStyle)[0] }
+            setAllStyles={setAllStyles} />
+          )
         }
       </section>
     </>

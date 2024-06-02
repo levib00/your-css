@@ -1,57 +1,65 @@
 (() => {
   const getFromStorage = async (domain: string | undefined) => {
-    const styles = await browser.storage.local.get('styles');
+    try {
+      const { styles } = await browser.storage.local.get('styles');
+      if (!styles) return {};
 
-    if (!domain) {
+      const domainStyles = domain ? styles[domain] : undefined;
+      const toggleAllStyles = styles.___toggleAll;
+      const globalStyles = styles.__global;
+
+      return { domain: domainStyles, ___toggleAll: toggleAllStyles, __global: globalStyles };
+    } catch (error) {
+      console.error('Error getting styles from storage:', error);
       return {};
     }
-    const domainObj = await styles.styles[domain];
-
-    const toggleAll = await styles.styles.___toggleAll;
-
-    const global = await styles.styles.__global;
-
-    return { domain: domainObj, ___toggleAll: toggleAll, __global: global };
   };
 
-  const domainStyle: HTMLStyleElement = document.createElement('style');
-
-  const url = new URL(window.location.href);
-  const domain: string | undefined = url.hostname;
+  const createStyleElement = (css: string): HTMLStyleElement => {
+    const styleElement = document.createElement('style');
+    styleElement.appendChild(document.createTextNode(css));
+    return styleElement;
+  };
 
   const getStyleValue = (styles: {
-    [key: string]: {
-      isActive?: boolean,
-      css?: string,
-      undeleteable?: boolean,
-      displayName?: string, domain: string
-    } | undefined
-  } | undefined) => {
-    if (!styles) {
-      return '';
-    }
-    const { domain: stylesForDomain, ___toggleAll: toggleAll, __global: global } = styles;
+    domain?: { isActive?: boolean, css?: string },
+    ___toggleAll?: { isActive?: boolean, css?: string },
+    __global?: { isActive?: boolean, css?: string },
+  }): string => {
+    if (!styles) return '';
+
+    const { domain: domainStyles, ___toggleAll: toggleAllStyles, __global: globalStyles } = styles;
     let css = '';
-    if ((!stylesForDomain?.isActive && !global?.isActive) || (toggleAll && !toggleAll?.isActive)) {
+
+    if ((!domainStyles?.isActive && !globalStyles?.isActive) || (toggleAllStyles && !toggleAllStyles.isActive)) {
       return '';
     }
-    if (global?.isActive && global?.css) {
-      css = css.concat(global.css);
+
+    if (globalStyles?.isActive && globalStyles.css) {
+      css += globalStyles.css;
     }
-    if (stylesForDomain?.isActive && stylesForDomain.css) {
-      css = css.concat(stylesForDomain.css);
+
+    if (domainStyles?.isActive && domainStyles.css) {
+      css += domainStyles.css;
     }
+
     return css;
   };
 
-  (async () => {
-    const stylesFromStorage = await getFromStorage(domain);
-    let css = '';
-    if (stylesFromStorage) {
-      css = getStyleValue(stylesFromStorage);
-    }
-    domainStyle.appendChild(document.createTextNode(css));
-  })();
+  const init = async () => {
+    const url = new URL(window.location.href);
+    const domain = url.hostname;
 
-  document.head.appendChild(domainStyle);
+    try {
+      const stylesFromStorage = await getFromStorage(domain);
+      const css = getStyleValue(stylesFromStorage);
+
+      const styleElement = createStyleElement(css);
+      document.head.appendChild(styleElement);
+    } catch (error) {
+      console.error('Error initializing styles:', error);
+    }
+  };
+
+  document.addEventListener('DOMContentLoaded', init);
 })();

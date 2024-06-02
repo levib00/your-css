@@ -1,8 +1,12 @@
 const checkDarkMode = async () => {
-  const darkmodeObject = await browser.storage.local.get('darkMode');
-  if (await darkmodeObject.darkMode) {
-    const topContainer = document.getElementById('top-container');
-    topContainer?.classList.add('dark-mode');
+  try {
+    const { darkMode } = await browser.storage.local.get('darkMode');
+    if (darkMode) {
+      const topContainer = document.getElementById('top-container');
+      topContainer?.classList.add('dark-mode');
+    }
+  } catch (error) {
+    console.error('Error checking dark mode:', error);
   }
 };
 
@@ -11,19 +15,21 @@ const closeForm = () => {
 };
 
 const fillInputs = async () => {
-  const website: HTMLInputElement = (<HTMLInputElement>document.getElementById('website-input'));
-  const isActive: HTMLInputElement = (<HTMLInputElement>document.getElementById('active-checkbox'));
+  try {
+    const website = document.getElementById('website-input') as HTMLInputElement;
+    const isActive = document.getElementById('active-checkbox') as HTMLInputElement;
 
-  const temp = await browser.storage.local.get('temp');
-  const storageObject = await temp.temp;
+    const { temp } = await browser.storage.local.get('temp');
+    if (temp) {
+      website.value = temp.displayName || temp.website;
+      isActive.checked = temp.isActive;
 
-  if (storageObject) {
-    website.value = await storageObject.displayName || storageObject.website;
-    isActive.checked = await storageObject.isActive;
-  }
-
-  if (storageObject.undeleteable) {
-    website.readOnly = true;
+      if (temp.undeleteable) {
+        website.readOnly = true;
+      }
+    }
+  } catch (error) {
+    console.error('Error filling inputs:', error);
   }
 };
 
@@ -39,42 +45,34 @@ const cancelButton = document.getElementById('cancel-button');
 form?.addEventListener('submit', (e) => e.preventDefault());
 
 const importButtonHandler = async () => {
-  const file: HTMLInputElement = (<HTMLInputElement>document.getElementById('file-input'));
-  const website: HTMLInputElement = (<HTMLInputElement>document.getElementById('website-input'));
-  const isActive: HTMLInputElement = (<HTMLInputElement>document.getElementById('active-checkbox'));
+  try {
+    const fileInput = document.getElementById('file-input') as HTMLInputElement;
+    const websiteInput = document.getElementById('website-input') as HTMLInputElement;
+    const isActiveInput = document.getElementById('active-checkbox') as HTMLInputElement;
 
-  const temp = await browser.storage.local.get('temp');
-  const storageObject = await temp.temp;
+    const { temp } = await browser.storage.local.get('temp');
+    if (!fileInput.files?.length || !temp) return;
 
-  if (file && website && isActive && file.files) {
-    const css = await file.files[0].text();
-    const savedName = storageObject.undeleteable ? storageObject.website : website.value;
-    let newListing;
-    if (storageObject.undeleteable) {
-      newListing = {
-        [savedName]: {
-          css: await storageObject.css.concat(css) || css,
-          isActive: isActive.checked,
-          undeleteable: storageObject.undeleteable,
-          displayName: storageObject.displayName,
-        },
-      };
-    } else {
-      newListing = {
-        [savedName]: {
-          css: await storageObject.css.concat(css) || css,
-          isActive: isActive.checked,
-        },
-      };
-    }
+    const css = await fileInput.files[0].text();
+    const savedName = temp.undeleteable ? temp.website : websiteInput.value;
 
-    const existingData = await browser.storage.local.get('styles');
-    const stylesObject = existingData.styles || {};
+    const newListing: { [key: string]: { css: string; isActive: boolean; undeleteable?: boolean; displayName?: string } } = {
+      [savedName]: {
+        css: temp.css ? temp.css.concat(css) : css,
+        isActive: isActiveInput.checked,
+        ...(temp.undeleteable && { undeleteable: temp.undeleteable, displayName: temp.displayName }),
+      },
+    };
+
+    const { styles } = await browser.storage.local.get('styles');
+    const stylesObject = styles || {};
     const mergedObject = { ...stylesObject, ...newListing };
 
-    browser.storage.local.set({ styles: mergedObject });
+    await browser.storage.local.set({ styles: mergedObject });
 
     closeForm();
+  } catch (error) {
+    console.error('Error handling import button click:', error);
   }
 };
 
@@ -83,4 +81,4 @@ cancelButton?.addEventListener('click', closeForm);
 
 window.onload = pageLoad;
 
-export {}
+export {};

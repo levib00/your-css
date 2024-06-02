@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SettingsOutlined, HomeOutlined, DataObjectOutlined } from '@mui/icons-material';
-
-function NavBar() {
+const NavBar = () => {
   return (
     <nav>
       <ul>

@@ -10,29 +10,44 @@ import { saveToStorage } from '../scripts/storage-handlers';
 import ConfirmModal from './confirm-modal';
 
 interface ListingProps {
-  domainName : string
-  styleInfo : { isActive?: boolean, css?: string, undeleteable?: boolean, displayName?: string }
-  setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>
-  allStyles?: IStyle
-  toggleEditing: () => void
-  isBeingEdited: boolean
-  toggleModal: () => void
-  modalIsShowing: boolean
+  domainName: string;
+  styleInfo: {
+    isActive?: boolean;
+    css?: string;
+    undeleteable?: boolean;
+    displayName?: string;
+  };
+  setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>;
+  allStyles?: IStyle;
+  toggleEditing: () => void;
+  isBeingEdited: boolean;
+  toggleModal: () => void;
+  modalIsShowing: boolean;
 }
 
-function Listing(props: ListingProps) {
-  const {
-    domainName,
-    setAllStyles,
-    styleInfo,
-    allStyles,
-    toggleEditing,
-    isBeingEdited,
-    toggleModal,
-    modalIsShowing,
-  } = props;
-
+const Listing = ({
+  domainName,
+  styleInfo,
+  allStyles,
+  setAllStyles,
+  toggleEditing,
+  isBeingEdited,
+  toggleModal,
+  modalIsShowing,
+}: ListingProps) => {
   const [isActive, setIsActive] = useState(styleInfo.isActive);
+
+  const firstUpdate = useRef(true);
+  useEffect(() => {
+    if (firstUpdate.current) {
+      firstUpdate.current = false;
+      return;
+    }
+    const allStylesCopy = { ...allStyles };
+    allStylesCopy[domainName].isActive = isActive;
+    saveToStorage({ [domainName]: allStylesCopy[domainName] });
+    setAllStyles({ ...allStylesCopy });
+  }, [isActive]);
 
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
@@ -54,72 +69,75 @@ function Listing(props: ListingProps) {
     toggleEditing();
   };
 
-  const firstUpdate = useRef(true);
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
+  const renderModal = () => {
+    if (modalIsShowing) {
+      if (styleInfo.undeleteable) {
+        return <ConfirmModal toggleModal={toggleModal} clearListing={clearListing} />;
+      }
+      return <ConfirmModal toggleModal={toggleModal} deleteListing={deleteListing} />;
     }
-    const allStylesCopy = { ...allStyles };
-    allStylesCopy[domainName].isActive = isActive;
-    saveToStorage({ [domainName]: allStylesCopy[domainName] });
-    setAllStyles({ ...allStylesCopy });
-  }, [isActive]);
+    return null;
+  };
+
+  const renderForm = () => (
+    <>
+      <div className="editing-display-name display-name">
+        <h2 className="display-name-text">{styleInfo.displayName || domainName}</h2>
+      </div>
+      <Form
+        styleInfo={styleInfo}
+        domain={domainName}
+        toggleEditing={toggleEditing}
+        allStyles={allStyles}
+        setAllStyles={setAllStyles}
+      />
+    </>
+  );
+
+  const renderListing = () => (
+    <>
+      {renderModal()}
+      <div className="display-name">
+        {styleInfo.displayName || domainName}
+      </div>
+      <div className="button-container">
+        {domainName !== '___toggleAll' && (
+          <button onClick={openEditPage} title="edit">
+            <EditOutlined />
+          </button>
+        )}
+        {domainName !== '___toggleAll' && (
+          styleInfo.undeleteable ? (
+            <button title="clear" onClick={toggleModal}>
+              <CancelPresentationOutlined />
+            </button>
+          ) : (
+            <button title="remove" onClick={toggleModal}>
+              <DeleteForever />
+            </button>
+          )
+        )}
+        <div className="checkbox-container">
+          <input
+            type="checkbox"
+            className="active-checkbox"
+            checked={isActive}
+            onChange={() => setIsActive(!isActive)}
+          />
+          <span
+            className="checkmark"
+            onClick={() => setIsActive(!isActive)}
+          ></span>
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <section className={isBeingEdited ? 'listing editing-listing' : 'listing'}>
-      {
-        isBeingEdited
-          ? <>
-            <div className='editing-display-name display-name'>
-              <h2 className='display-name-text'>{ styleInfo.displayName || domainName }</h2>
-            </div>
-            <Form
-              styleInfo={styleInfo}
-              domain={domainName}
-              toggleEditing={toggleEditing}
-              allStyles={allStyles}
-              setAllStyles={setAllStyles}
-            />
-          </>
-          : <>
-          {
-            (!styleInfo.undeleteable && modalIsShowing) && <ConfirmModal
-              toggleModal={toggleModal}
-              deleteListing={deleteListing}
-            />
-          }
-          {
-            (styleInfo.undeleteable && modalIsShowing) && <ConfirmModal
-              toggleModal={toggleModal}
-              clearListing={clearListing}
-            />
-          }
-          <div className='display-name'>
-            { styleInfo.displayName || domainName }
-          </div>
-          <div className='button-container'>
-            {domainName !== '___toggleAll' && <button onClick={openEditPage} title='edit'><EditOutlined /></button>}
-            {domainName !== '___toggleAll' && (
-              styleInfo.undeleteable ? <button
-                title='clear'
-                onClick={toggleModal}>
-                  <CancelPresentationOutlined />
-                </button> : <button
-                  title='remove'
-                  onClick={toggleModal}>
-                  <DeleteForever />
-                </button>
-            )}
-              <div className="checkbox-container" >
-                <input type="checkbox" className='active-checkbox' defaultChecked={isActive} onClick={() => setIsActive(!isActive)}/>
-                <span className="checkmark" onClick={() => setIsActive(!isActive)}></span>
-              </div>
-          </div>
-        </>
-      }
+      {isBeingEdited ? renderForm() : renderListing()}
     </section>
   );
-}
+};
 
 export default Listing;

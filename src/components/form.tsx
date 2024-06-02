@@ -8,54 +8,55 @@ import { handleDownloadClick } from '../scripts/import-export-css';
 import { IStyle } from '../objects/styles';
 import ConfirmModal from './confirm-modal';
 
-interface FormProps {
-  styleInfo?: {
-    css?: string
-    isActive?: boolean
-    undeleteable?: boolean
-    displayName?: string
-  }
-  domain?: string
-  toggleEditing?: () => void
-  setAllStyles?: React.Dispatch<React.SetStateAction<IStyle | undefined>>
-  allStyles?: IStyle
+interface IStyleInfo {
+  css?: string;
+    isActive?: boolean;
+    undeleteable?: boolean;
+    displayName?: string;
 }
 
-const Form = (props: FormProps) => {
+interface IFormProps {
+  styleInfo?: IStyleInfo
+  domain?: string;
+  toggleEditing?: () => void;
+  setAllStyles?: React.Dispatch<React.SetStateAction<IStyle | undefined>>;
+  allStyles?: IStyle;
+}
+
+const formatCss = (css: string | undefined) => {
+  if (!css) return '';
+  return css.includes('{\n    ') && css.includes(';\n    ') && css.includes('}\n\n')
+    ? css
+    : css.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n');
+};
+
+const Form = (props: IFormProps) => {
   const {
     toggleEditing, setAllStyles, allStyles, styleInfo, domain,
   } = props;
 
-  const cssString = `${styleInfo?.css}`;
-
-  const checkFormatting = cssString.includes('{\n    ') && cssString.includes(';\n    ') && cssString.includes('}\n\n');
-
   const [websiteInput, setWebsiteInput] = useState(domain || '');
-  const [cssInput, setCssInput] = useState(checkFormatting ? `${styleInfo?.css}`.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n') : null || (styleInfo?.css || ''));
+  const [cssInput, setCssInput] = useState(formatCss(styleInfo?.css));
   const [isActive, setIsActive] = useState(styleInfo?.isActive || false);
   const [modalIsShowing, setModalIsShowing] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
+    const fetchWebsite = async () => {
       if (!websiteInput) {
         const tabs = await browser.tabs.query({ active: true, lastFocusedWindow: true });
         const url = new URL(tabs[0].url || '').hostname;
         setWebsiteInput(url);
       }
-    })();
+    };
+    fetchWebsite();
   }, []);
 
   const saveCss = async (
     website: string,
     css: string,
     activeStatus: boolean,
-    prevStyles?: {
-      css?: string,
-      isActive?: boolean,
-      undeleteable?: boolean,
-      displayName?: string,
-    } | null,
+    prevStyles?: IStyleInfo | null,
     overwrite: boolean = false,
   ) => {
     let newListing: {
@@ -135,7 +136,13 @@ const Form = (props: FormProps) => {
 
   return (
     <div className={!toggleEditing ? 'new-listing' : 'editing-listing-form-container'}>
-      {!toggleEditing ? <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'><ChevronLeft /></Link> : <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button> }
+      {!toggleEditing ? (
+        <Link to='/' className='go-back-form-button go-back-new-form-button' title='go back'>
+          <ChevronLeft />
+        </Link>
+      ) : (
+        <button className='go-back-form-button' title='go back' onClick={toggleEditing}><ChevronLeft/></button>
+      )}
       <form className={!toggleEditing ? 'new-form' : 'editing-form'} onSubmit={(e) => e.preventDefault()}>
         <section>
           {
@@ -144,22 +151,20 @@ const Form = (props: FormProps) => {
             saveCss={saveCss}
             listingInfo={{ websiteInput, cssInput, isActive }}
           />}
-          {
-            !styleInfo?.undeleteable && <>
-              <label htmlFor='website-input' className='website-input'>
-                Website:
-                <input
-                  type='text'
-                  id='website-input'
-                  name='website'
-                  onChange={(e) => setWebsiteInput(e.target.value)}
-                  value={websiteInput}
-                  required
-                  minLength={3}
-                />
-              </label>
-            </>
-          }
+          {!styleInfo?.undeleteable && (
+            <label htmlFor='website-input' className='website-input'>
+              Website:
+              <input
+                type='text'
+                id='website-input'
+                name='website'
+                onChange={(e) => setWebsiteInput(e.target.value)}
+                value={websiteInput}
+                required
+                minLength={3}
+              />
+            </label>
+          )}
           <label htmlFor='css-input'>
             <div>Custom css:</div>
             <textarea
