@@ -12,7 +12,6 @@ jobs:
       - run: npm install typescript
       - run: npm install -g vite
       - run: npm install web-ext
-      - run: INLINE_RUNTIME_CHUNK=false tsc
       - run: vite build
-      - run: tsc ./public/scripts/*.ts --outdir ./dist/scripts/
+      - run: tsc
       - run: web-ext build --source-dir ./dis/ --overwrite-dest
