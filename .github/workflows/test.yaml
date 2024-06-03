@@ -15,4 +15,4 @@ jobs:
       - run: INLINE_RUNTIME_CHUNK=false tsc
       - run: vite build
       - run: npm run tscscript
-      - run: web-ext build --source-dir ./dist/ --overwrite-dest
+      - run: web-ext build --source-dir ./dis/ --overwrite-dest
