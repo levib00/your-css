@@ -9,9 +9,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - run: npm install -g typescript
-      - run: npm install -g vite
-      - run: npm install -g web-ext
+      - run: npm install typescript
+      - run: npm install vite
+      - run: npm install web-ext
       - run: tsc
       - run: vite build
       - run: npm run tscscript
