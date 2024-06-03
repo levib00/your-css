@@ -14,4 +14,4 @@ jobs:
       - run: npm install -g web-ext
       - run: vite build
       - run: tsc
-      - run: web-ext build --source-dir ./dis/ --overwrite-dest
+      - run: web-ext build --source-dir ./dist/ --overwrite-dest
