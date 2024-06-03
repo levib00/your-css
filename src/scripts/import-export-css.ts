@@ -14,24 +14,6 @@ export const assembleCssForExport = (
   return URL.createObjectURL(file);
 };
 
-export const parseJsonFile = async (
-  file: File | undefined,
-  allStyles: IStyle
-): Promise<IStyle> => {
-  if (!file) {
-    return allStyles;
-  }
-
-  try {
-    const json = await file.text();
-    const parsedJSON = JSON.parse(json);
-    return { ...parsedJSON, ...allStyles };
-  } catch (error) {
-    console.error('Failed to parse JSON file', error);
-    return allStyles;
-  }
-};
-
 export const handleDownloadClick = (
   css: string | null,
   domain: string | null,
