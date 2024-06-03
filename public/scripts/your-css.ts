@@ -46,7 +46,7 @@
     return css;
   };
 
-  const init = async () => {
+  (async () => {
     const url = new URL(window.location.href);
     const domain = url.hostname;
 
@@ -59,7 +59,5 @@
     } catch (error) {
       console.error('Error initializing styles:', error);
     }
-  };
-
-  document.addEventListener('DOMContentLoaded', init);
+  })();
 })();
