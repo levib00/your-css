@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "tscscript": "tsc ./public/scripts/*.ts --outdir ./dist/scripts/",
-    "build": "INLINE_RUNTIME_CHUNK=false tsc && vite build && npm run tscscript",
+    "build": "vite build && tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --coverage",
