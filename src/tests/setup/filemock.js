@@ -14,3 +14,4 @@ global.browser = {
     },
   },
 };
+URL.revokeObjectURL = jest.fn();
