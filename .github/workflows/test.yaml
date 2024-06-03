@@ -14,5 +14,5 @@ jobs:
       - run: npm install web-ext
       - run: INLINE_RUNTIME_CHUNK=false tsc
       - run: vite build
-      - run: npm run tscscript
+      - run: tsc ./public/scripts/*.ts --outdir ./dist/scripts/
       - run: web-ext build --source-dir ./dis/ --overwrite-dest
