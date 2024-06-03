@@ -10,9 +10,8 @@ jobs:
         with:
           node-version: '20'
       - run: npm install typescript
-      - run: npm install vite
+      - run: npm install -g vite
       - run: npm install web-ext
-      - run: npm install
       - run: INLINE_RUNTIME_CHUNK=false tsc
       - run: vite build
       - run: npm run tscscript
