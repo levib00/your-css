@@ -11,7 +11,7 @@ jobs:
           node-version: '20'
       - run: npm install typescript
       - run: npm install -g vite
-      - run: npm install web-ext
+      - run: npm install -g web-ext
       - run: vite build
       - run: tsc
       - run: web-ext build --source-dir ./dis/ --overwrite-dest
