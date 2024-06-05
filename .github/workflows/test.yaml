@@ -24,3 +24,4 @@ jobs:
         with:
           files: |
            ./web-ext-artifacts/pack.zip
+          fail_on_unmatched_files: true
