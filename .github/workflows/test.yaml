@@ -22,4 +22,5 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
         if: startsWith(github.ref, 'refs/tags/')
-          files: ./web-ext-artifacts/pack.zip
+          files: |
+           ./web-ext-artifacts/pack.zip
