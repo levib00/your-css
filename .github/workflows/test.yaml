@@ -20,7 +20,7 @@ jobs:
           name: your-css
           path: ./web-ext-artifacts/pack.zip
       - uses: softprops/action-gh-release@v2
-        with:
         if: startsWith(github.ref, 'refs/tags/')
+        with:
           files: |
            ./web-ext-artifacts/pack.zip
