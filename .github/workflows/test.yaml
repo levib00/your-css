@@ -1,6 +1,9 @@
 name: build
 run-name: build
-on: [push]
+on:
+  push:
+    tags:
+      - '*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,8 +23,6 @@ jobs:
           name: your-css
           path: ./web-ext-artifacts/pack.zip
       - uses: softprops/action-gh-release@v2
-        if: startsWith(*, '*')
         with:
           files: |
            ./web-ext-artifacts/pack.zip
-          fail_on_unmatched_files: true
