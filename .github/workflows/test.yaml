@@ -17,4 +17,5 @@ jobs:
       - run: web-ext build --source-dir ./dist/ --overwrite-dest --filename pack.zip
       - uses: actions/upload-artifact@v4
         with:
+          name: your-css
           path: ./web-ext-artifacts/pack.zip
