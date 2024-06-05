@@ -19,8 +19,6 @@ jobs:
         with:
           name: your-css
           path: ./web-ext-artifacts/pack.zip
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          title: "Development Build"
+      - uses: softprops/action-gh-release@v2
+          with:
+            files: ./web-ext-artifacts/pack.zip
