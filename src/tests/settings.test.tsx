@@ -43,6 +43,29 @@ describe('Settings page component', () => {
       styleName2: { isActive: true, css: 'style text 2' },
     };
 
+    const expectedResult = {
+      ___toggleAll: {
+        css: "",
+        displayName: "toggle all",
+        isActive: true,
+        undeleteable: true,
+      },
+      __global:  {
+        css: "",
+        displayName: "global styles",
+        isActive: false,
+        undeleteable: true,
+      },
+      _extension: {
+        css: "",
+        displayName: "extension styles",
+        isActive: false,
+        undeleteable: true,
+      },
+      styleName: { isActive: true, css: 'style text' },
+      styleName2: { isActive: true, css: 'style text 2' },
+    }
+
     const mock = jest.spyOn(importExport, 'assembleCssForExport').mockReturnValue('Updated');
 
     jest.spyOn(storageHandlers, 'getFromStorage').mockResolvedValue(masterStylesMock);
@@ -59,7 +82,7 @@ describe('Settings page component', () => {
       await userEvent.click(exportButton);
     });
 
-    expect(mock).toHaveBeenCalledWith(masterStylesMock, null);
+    expect(mock).toHaveBeenCalledWith(expectedResult, null);
   });
 });
 
