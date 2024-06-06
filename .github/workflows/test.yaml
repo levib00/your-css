@@ -14,7 +14,7 @@ jobs:
       - run: npm install typescript
       - run: npm install -g vite
       - run: npm install -g web-ext
-      - run: npm install jest
+      - run: npm install -g jest
       - run: jest
       - run: vite build
       - run: tsc
