@@ -11,6 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - run: npm install typescript
       - run: npm install -g jest
       - run: npm install -g ts-node
       - run: jest
