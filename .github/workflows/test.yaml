@@ -3,15 +3,14 @@ run-name: test
 on: [push]
 jobs:
   test:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
-      permissions:
-        contents: write
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/setup-node@v4
-          with:
-            node-version: '20'
-        - run: npm install -g jest
-        - run: npm install -g ts-node
-        - run: jest
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install -g jest
+      - run: npm install -g ts-node
+      - run: jest
