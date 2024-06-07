@@ -1,31 +1,17 @@
-name: build
-run-name: build
+name: test
+run-name: test
 on: [push]
 jobs:
-  build:
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: npm install typescript
-      - run: npm install -g vite
-      - run: npm install -g web-ext
-      - run: npm install -g jest
-      - run: npm install -g ts-node
-      - run: jest
-      - run: vite build
-      - run: tsc
-      - run: web-ext build --source-dir ./dist/ --overwrite-dest --filename pack.zip
-      - uses: actions/upload-artifact@v4
-        with:
-          name: your-css
-          path: ./web-ext-artifacts/pack.zip
-      - uses: softprops/action-gh-release@v2
-        with:
-          files: |
-           ./web-ext-artifacts/pack.zip
-          tag_name: 1.0.0
+  test:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+      permissions:
+        contents: write
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: '20'
+        - run: npm install -g jest
+        - run: npm install -g ts-node
+        - run: jest
