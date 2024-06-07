@@ -30,4 +30,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: ./web-ext-artifacts/pack.zip
-        tag_name: 1.0.0
+        tag_name: 1.0
