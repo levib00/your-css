@@ -141,13 +141,17 @@ a {
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  
   margin: auto auto;
   width: 100%;
   box-sizing: border-box;
   font-size: 16px;
+
+  > section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
   .file-input {
     margin: 16px 0;
