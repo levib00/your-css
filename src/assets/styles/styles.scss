@@ -120,6 +120,13 @@ a {
     overflow-y: visible;
     text-overflow: ellipsis;
   }
+  .display-name-text {
+    font-size: 22px;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
 }
 
 .checkbox {
@@ -534,6 +541,8 @@ nav {
   width: 190px;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
 }
 
 .editing-display-name {
@@ -545,6 +554,7 @@ nav {
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  overflow-y: hidden !important;
 }
 
 .settings-page {
