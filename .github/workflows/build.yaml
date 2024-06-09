@@ -1,6 +1,9 @@
 name: build
 run-name: build
-on: [push]
+on:
+  push:
+    tags:        
+      - '**'
 jobs:
   build:
     permissions:
@@ -25,4 +28,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: ./web-ext-artifacts/pack.zip
-          tag_name: ${{ github.refs/tags/my_tag }}
+          tag_name: ${{ github.ref_name }}
