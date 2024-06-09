@@ -1,6 +1,9 @@
 name: build
 run-name: build
-on: [push]
+on:
+  push:
+    tags:        
+      - '**'
 jobs:
   build:
     permissions:
@@ -26,5 +29,3 @@ jobs:
         with:
           files: ./web-ext-artifacts/pack.zip
           tag_name: ${{ github.ref_name }}
-      - run: echo ${{github.event.release.tag_name}}
-      - run: echo ${{ github.ref_name }}
