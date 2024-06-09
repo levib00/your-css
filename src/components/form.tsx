@@ -25,9 +25,15 @@ interface IFormProps {
 
 const formatCss = (css: string | undefined) => {
   if (!css) return '';
-  return css.includes('{\n    ') && css.includes(';\n    ') && css.includes('}\n\n')
-    ? css
-    : css.replace(/([{;])/g, '$1\n    ').replace(/}/g, '}\n\n');
+  const cssArray = css.split('}')
+  const unformattedCssArray = cssArray.map(string => string.replace(/\s+/g, ' ').replace(/\s*{\s*/g, '{').replace(/\s*}\s*/g, '}').replace(/\s*:\s*/g, ':').replace(/\s*;\s*/g, ';').trim());
+  const filteredCssArray = unformattedCssArray.filter(Boolean)
+  const closedCssArray = filteredCssArray.map(string => string.concat('}'))
+  const formattedCssArray = closedCssArray.map(string => string.replace(/;/g, ';\n  ')
+    .replace(/{/g, ' {\n  ')
+    .replace(/}/g, '\n}\n')
+    .replace(/\n  \n/g, '\n'))
+  return formattedCssArray.join('\n\n')
 };
 
 const Form = (props: IFormProps) => {
@@ -175,8 +181,8 @@ const Form = (props: IFormProps) => {
               onChange={(e) => setCssInput(e.target.value)}
               value={cssInput}
             />
+            <label className='shift-tab-label' htmlFor='css-input'>Shift + Tab to indent</label>
           </label>
-          <label htmlFor='css-input'>Shift + Tab to indent</label>
           <label className='checkbox-label form-input-container style-active-container' htmlFor='active-checkbox'>
             <div className='activate-text'>Activate:</div>
             <div className="checkbox-container form-checkbox-container">
