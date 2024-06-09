@@ -72,7 +72,7 @@ describe('Form renders', () => {
     );
 
     const websiteBox = screen.getByLabelText('Website:');
-    const cssBox = screen.getByLabelText('Custom css:');
+    const cssBox = screen.getByLabelText('Custom css:Shift + Tab to indent');
     const saveButton = screen.getByText('save');
     const checkbox = screen.getByText('Activate:');
 
@@ -127,7 +127,7 @@ describe('Form renders', () => {
       </MemoryRouter>,
     );
 
-    const cssBox = screen.getByLabelText('Custom css:');
+    const cssBox = screen.getByLabelText('Custom css:Shift + Tab to indent');
     const saveButton = screen.getByText('save');
 
     await act(async () => {
