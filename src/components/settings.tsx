@@ -22,6 +22,7 @@ const handleSelector = (
   setIsDarkMode(isDark);
   browser.storage.local.set({ darkMode: isDark });
   setDarkModeSelector(option);
+  console.log('ffff')
 };
 
 const Settings = (props: ISettingsProps) => {
