@@ -9,23 +9,25 @@
   <body class='top-container' id='top-container'>
     <div class='new-listing'>
       <form class='new-form' id='import-form'>
-        <label htmlFor='website-input' class='website-input'>
-          Website:
-          <input
-            type='text'
-            id='website-input'
-            name='website'
-            required
-            minlength="3"
-          />
-        </label>
-        <label class='checkbox-label form-input-container style-active-container' for='active-checkbox'>
-          <div class='activate-text'>Activate:</div>
-          <div class="checkbox-container form-checkbox-container">
-            <input type='checkbox' id='active-checkbox'/>
-            <span class='checkmark'></span>
-          </div>
-        </label>
+        <section>
+          <label htmlFor='website-input' class='website-input'>
+            Website:
+            <input
+              type='text'
+              id='website-input'
+              name='website'
+              required
+              minlength="3"
+            />
+          </label>
+          <label class='checkbox-label form-input-container style-active-container' for='active-checkbox'>
+            <div class='activate-text'>Activate:</div>
+            <div class="checkbox-container form-checkbox-container">
+              <input type='checkbox' id='active-checkbox'/>
+              <span class='checkmark'></span>
+            </div>
+          </label>
+        </section>
         <div class='import-export-container'>
           <div>import any css file</div>
           <input type='file' class='file-input' id='file-input' accept=".css"/>
