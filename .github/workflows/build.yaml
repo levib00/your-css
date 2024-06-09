@@ -25,4 +25,4 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: ./web-ext-artifacts/pack.zip
-          tag_name: '$CI_COMMIT_TAG'
+          tag_name: 0
