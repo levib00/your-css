@@ -26,9 +26,13 @@ interface IFormProps {
 const formatCss = (css: string | undefined) => {
   if (!css) return '';
   const cssArray = css.split('}')
-  const unformattedCssArray = cssArray.map(string => string.replace(/\s+/g, ' ').replace(/\s*{\s*/g, '{').replace(/\s*}\s*/g, '}').replace(/\s*:\s*/g, ':').replace(/\s*;\s*/g, ';').trim());
+  const unformattedCssArray = cssArray.map(string => string.replace(/\s+/g, ' ')
+    .replace(/\s*{\s*/g, '{')
+    .replace(/\s*}\s*/g, '}')
+    .replace(/\s*:\s*/g, ':').replace(/\s*;\s*/g, ';')
+    .trim());
   const filteredCssArray = unformattedCssArray.filter(Boolean)
-  const closedCssArray = filteredCssArray.map(string => string.concat('}'))
+  const closedCssArray = filteredCssArray.map(string => string.includes('{') ? string.concat('}') : string)
   const formattedCssArray = closedCssArray.map(string => string.replace(/;/g, ';\n  ')
     .replace(/{/g, ' {\n  ')
     .replace(/}/g, '\n}\n')
