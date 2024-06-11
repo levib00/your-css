@@ -16,6 +16,8 @@ interface IModalProps {
   };
 }
 
+// Different components depending on the context to modal is called in
+
 const ConfirmDelete = ({ deleteListing, toggleModal }: { deleteListing: () => void; toggleModal: () => void }) => (
   <>
     <div>Are you sure you want to permanently delete this group?</div>
@@ -63,6 +65,7 @@ const ConfirmModal = (props: IModalProps) => {
     toggleModal, deleteListing, clearListing, saveCss, listingInfo,
   } = props;
 
+  // Determine which component to load based on which functions have been passed
   return (
     <div className="darken-box">
       <section className="confirm-modal">

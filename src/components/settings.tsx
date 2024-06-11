@@ -8,11 +8,13 @@ interface ISettingsProps {
   isDarkMode: boolean;
 }
 
+// Get styles for them to be exported
 const fetchStyles = async (setAllStyles: React.Dispatch<React.SetStateAction<IStyle | undefined>>) => {
   const storageStyles = await getFromStorage(null);
   setAllStyles(populateSpecialStyles(await storageStyles || {}));
 };
 
+// Handle dark mode selector
 const handleSelector = (
   option: string, 
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>, 
@@ -39,6 +41,7 @@ const Settings = (props: ISettingsProps) => {
     setIsOpen(false);
   };
 
+  // Open options_ui page for importing a bunch of listings
   const importHandler = () => {
     browser.windows.create({
       url: browser.runtime.getURL('import-all.html'),
@@ -50,6 +53,7 @@ const Settings = (props: ISettingsProps) => {
 
   return (
     <div className='settings-page'>
+      {/* Wait for styles to be fetched before showing buttons */}
       {allStyles ? (
         <section className='settings-buttons-container'>
           <button onClick={importHandler}>import</button>

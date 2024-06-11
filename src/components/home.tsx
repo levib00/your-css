@@ -22,6 +22,7 @@ const Home = () => {
   const [modalIsShowing, setModalIsShowing] = useState<null | number>(null);
   const [searchResults, setSearchResults] = useState<IStyle | undefined>();
 
+  // get websites that match search results
   const search = (obj: IStyle, searchQueryString: string) => {
     const keys = Object.getOwnPropertyNames(obj);
     const searchResultsObj: IStyle = {};
@@ -34,12 +35,14 @@ const Home = () => {
     return searchResultsObj;
   };
 
+  // Update listings when search query changes
   useEffect(() => {
     if (allStyles) {
       search(allStyles, searchQuery);
     }
   }, [searchQuery]);
 
+  // Get all the styles from storage
   useEffect(() => {
     const fetchStyles = async () => {
       const storageStyles = await getFromStorage(null) || {};
@@ -48,6 +51,7 @@ const Home = () => {
     fetchStyles();
   }, [searchQuery]);
 
+  // set whether shown listings are all or searched listings and sort alphabetically
   useEffect(() => {
     let stylesArray: Array<{ [x:string]: IDomainStyle }> = [];
     const shownListings = searchResults || allStyles;

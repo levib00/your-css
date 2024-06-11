@@ -25,18 +25,24 @@ interface IFormProps {
 
 const formatCss = (css: string | undefined) => {
   if (!css) return '';
+  // Split declaration blocks into array
   const cssArray = css.split('}')
+  // Format remove all white space from each element
   const unformattedCssArray = cssArray.map(string => string.replace(/\s+/g, ' ')
     .replace(/\s*{\s*/g, '{')
     .replace(/\s*}\s*/g, '}')
     .replace(/\s*:\s*/g, ':').replace(/\s*;\s*/g, ';')
     .trim());
+  // Remove any empty elements
   const filteredCssArray = unformattedCssArray.filter(Boolean)
+  // Close blocks opened by the split
   const closedCssArray = filteredCssArray.map(string => string.includes('{') ? string.concat('}') : string)
+  // Add white space in the right places
   const formattedCssArray = closedCssArray.map(string => string.replace(/;/g, ';\n  ')
     .replace(/{/g, ' {\n  ')
     .replace(/}/g, '\n}\n')
     .replace(/\n  \n/g, '\n'))
+    // Assemble elements back into strings
   return formattedCssArray.join('\n\n')
 };
 
@@ -51,6 +57,7 @@ const Form = (props: IFormProps) => {
   const [modalIsShowing, setModalIsShowing] = useState(false);
   const navigate = useNavigate();
 
+  // Set website input to current website upon opening a new form
   useEffect(() => {
     const fetchWebsite = async () => {
       if (!websiteInput) {
@@ -78,6 +85,7 @@ const Form = (props: IFormProps) => {
       }
     };
 
+    // Add undeletable and display name properties if they are special and should exist
     if (prevStyles?.undeleteable) {
       newListing = {
         [website]: {
@@ -96,6 +104,7 @@ const Form = (props: IFormProps) => {
       };
     }
 
+    // If form will overwrite an existing website, show modal else save as new or edit
     if (await getFromStorage(website) && (!overwrite && !toggleEditing)) {
       setModalIsShowing(true);
     } else {
@@ -111,6 +120,7 @@ const Form = (props: IFormProps) => {
     }
   };
 
+  // Let user indent with shift + tab
   const indentOnTab = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Tab' && e.shiftKey) {
       e.preventDefault();
@@ -125,6 +135,7 @@ const Form = (props: IFormProps) => {
     }
   };
 
+  // store the websites style info in local storage and open a options_ui page to import
   const importHandler = () => {
     browser.storage.local.set({
       temp: {

@@ -37,6 +37,8 @@ const Listing = ({
 }: ListingProps) => {
   const [isActive, setIsActive] = useState(styleInfo.isActive);
 
+
+  // Prevent unnecessary updates when checkbox is checked and save checked state to storage
   const firstUpdate = useRef(true);
   useEffect(() => {
     if (firstUpdate.current) {
@@ -49,6 +51,7 @@ const Listing = ({
     setAllStyles({ ...allStylesCopy });
   }, [isActive]);
 
+  // Delete listing from storage
   const deleteListing = () => {
     const allStylesCopy = { ...allStyles };
     delete allStylesCopy[domainName];
@@ -57,6 +60,7 @@ const Listing = ({
     toggleModal();
   };
 
+  // Clear css for undeleteable listings
   const clearListing = () => {
     const allStylesCopy = { ...allStyles };
     allStylesCopy[domainName].css = '';
@@ -69,6 +73,7 @@ const Listing = ({
     toggleEditing();
   };
 
+  // Open modal with relevant props
   const renderModal = () => {
     if (modalIsShowing) {
       if (styleInfo.undeleteable) {

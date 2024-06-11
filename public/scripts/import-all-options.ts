@@ -25,6 +25,7 @@ const importAllButtonHandler = async (): Promise<void> => {
     const { styles } = await browser.storage.local.get('styles');
     const allStyles = styles || {};
 
+    // If a file is found convert the contents to text, parse the JSON and save it in storage
     if (fileInput?.files?.length) {
       const json = await fileInput.files[0].text();
       if (!json) return;

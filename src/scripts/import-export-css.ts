@@ -1,5 +1,6 @@
 import { IStyle } from '../objects/styles';
 
+// Put css into a file to be downloaded by user
 export const assembleCssForExport = (
   allStyles: IStyle | null | undefined,
   css: string | null,
@@ -14,6 +15,7 @@ export const assembleCssForExport = (
   return URL.createObjectURL(file);
 };
 
+// Open the download confirmation 
 export const handleDownloadClick = (
   css: string | null,
   domain: string | null,

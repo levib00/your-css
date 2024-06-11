@@ -9,6 +9,7 @@ import Settings from './components/settings.js';
 function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
 
+  // Load dark mode
   useEffect(() => {
     (async () => {
       const darkModeStorage = await browser.storage.local.get('darkMode');
@@ -17,6 +18,7 @@ function App() {
   }, []);
 
   return (
+    // Set dark mode class for styling
     <div className={isDarkMode ? 'top-container dark-mode' : 'top-container'}>
       <MemoryRouter>
         <header>

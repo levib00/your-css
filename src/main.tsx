@@ -10,6 +10,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 );
 
+// Load user styles for extension
 (async () => {
   const extensionStyles = await getFromStorage('_extension');
 
