@@ -570,6 +570,7 @@ nav {
   .settings-buttons-container {
     display: flex;
     gap: 12px;
+    margin-top: 65px;
     button {
       border: solid 1px $border-light;
       background-color: $light-mode;
@@ -721,6 +722,7 @@ textarea:focus, input:focus{
   .home-head {
     .search-container {
       input {
+        padding-left: 5px;
         border: 0;
         background-color: $dark-mode;
         color: white;
@@ -750,7 +752,7 @@ textarea:focus, input:focus{
       button {
         background-color: $dark-mode;
         color: #ffffff;
-        border: $border-dark;
+        border: $border-dark 1px solid;
       }
       .modal-action {
         background-color: #b50000;
