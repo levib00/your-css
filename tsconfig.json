@@ -24,6 +24,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "public/", "public/scripts/import-listing-options.ts", "public/scripts/import-all-options.ts"],
+  "include": ["src", "public/", "src/scripts/import-listing-options.ts", "src/scripts/import-all-options.ts", "jest.config.ts", "src/config/babel.config.cjs", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
