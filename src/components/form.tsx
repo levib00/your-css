@@ -40,7 +40,8 @@ const formatCss = (css: string | undefined) => {
   // Add white space in the right places
   const formattedCssArray = closedCssArray.map(string => string.replace(/;/g, ';\n  ')
     .replace(/{/g, ' {\n  ')
-    .replace(/}/g, '\n}\n')
+    .replace(/:/g, ': ')
+    .replace(/}/g, '\n}')
     .replace(/\n  \n/g, '\n'))
     // Assemble elements back into strings
   return formattedCssArray.join('\n\n')
