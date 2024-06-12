@@ -10,7 +10,7 @@
   "description": "Add and save your own custom css for whatever websites you want.",
   "browser_specific_settings": {
     "gecko": {
-      "id": "addon@example.com",
+      "id": "786e93b9-f63a-404f-a40e-eb63ddfc6906",
       "strict_min_version": "42.0"
     }
   },  
