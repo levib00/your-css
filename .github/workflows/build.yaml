@@ -20,12 +20,12 @@ jobs:
       - run: npm install -g ts-node
       - run: vite build
       - run: tsc
-      - run: web-ext build --source-dir ./dist/ --overwrite-dest --filename pack.zip
+      - run: web-ext build --source-dir ./dist/ --overwrite-dest --filename your-css.zip
       - uses: actions/upload-artifact@v4
         with:
           name: your-css
-          path: ./web-ext-artifacts/pack.zip
+          path: ./web-ext-artifacts/your-css.zip
       - uses: softprops/action-gh-release@v2
         with:
-          files: ./web-ext-artifacts/pack.zip
+          files: ./web-ext-artifacts/your-css.zip
           tag_name: ${{ github.ref_name }}
