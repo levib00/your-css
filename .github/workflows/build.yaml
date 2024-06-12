@@ -20,6 +20,7 @@ jobs:
       - run: npm install -g ts-node
       - run: vite build
       - run: tsc
+      - run: tsc ./src/scripts/your-css.ts --outdir ./dist/scripts/ --skiplibcheck true
       - run: web-ext build --source-dir ./dist/ --overwrite-dest --filename your-css.zip
       - uses: actions/upload-artifact@v4
         with:

@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "tscscript": "tsc ./public/scripts/*.ts --outdir ./dist/scripts/",
-    "build": "tsc && vite build",
+    "tscscript": "tsc ./src/scripts/your-css.ts --outdir ./dist/scripts/ --skiplibcheck true",
+    "build": "tsc && vite build && tscscript",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --coverage",
