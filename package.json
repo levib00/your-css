@@ -6,12 +6,12 @@
   "scripts": {
     "dev": "vite",
     "tscscript": "tsc ./src/scripts/your-css.ts --outdir ./dist/scripts/ --skiplibcheck true",
-    "build": "tsc && vite build && npm run tscscript",
+    "start:firefox": "web-ext build --source-dir ./dist/ --overwrite-dest",
+    "build": "tsc && vite build && npm run tscscript && npm run start:firefox",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --coverage",
-    "clear_jest": "jest --clearCache",
-    "start:firefox": "web-ext build --source-dir ./dist/ --overwrite-dest"
+    "clear_jest": "jest --clearCache"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
